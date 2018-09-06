@@ -3,7 +3,7 @@
 import sys
 from optparse import OptionParser, OptionGroup
 
-from gemtools.bedpe2window_f import bedpe2window
+from gemtools2.bedpe2window_f import bedpe2window
 
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
