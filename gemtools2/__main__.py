@@ -35,7 +35,7 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
-		pipeline = bedpe2window()
+		pipeline = bedpe2window(bedpe=options.sv_input, window=options.window_size, out=options.outpre)
 	return pipeline
 
 
