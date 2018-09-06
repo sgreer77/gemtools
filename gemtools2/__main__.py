@@ -50,6 +50,8 @@ def main(cmdlineargs=None):
 	print options
 	print "args:"
 	print args
+	print options.sv_input
+	print options.window_size
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
