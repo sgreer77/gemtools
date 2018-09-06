@@ -7,7 +7,7 @@ from gemtools2.bedpe2window_f import bedpe2window
 
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
-		return self.usage.lstrip().replace('%version', __version__)
+		return self.usage.lstrip().replace('%version', '0.1')
 
 class CommandlineError(Exception):
 	pass
