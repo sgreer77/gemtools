@@ -46,7 +46,9 @@ def main(cmdlineargs=None):
 		cmdlineargs = sys.argv[1:]
 		print cmdlineargs
 	options, args = parser.parse_args(args=cmdlineargs)
+	print "options:"
 	print options
+	print "args:"
 	print args
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
