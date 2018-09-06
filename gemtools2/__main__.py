@@ -16,7 +16,7 @@ def get_option_parser():
 	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	
 	parser.add_option("-t", "--tool", default=None,
-		help="Name of tool to use")
+		help="Name of tool to use", dest="tool")
 	parser.add_option("-o", "--output", metavar="FILE",
 		dest="outpre",
 		help="Name of output file")
@@ -28,14 +28,28 @@ def get_option_parser():
 		help="BEDPE file of SVs (longranger output)")
 	group.add_option("-w", "--window", type=int, default=50000,
 		dest="window_size",
-		help="BEDPE file of SVs (longranger output)")	
+		help="BEDPE file of SVs (longranger output)")
+	parser.add_option_group(group)
+	
+	return parser
+
+def pipeline_from_parsed_args(options):
+	if options.tool=="bedpe2window":
+		pipeline = bedpe2window()
+	return pipeline
+
 
 def main(cmdlineargs=None):
+	parser = get_option_parser()
+	print cmdlineargs
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
+		print cmdlineargs
 	options, args = parser.parse_args(args=cmdlineargs)
 	print options
 	print args
+	pipeline = pipeline_from_parsed_args(options)
+	runner = pipeline
 
 if __name__ == '__main__':
 	main()
