@@ -13,7 +13,7 @@ class CommandlineError(Exception):
 	pass
 
 def get_option_parser():
-	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
+	parser = GemtoolsOptionParser(usage=__doc__, version='0.1')
 	
 	parser.add_option("-t", "--tool", default=None,
 		help="Name of tool to use", dest="tool")
