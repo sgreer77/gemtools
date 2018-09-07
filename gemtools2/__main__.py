@@ -3,20 +3,22 @@
 import sys
 from optparse import OptionParser, OptionGroup
 
-from gemtools2.assign_sv_haps_f import assign_sv_haps
+
 from gemtools2.bedpe2window_f import bedpe2window
+from gemtools2.get_shared_bcs_f import get_shared_bcs
+from gemtools2.assign_sv_haps_f import assign_sv_haps
 from gemtools2.count_bcs_f import count_bcs
+from gemtools2.get_phased_basic_f import get_phased_basic
+from gemtools2.get_phased_basic_chr_f import get_phased_basic_chr
+from gemtools2.get_phase_blocks_f import get_phase_blocks
+from gemtools2.get_bcs_in_region_f import get_bcs_in_region
+from gemtools2.get_phased_bcs_f import get_phased_bcs
+from gemtools2.select_bcs_f import select_bcs
 from gemtools2.count_bcs_list_f import count_bcs_list
 from gemtools2.extract_reads_v2_0_f import extract_reads_v2_0
 from gemtools2.extract_reads_v2_1_f import extract_reads_v2_1
-from gemtools2.get_bcs_in_region_f import get_bcs_in_region
 from gemtools2.get_hmw_summary_f import get_hmw_summary
-from gemtools2.get_phase_blocks_f import get_phase_blocks
-from gemtools2.get_phased_basic_chr_f import get_phased_basic_chr
-from gemtools2.get_phased_basic_f import get_phased_basic
-from gemtools2.get_phased_bcs_f import get_phased_bcs
-from gemtools2.get_shared_bcs_f import get_shared_bcs
-from gemtools2.select_bcs_f import select_bcs
+
 
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
@@ -30,54 +32,71 @@ def get_option_parser():
 	
 	parser.add_option("-T", "--tool", default=None,
 		help="Name of tool to use", dest="tool")
+
+		help="Name of input file")
 	parser.add_option("-o", "--output", metavar="FILE",
 		dest="outfile",
 		help="Name of output file")
-	parser.add_option("-i", "--input", metavar="FILE",
+
+	group = OptionGroup(parser, "Input files")
+	group.add_option("-i", "--input", metavar="FILE",
 		dest="infile",
-		help="Name of output file")
-	parser.add_option("-w", "--window", type=int, default=50000,
-		dest="window_size",
-		help="BEDPE file of SVs (longranger output)")
-	parser.add_option("-b","--bam", metavar="FILE",
+	group.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
-	parser.add_option("-c","--vcf_control", metavar="FILE",
+	group.add_option("-v","--vcf", metavar="FILE",
+		dest="vcf",
+		help="vcf file")
+	group.add_option("-c","--vcf_control", metavar="FILE",
 		dest="vcf_control",
 		help="Control vcf file")
-	parser.add_option("-t","--vcf_test", metavar="FILE",
+	group.add_option("-t","--vcf_test", metavar="FILE",
 		dest="vcf_test",
 		help="Test vcf file")
-	parser.add_option("-x","--in_window", type=int, default=1000,
+	parser.add_option_group(group)	
+	
+	group = OptionGroup(parser, "Window sizes")
+	group.add_option("-w", "--window", type=int, default=50000,
+		dest="window_size",
+		help="BEDPE file of SVs (longranger output)")
+	group.add_option("-x","--in_window", type=int, default=1000,
 		dest="in_window",
 		help="Size of small windows")
-	parser.add_option("-y","--out_window", type=int, default=50000,
+	group.add_option("-y","--out_window", type=int, default=50000,
 		dest="out_window",
 		help="Size of large window")
-	parser.add_option("-l","--bc_list", metavar="FILE",
-		dest="bcs",
-		help="File with list of barcodes")			
-	parser.add_option("-n","--sv_name",
-		dest="sv_name",
-		help="Name of SV; ex: 'call_144', '144'")
-	parser.add_option("-v","--vcf", metavar="FILE",
-		dest="vcf",
-		help="vcf file")		
-	parser.add_option("-z","--chrom",
-		dest="chrom",
-		help="Chromosome number; ex: 'chr22','22'")
-	parser.add_option("-p","--phase_block",
-		dest="phase_block",
-		help="Phase block id (from vcf)")
-	parser.add_option("-f","--region_in",
+	parser.add_option_group(group)
+
+	group = OptionGroup(parser, "Regions")
+	group.add_option("-f","--region_in",
 		dest="region_in",
 		help="In regions")
-	parser.add_option("-g","--region_out",
+	group.add_option("-g","--region_out",
 		dest="region_out",
-		help="Out regions")
-	parser.add_option("-q","--bc_select",
+		help="Out regions")		
+	parser.add_option_group(group)
+
+	group = OptionGroup(parser, "Barcodes")
+	group.add_option("-l","--bc_list", metavar="FILE",
+		dest="bcs",
+		help="File with list of barcodes")			
+	group.add_option("-q","--bc_select",
 		dest="bc_select",choices=('all', 'shared'),
 		help="BCs to consider: all bcs or shared bcs")
+	parser.add_option_group(group)
+
+	group = OptionGroup(parser, "Specifics")
+	group.add_option("-n","--chrom",
+		dest="chrom",
+		help="Chromosome number; ex: 'chr22','22'")
+	group.add_option("-p","--phase_block",
+		dest="phase_block",
+		help="Phase block id (from vcf)")
+	group.add_option("-s","--sv_name",
+		dest="sv_name",
+		help="Name of SV; ex: 'call_144', '144'")
+	parser.add_option_group(group)
+
 	return parser
 
 def pipeline_from_parsed_args(options):
