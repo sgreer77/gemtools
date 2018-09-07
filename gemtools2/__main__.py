@@ -67,22 +67,29 @@ def get_option_parser():
 	group = OptionGroup(parser, "Windows")
 	group.add_option("-w", "--window", type=int, default=50000,
 		dest="window_size", metavar="WINDOW",
-		help="BEDPE file of SVs (longranger output)")
+		help="Size of window to create around breakpoints (bp)"
+			"default: 50000")
 	group.add_option("-x","--in_window", type=int, default=1000,
 		dest="in_window",metavar="WINDOW",
-		help="Size of small windows")
+		help="Size of small windows"
+			"default: 1000")
 	group.add_option("-y","--out_window", type=int, default=50000,
 		dest="out_window",metavar="WINDOW",
-		help="Size of large window")
+		help="Size of large window"
+			"default: 50000")
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Regions")
 	group.add_option("-f","--region_in",
 		dest="region_in", metavar='REGION',
-		help="In regions")
+		help="In regions in format: "
+		"chr1,1000000,2000000"
+		"chr1,1000000,2000000;chr2:3000000,4000000")
 	group.add_option("-g","--region_out",
 		dest="region_out", metavar='REGION',
-		help="Out regions")		
+		help="Out regions in format:"
+		"chr1,1000000,2000000"
+		"chr1,1000000,2000000;chr2:3000000,4000000")
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Barcodes")
