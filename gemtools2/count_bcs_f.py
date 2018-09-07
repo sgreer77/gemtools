@@ -55,7 +55,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	full_w_size = int(full_w_size)  # -l #500000
 	small_w_size = int(small_w_size)
 	
-	sv_df = sv_input
+	sv_df = pd.read_table(sv_input, sep="\t")
 	sv_df[['name']] = sv_df[['name']].astype(str)
 	
 	print locals()

@@ -226,10 +226,7 @@ def main(cmdlineargs=None):
 			print "Out window size: " + str(options.out_window)
 		else:
 			parser.error(str(options.out_window) + " must be an integer >0")
-		#if str(options.bc_select)=="shared" or str(options.bc_select)=="all":
-		#	print "Barcodes to use: " + str(options.bc_select)
-		#else:
-		#	parser.error(str(options.bc_select) + " must be shared or all")
+
 
 
 	pipeline = pipeline_from_parsed_args(options)
