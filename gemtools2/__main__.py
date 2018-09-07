@@ -117,6 +117,11 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		
 		if os.path.isfile(options.infile):
 			print "input file: " + str(options.infile)
 		else:
