@@ -120,21 +120,6 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
-
-		
-		#if os.path.isfile(options.infile):
-		#	print "input file: " + str(options.infile)
-		#else:
-			#print str(os.path.isfile) + " does not exist"
-		#	raise CommandLineError(str(os.path.isfile) + " does not exist") 
-
-		#if str(options.window_size).isdigit() and int(options.window_size)>0:
-		#	print "window_size: " + str(options.window_size)
-			
-		#else:
-			#print str(options.window_size) + " must be an integer >0"	
-		#	raise CommandLineError(str(options.window_size) + " must be an integer >0")
-			
 		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
 	
 	if options.tool=="get_shared_bcs":
@@ -175,7 +160,11 @@ def main(cmdlineargs=None):
 		if os.path.isfile(options.infile):
 			print "input file: " + str(options.infile)
 		else:
-			raise CommandLineError(str(os.path.isfile) + " does not exist")
+			parser.error(str(os.path.isfile) + " does not exist")
+		if str(options.window_size).isdigit() and int(options.window_size)>0:
+			print "window_size: " + str(options.window_size)
+		else:
+			parser.error(str(options.window_size) + " must be an integer >0")
 	
 	
 	
