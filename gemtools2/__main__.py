@@ -54,24 +54,24 @@ def get_option_parser():
 		help="Test vcf file")
 	parser.add_option_group(group)	
 	
-	group = OptionGroup(parser, "Window sizes")
+	group = OptionGroup(parser, "Windows")
 	group.add_option("-w", "--window", type=int, default=50000,
-		dest="window_size",
+		dest="window_size", metavar="WINDOW",
 		help="BEDPE file of SVs (longranger output)")
 	group.add_option("-x","--in_window", type=int, default=1000,
-		dest="in_window",
+		dest="in_window",metavar="WINDOW"
 		help="Size of small windows")
 	group.add_option("-y","--out_window", type=int, default=50000,
-		dest="out_window",
+		dest="out_window",metavar="WINDOW"
 		help="Size of large window")
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Regions")
 	group.add_option("-f","--region_in",
-		dest="region_in",
+		dest="region_in", metavar='REGION',
 		help="In regions")
 	group.add_option("-g","--region_out",
-		dest="region_out",
+		dest="region_out", metavar='REGION',
 		help="Out regions")		
 	parser.add_option_group(group)
 
@@ -79,20 +79,20 @@ def get_option_parser():
 	group.add_option("-l","--bc_list", metavar="FILE",
 		dest="bcs",
 		help="File with list of barcodes")			
-	group.add_option("-q","--bc_select",
+	group.add_option("-q","--bc_select",metavar='(all|shared)',
 		dest="bc_select",choices=('all', 'shared'),
 		help="BCs to consider: all bcs or shared bcs")
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Specifics")
-	group.add_option("-n","--chrom",
+	group.add_option("-n","--chrom", metavar="CHR",
 		dest="chrom",
 		help="Chromosome number; ex: 'chr22','22'")
 	group.add_option("-p","--phase_block",
-		dest="phase_block",
+		dest="phase_block", metavar="PHASE_ID",
 		help="Phase block id (from vcf)")
 	group.add_option("-s","--sv_name",
-		dest="sv_name",
+		dest="sv_name", metavar="SV",
 		help="Name of SV; ex: 'call_144', '144'")
 	parser.add_option_group(group)
 
