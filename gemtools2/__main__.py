@@ -213,6 +213,8 @@ def main(cmdlineargs=None):
 			parser.error('Output file is required')
 		if not options.sv_name:
 			parser.error('SV name is required')
+		if not options.bam:
+			parser.error('bam file is required')
 
 		if os.path.isfile(options.infile):
 			print "input file: " + str(options.infile)
@@ -226,7 +228,10 @@ def main(cmdlineargs=None):
 			print "Out window size: " + str(options.out_window)
 		else:
 			parser.error(str(options.out_window) + " must be an integer >0")
-
+		if str(options.bam).endswith(".bam"):
+			print "Bam file: " + str(options.bam)
+		else:
+			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 
 	pipeline = pipeline_from_parsed_args(options)

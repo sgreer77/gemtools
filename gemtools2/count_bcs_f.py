@@ -103,7 +103,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		# Make a list of barcodes in each of the 1kb windows
 		region_bcs = []
 		for i,r in df_name.iterrows():  
-			region_bc_list = get_barcode_ids(bam_open, r['chrom'], r['window_start'], r['window_end'], MIN_MAPQ, PERF_CIGAR)
+			region_bc_list = get_barcode_ids(bam_open, r['chrom'], r['window_start'], r['window_end'], MIN_MAPQ)
 			region_bcs.append(region_bc_list)
 
 		# Make list of SV-specific barcodes
