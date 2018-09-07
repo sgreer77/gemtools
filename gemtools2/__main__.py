@@ -32,8 +32,6 @@ def get_option_parser():
 	
 	parser.add_option("-T", "--tool", default=None,
 		help="Name of tool to use", dest="tool")
-
-		help="Name of input file")
 	parser.add_option("-o", "--output", metavar="FILE",
 		dest="outfile",
 		help="Name of output file")
@@ -41,6 +39,7 @@ def get_option_parser():
 	group = OptionGroup(parser, "Input files")
 	group.add_option("-i", "--input", metavar="FILE",
 		dest="infile",
+		help="Name of input file")
 	group.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
