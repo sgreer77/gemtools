@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+
+"""
+gemtools version %version
+Copyright (C) 2018 Stephanie Greer <sgreer2@stanford.edu>
+gemtools is a suite of tools to work with linked read sequencing data.
+Usage:
+    gemtools -T TOOL [options] [-o output]
+"""
+
+
 import sys
 from optparse import OptionParser, OptionGroup
 
