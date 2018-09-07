@@ -120,23 +120,23 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
-		if not options.infile:
-			raise CommandLineError('Input file is required')
-		if not options.outfile:
-			raise CommandLineError('Output file is required')
+		#if not options.infile:
+		#	raise CommandLineError('Input file is required')
+		#if not options.outfile:
+		#	raise CommandLineError('Output file is required')
 		
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		#if os.path.isfile(options.infile):
+		#	print "input file: " + str(options.infile)
+		#else:
 			#print str(os.path.isfile) + " does not exist"
-			raise CommandLineError(str(os.path.isfile) + " does not exist") 
+		#	raise CommandLineError(str(os.path.isfile) + " does not exist") 
 
-		if str(options.window_size).isdigit() and int(options.window_size)>0:
-			print "window_size: " + str(options.window_size)
+		#if str(options.window_size).isdigit() and int(options.window_size)>0:
+		#	print "window_size: " + str(options.window_size)
 			
-		else:
+		#else:
 			#print str(options.window_size) + " must be an integer >0"	
-			raise CommandLineError(str(options.window_size) + " must be an integer >0")
+		#	raise CommandLineError(str(options.window_size) + " must be an integer >0")
 			
 		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
 	
@@ -168,6 +168,16 @@ def main(cmdlineargs=None):
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
 	options, args = parser.parse_args(args=cmdlineargs)
+	
+	if options.tool=="bedpe2window":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+	
+	
+	
+	
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
