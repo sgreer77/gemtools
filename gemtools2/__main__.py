@@ -2,11 +2,11 @@
 
 
 """
-gemtools version %version
+gemtools2 version %version
 Copyright (C) 2018 Stephanie Greer <sgreer2@stanford.edu>
-gemtools is a suite of tools to work with linked read sequencing data.
+gemtools2 is a suite of tools to work with linked read sequencing data.
 Usage:
-    gemtools -T TOOL [options] [-o output]
+    gemtools2 -T TOOL [options] [-o output]
 """
 
 
@@ -40,8 +40,19 @@ class CommandlineError(Exception):
 def get_option_parser():
 	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	
-	parser.add_option("-T", "--tool", default=None,
-		help="Name of tool to use", dest="tool")
+	parser.add_option("-T", "--tool", default=None, dest="tool",
+		help="Name of tool to use "
+		"gemtools2 -T bedpe2window -i INPUT_FILE -w WINDOW_SIZE -o OUTPUT_FILE"
+		"gemtools2 -T get_shared_bcs -i INPUT_FILE -b BAM_FILE -o OUTPUT_FILE"
+		"gemtools2 -T assign_sv_haps -i INPUT_FILE -c VCF_CONTROL_FILE -t VCF_TEST_FILE -o OUTPUT_FILE"
+		"gemtools2 -T count_bcs -i INPUT_FILE -x SMALL_WINDOW -y BIG_WINDOW -s SV_NAME -q (all|shared) -o OUTPUT_FILE
+		"gemtools2 -T get_phased_basic -v VCF_FILE -o OUTPUT_FILE"
+		"gemtools2 -T get_phased_basic_chr -v VCF_FILE -n CHROM -o OUTPUT_FILE"
+		"gemtools2 -T get_phase_blocks -i INPUT_FILE -o OUTPUT_FILE"
+		"gemtools2 -T get_bcs_in_region -b BAM_FILE -f REGION -o OUTPUT_FILE"
+		"gemtools2 -T get_phased_bcs -i INPUT_FILE -p PHASE_ID -o OUTPUT_FILE"
+		"gemtools2 -T select_bcs -b BAM_FILE -f REGION_IN -g REGION_OUT -o OUTPUT_FILE"
+		"gemtools2 -T count_bcs_list -b BAM_FILE -f REGION -x WINDOW -l BARCODES_FILE -o OUTPUT_FILE")
 	parser.add_option("-o", "--output", metavar="FILE",
 		dest="outfile",
 		help="Name of output file")
@@ -49,7 +60,7 @@ def get_option_parser():
 	group = OptionGroup(parser, "Input files")
 	group.add_option("-i", "--input", metavar="FILE",
 		dest="infile",
-		help="Name of input file")
+		help="Name of input file ")
 	group.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
