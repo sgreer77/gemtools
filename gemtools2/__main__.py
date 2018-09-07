@@ -130,7 +130,7 @@ def pipeline_from_parsed_args(options):
 			#print str(options.window_size) + " must be an integer >0"	
 			raise CommandLineError(str(options.window_size) + " must be an integer >0")
 			
-		 pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
+		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
 	
 	if options.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
