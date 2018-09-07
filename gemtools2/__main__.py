@@ -128,7 +128,6 @@ def main(cmdlineargs=None):
 	parser = get_option_parser()
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
-		print cmdlineargs
 	options, args = parser.parse_args(args=cmdlineargs)
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
