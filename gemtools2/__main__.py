@@ -29,40 +29,40 @@ def get_option_parser():
 	parser.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
-	parser.add_option("-c","--vcf_control', metavar="FILE",
+	parser.add_option("-c","--vcf_control", metavar="FILE",
 		dest="vcf_control",
 		help="Control vcf file")
-	parser.add_option("-t","--vcf_test', metavar="FILE",
+	parser.add_option("-t","--vcf_test", metavar="FILE",
 		dest="vcf_test",
 		help="Test vcf file")
-	parser.add_option("-x","--in_window', type=int, default=1000,
+	parser.add_option("-x","--in_window", type=int, default=1000,
 		dest="in_window",
 		help="Size of small windows")
-	parser.add_option("-y","--out_window', type=int, default=50000,
+	parser.add_option("-y","--out_window", type=int, default=50000,
 		dest="out_window",
 		help="Size of large window")
-	parser.add_option("-l","--bc_list', metavar="FILE",
+	parser.add_option("-l","--bc_list", metavar="FILE",
 		dest="bcs",
 		help="File with list of barcodes")			
-	parser.add_option("-n","--sv_name',
+	parser.add_option("-n","--sv_name",
 		dest="sv_name",
 		help="Name of SV; ex: 'call_144', '144'")
-	parser.add_option("-v","--vcf', metavar="FILE",
+	parser.add_option("-v","--vcf", metavar="FILE",
 		dest="vcf",
 		help="vcf file")		
-	parser.add_option("-z","--chrom',
+	parser.add_option("-z","--chrom",
 		dest="chrom",
 		help="Chromosome number; ex: 'chr22','22'")
-	parser.add_option("-p","--phase_block',
+	parser.add_option("-p","--phase_block",
 		dest="phase_block",
 		help="Phase block id (from vcf)")
-	parser.add_option("-f","--region_in',
+	parser.add_option("-f","--region_in",
 		dest="region_in",
 		help="In regions")
-	parser.add_option("-g","--region_out',
+	parser.add_option("-g","--region_out",
 		dest="region_out",
 		help="Out regions")
-	parser.add_option("-h","--bc_select',
+	parser.add_option("-h","--bc_select",
 		dest="bc_select",choices=('all', 'shared'),
 		help="BCs to consider: all bcs or shared bcs")
 	return parser
