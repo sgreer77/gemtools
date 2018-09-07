@@ -123,8 +123,8 @@ def assign_sv_haps(outpre='out',**kwargs):
    		
 	    #print row['bc_overlap_id']
 	    print type(row['bc_overlap_id'])
-	    #sv_bcs = literal_eval(row['bc_overlap_id'])
-	    sv_bcs = row['bc_overlap_id']
+	    sv_bcs = literal_eval(row['bc_overlap_id'])
+	    #sv_bcs = row['bc_overlap_id']
 	    sv_id = row['name']
 
 	    overlap_bcs_1 = []
