@@ -3,7 +3,7 @@
 import sys
 from optparse import OptionParser, OptionGroup
 
-
+from gemtools2 import __version__
 from gemtools2.bedpe2window_f import bedpe2window
 from gemtools2.get_shared_bcs_f import get_shared_bcs
 from gemtools2.assign_sv_haps_f import assign_sv_haps
