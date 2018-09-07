@@ -64,5 +64,5 @@ def bedpe2window(window_size=500000,outpre='out',**kwargs):
 	df_wndw['dist'] = df_wndw.apply(lambda row: get_dist(row)[0], axis=1)
 	df_wndw['status'] = df_wndw.apply(lambda row: get_dist(row)[1], axis=1)
 
-	df_wndw.to_csv(str(outpre) + ".wndw.txt", sep="\t", index=False)
+	df_wndw.to_csv(str(outpre), sep="\t", index=False)
 	return df_wndw

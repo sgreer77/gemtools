@@ -3,7 +3,20 @@
 import sys
 from optparse import OptionParser, OptionGroup
 
+from gemtools2.assign_sv_haps_f import assign_sv_haps
 from gemtools2.bedpe2window_f import bedpe2window
+from gemtools2.count_bcs_f import count_bcs
+from gemtools2.count_bcs_list_f import count_bcs_list
+from gemtools2.extract_reads_v2_0_f import extract_reads_v2_0
+from gemtools2.extract_reads_v2_1_f import extract_reads_v2_1
+from gemtools2.get_bcs_in_region_f import get_bcs_in_region
+from gemtools2.get_hmw_summary_f import get_hmw_summary
+from gemtools2.get_phase_blocks_f import get_phase_blocks
+from gemtools2.get_phased_basic_chr_f import get_phased_basic_chr
+from gemtools2.get_phased_basic_f import get_phased_basic
+from gemtools2.get_phased_bcs_f import get_phased_bcs
+from gemtools2.get_shared_bcs_f import get_shared_bcs
+from gemtools2.select_bcs_f import select_bcs
 
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
