@@ -67,15 +67,15 @@ def get_option_parser():
 	group = OptionGroup(parser, "Windows")
 	group.add_option("-w", "--window", type=int, default=50000,
 		dest="window_size", metavar="WINDOW",
-		help="Size of window to create around bkpts in bp "
+		help="Size of window to create around bkpts in bp      "
 			"default: 50000")
 	group.add_option("-x","--in_window", type=int, default=1000,
 		dest="in_window",metavar="WINDOW",
-		help="Size of small windows in bp "
+		help="Size of small windows in bp      "
 			"default: 1000")
 	group.add_option("-y","--out_window", type=int, default=50000,
 		dest="out_window",metavar="WINDOW",
-		help="Size of large window in bp "
+		help="Size of large window in bp      "
 			"default: 50000")
 	parser.add_option_group(group)
 
