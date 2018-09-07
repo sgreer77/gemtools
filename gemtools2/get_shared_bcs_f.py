@@ -23,7 +23,7 @@ def get_shared_bcs(outpre='out',**kwargs):
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 
-	df_sv = sv_input
+	df_sv = pd.read_table(sv_input, sep="\t")
 	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
 
 	## Generate list of columns to loop through
