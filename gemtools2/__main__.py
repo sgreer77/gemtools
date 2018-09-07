@@ -34,6 +34,10 @@ class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
 		return self.usage.lstrip().replace('%version', __version__)
 
+	def error(self, msg):
+		print('Run "gemtools2 --help" to see command-line options.', file=sys.stderr)
+		self.exit(2, "\n%s: error: %s\n" % (self.get_prog_name(), msg))
+
 class CommandLineError(Exception):
 	pass
 
