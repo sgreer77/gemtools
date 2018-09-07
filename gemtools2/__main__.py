@@ -45,7 +45,7 @@ def get_option_parser():
 		"gemtools2 -T bedpe2window -i INPUT_FILE -w WINDOW_SIZE -o OUTPUT_FILE"
 		"gemtools2 -T get_shared_bcs -i INPUT_FILE -b BAM_FILE -o OUTPUT_FILE"
 		"gemtools2 -T assign_sv_haps -i INPUT_FILE -c VCF_CONTROL_FILE -t VCF_TEST_FILE -o OUTPUT_FILE"
-		"gemtools2 -T count_bcs -i INPUT_FILE -x SMALL_WINDOW -y BIG_WINDOW -s SV_NAME -q (all|shared) -o OUTPUT_FILE
+		"gemtools2 -T count_bcs -i INPUT_FILE -x SMALL_WINDOW -y BIG_WINDOW -s SV_NAME -q (all|shared) -o OUTPUT_FILE"
 		"gemtools2 -T get_phased_basic -v VCF_FILE -o OUTPUT_FILE"
 		"gemtools2 -T get_phased_basic_chr -v VCF_FILE -n CHROM -o OUTPUT_FILE"
 		"gemtools2 -T get_phase_blocks -i INPUT_FILE -o OUTPUT_FILE"
