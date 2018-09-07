@@ -100,8 +100,9 @@ def get_option_parser():
 		dest="bcs",
 		help="File with list of barcodes")			
 	group.add_option("-q","--bc_select",metavar='(all|shared)',
-		dest="bc_select",choices=('all', 'shared'),
-		help="BCs to consider: all bcs or shared bcs")
+		dest="bc_select",choices=('all', 'shared'), default="shared",
+		help="BCs to consider: all bcs or shared bcs               "
+			"default: shared")
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Specifics")
@@ -204,6 +205,32 @@ def main(cmdlineargs=None):
 			print "Test vcf file: " + str(options.vcf_test)
 		else:
 			parser.error(str(options.vcf_test) + " does not appear to be a gzipped vcf file")
+
+	if options.tool=="count_bcs":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.sv_name:
+			parser.error('SV name is required')
+
+		if os.path.isfile(options.infile):
+			print "input file: " + str(options.infile)
+		else:
+			parser.error(str(options.infile) + " does not exist")
+		if str(options.in_window).isdigit() and int(options.in_window)>0:
+			print "In window size: " + str(options.in_window)
+		else:
+			parser.error(str(options.in_window) + " must be an integer >0")
+		if str(options.out_window).isdigit() and int(options.out_window)>0:
+			print "Out window size: " + str(options.out_window)
+		else:
+			parser.error(str(options.out_window) + " must be an integer >0")
+		#if str(options.bc_select)=="shared" or str(options.bc_select)=="all":
+		#	print "Barcodes to use: " + str(options.bc_select)
+		#else:
+		#	parser.error(str(options.bc_select) + " must be shared or all")
+
 
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
