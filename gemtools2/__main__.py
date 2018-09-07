@@ -9,7 +9,7 @@ Usage:
     gemtools2 -T TOOL [options] [-o output]
 """
 
-
+import os
 import sys
 from optparse import OptionParser, OptionGroup
 
@@ -82,12 +82,12 @@ def get_option_parser():
 	group = OptionGroup(parser, "Regions")
 	group.add_option("-f","--region_in",
 		dest="region_in", metavar='REGION',
-		help="In regions in format: "
+		help="In region(s) in format: "
 		"chr1,1000000,2000000 or "
 		"chr1,1000000,2000000;chr2:3000000,4000000")
 	group.add_option("-g","--region_out",
 		dest="region_out", metavar='REGION',
-		help="Out regions in format: "
+		help="Out region(s) in format: "
 		"chr1,1000000,2000000 or "
 		"chr1,1000000,2000000;chr2:3000000,4000000")
 	parser.add_option_group(group)
@@ -117,7 +117,21 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
+		if os.path.isfile(options.infile):
+			print "input file: " + str(options.infile)
+		else:
+			#print str(os.path.isfile) + " does not exist"
+			raise CommandLineError(str(os.path.isfile) + " does not exist") 
+
+		if options.window_size.isdigit() and int(options.window_size)>0:
+			print "window_size: " + str(options.window_size)
+			
+		else:
+			#print str(options.window_size) + " must be an integer >0"	
+			raise CommandLineError(str(options.window_size) + " must be an integer >0")
+			
+		 pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
+	
 	if options.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
 	if options.tool=="assign_sv_haps":
