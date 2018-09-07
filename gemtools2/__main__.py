@@ -26,7 +26,7 @@ def get_option_parser():
 	parser.add_option("-w", "--window", type=int, default=50000,
 		dest="window_size",
 		help="BEDPE file of SVs (longranger output)")
-	parser.add_option("-b","--bam', metavar="FILE",
+	parser.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
 	parser.add_option("-c","--vcf_control', metavar="FILE",
