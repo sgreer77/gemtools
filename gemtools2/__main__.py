@@ -15,43 +15,90 @@ class CommandlineError(Exception):
 def get_option_parser():
 	parser = GemtoolsOptionParser(usage=__doc__, version='0.1')
 	
-	parser.add_option("-t", "--tool", default=None,
+	parser.add_option("-T", "--tool", default=None,
 		help="Name of tool to use", dest="tool")
 	parser.add_option("-o", "--output", metavar="FILE",
-		dest="outpre",
+		dest="outfile",
 		help="Name of output file")
-	
-	group = OptionGroup(parser, "Window breakpoints",
-		description="Parameters -b, -w specify file and windows")
-	group.add_option("-b", "--bedpe", metavar="FILE",
-		dest="sv_input",
-		help="BEDPE file of SVs (longranger output)")
-	group.add_option("-w", "--window", type=int, default=50000,
+	parser.add_option("-i", "--input", metavar="FILE",
+		dest="infile",
+		help="Name of output file")
+	parser.add_option("-w", "--window", type=int, default=50000,
 		dest="window_size",
 		help="BEDPE file of SVs (longranger output)")
-	parser.add_option_group(group)
-	
+	parser.add_option("-b","--bam', metavar="FILE",
+		dest="bam",
+		help="bam file")
+	parser.add_option("-c","--vcf_control', metavar="FILE",
+		dest="vcf_control",
+		help="Control vcf file")
+	parser.add_option("-t","--vcf_test', metavar="FILE",
+		dest="vcf_test",
+		help="Test vcf file")
+	parser.add_option("-x","--in_window', type=int, default=1000,
+		dest="in_window",
+		help="Size of small windows")
+	parser.add_option("-y","--out_window', type=int, default=50000,
+		dest="out_window",
+		help="Size of large window")
+	parser.add_option("-l","--bc_list', metavar="FILE",
+		dest="bcs",
+		help="File with list of barcodes")			
+	parser.add_option("-n","--sv_name',
+		dest="sv_name",
+		help="Name of SV; ex: 'call_144', '144'")
+	parser.add_option("-v","--vcf', metavar="FILE",
+		dest="vcf",
+		help="vcf file")		
+	parser.add_option("-z","--chrom',
+		dest="chrom",
+		help="Chromosome number; ex: 'chr22','22'")
+	parser.add_option("-p","--phase_block',
+		dest="phase_block",
+		help="Phase block id (from vcf)")
+	parser.add_option("-f","--region_in',
+		dest="region_in",
+		help="In regions")
+	parser.add_option("-g","--region_out',
+		dest="region_out",
+		help="Out regions")
+	parser.add_option("-h","--bc_select',
+		dest="bc_select",choices=('all', 'shared'),
+		help="BCs to consider: all bcs or shared bcs")
 	return parser
 
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=options.sv_input, window=options.window_size, out=options.outpre)
+		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
+	if options.tool=="get_shared_bcs":
+		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
+	if options.tool=="assign_sv_haps":
+		pipeline = assign_sv_haps(sv=options.infile, vcf_control=options.vcf_control, vcf_test=options.vcf_test, out=options.outfile)
+	if options.tool=="count_bcs":
+		pipeline = count_bcs(sv=options.infile, in_window=options.in_window, out_window=options.out_window, sv_name=options.sv_name, bcs=options.bc_select, out=options.outfile)
+	if options.tool=="get_phased_basic":
+		pipeline = get_phased_basic(vcf=options.vcf, out=options.outfile)
+	if options.tool=="get_phased_basic_chr":
+		pipeline = get_phased_basic_chr(vcf=options.vcf, chr=options.chrom, out=options.outfile)
+	if options.tool=="get_phase_blocks":
+		pipeline = get_phase_blocks(infile_basic=options.infile, out=options.outfile)
+	if options.tool=="get_phased_bcs":
+		pipeline = get_phased_bcs(infile_basic=options.infile, ps=options.phase_block, out=options.outfile)
+	if options.tool=="select_bcs":
+		pipeline = select_bcs(region_in=options.region_in, region_out=options.region_out, bam=options.bam, out=options.outfile)
+	if options.tool=="count_bcs_list":
+		pipeline = count_bcs_list(region=options.region_in, in_window=options.in_window, bam=options.bam, bcs=options.bcs, out=options.outfile)
+	if options.tool=="get_bcs_in_region":
+		pipeline = get_bcs_in_region(region=options.region_in,bam=options.bam, out=options.outfile)
 	return pipeline
 
 
 def main(cmdlineargs=None):
 	parser = get_option_parser()
-	print cmdlineargs
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
 		print cmdlineargs
 	options, args = parser.parse_args(args=cmdlineargs)
-	print "options:"
-	print options
-	print "args:"
-	print args
-	print options.sv_input
-	print options.window_size
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
