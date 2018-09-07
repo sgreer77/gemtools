@@ -123,7 +123,7 @@ def pipeline_from_parsed_args(options):
 			#print str(os.path.isfile) + " does not exist"
 			raise CommandLineError(str(os.path.isfile) + " does not exist") 
 
-		if options.window_size.isdigit() and int(options.window_size)>0:
+		if str(options.window_size).isdigit() and int(options.window_size)>0:
 			print "window_size: " + str(options.window_size)
 			
 		else:
