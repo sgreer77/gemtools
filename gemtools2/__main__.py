@@ -121,7 +121,6 @@ def get_option_parser():
 def pipeline_from_parsed_args(options):
 	if options.tool=="bedpe2window":
 		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
-	
 	if options.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
 	if options.tool=="assign_sv_haps":
@@ -160,13 +159,32 @@ def main(cmdlineargs=None):
 		if os.path.isfile(options.infile):
 			print "input file: " + str(options.infile)
 		else:
-			parser.error(str(os.path.isfile) + " does not exist")
+			parser.error(str(options.infile) + " does not exist")
 		if str(options.window_size).isdigit() and int(options.window_size)>0:
 			print "window_size: " + str(options.window_size)
 		else:
 			parser.error(str(options.window_size) + " must be an integer >0")
 	
-	
+	if options.tool=="get_shared_bcs":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.bam:
+			parser.error('bam file is required')
+
+		if os.path.isfile(options.infile):
+			print "input file: " + str(options.infile)
+		else:
+			parser.error(str(options.infile) + " does not exist")
+		if os.path.isfile(options.bam):
+			print "input file: " + str(options.bam)
+		else:
+			parser.error(str(options.bam) + " does not exist")
+		if str(options.bam).endswith(".bam"):
+			print "Bam file: " + str(options.bam)
+		else:
+			parser.error(str(options.bam) + " does not appear to be a bam file")
 	
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
