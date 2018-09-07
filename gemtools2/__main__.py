@@ -185,7 +185,26 @@ def main(cmdlineargs=None):
 			print "Bam file: " + str(options.bam)
 		else:
 			parser.error(str(options.bam) + " does not appear to be a bam file")
-	
+
+	if options.tool=="assign_sv_haps":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.vcf_control:
+			parser.error('Control vcf file is required')
+		if not options.vcf_test:
+			parser.error('Test vcf file is required')
+
+		if str(options.vcf_control).endswith(".vcf.gz"):
+			print "Control vcf file: " + str(options.bam)
+		else:
+			parser.error(str(options.vcf_control) + " does not appear to be a gzipped vcf file")		
+		if str(options.vcf_test).endswith(".vcf.gz"):
+			print "Test vcf file: " + str(options.vcf_test)
+		else:
+			parser.error(str(options.vcf_test) + " does not appear to be a gzipped vcf file")
+
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
