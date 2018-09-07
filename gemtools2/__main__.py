@@ -59,10 +59,10 @@ def get_option_parser():
 		dest="window_size", metavar="WINDOW",
 		help="BEDPE file of SVs (longranger output)")
 	group.add_option("-x","--in_window", type=int, default=1000,
-		dest="in_window",metavar="WINDOW"
+		dest="in_window",metavar="WINDOW",
 		help="Size of small windows")
 	group.add_option("-y","--out_window", type=int, default=50000,
-		dest="out_window",metavar="WINDOW"
+		dest="out_window",metavar="WINDOW",
 		help="Size of large window")
 	parser.add_option_group(group)
 
