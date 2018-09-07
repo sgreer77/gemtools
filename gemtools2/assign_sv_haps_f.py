@@ -130,18 +130,18 @@ def assign_sv_haps(outpre='out',**kwargs):
 	    overlap_bcs_1 = []
 	    overlap_counts_1 = []
 	    for b in bc_1_list_mod:
-		bc_overlap_1 = list(set(sv_bcs) & set(b))
-		num_overlaps = len(bc_overlap_1)
-		overlap_bcs_1.append(tuple(bc_overlap_1))
-		overlap_counts_1.append(num_overlaps)
+			bc_overlap_1 = list(set(sv_bcs) & set(b))
+			num_overlaps = len(bc_overlap_1)
+			overlap_bcs_1.append(tuple(bc_overlap_1))
+			overlap_counts_1.append(num_overlaps)
 
 	    overlap_bcs_2 = []
 	    overlap_counts_2 = []
 	    for b in bc_2_list_mod:
-		bc_overlap_2 = list(set(sv_bcs) & set(b))
-		num_overlaps = len(bc_overlap_2)
-		overlap_bcs_2.append(tuple(bc_overlap_2))
-		overlap_counts_2.append(num_overlaps)
+			bc_overlap_2 = list(set(sv_bcs) & set(b))
+			num_overlaps = len(bc_overlap_2)
+			overlap_bcs_2.append(tuple(bc_overlap_2))
+			overlap_counts_2.append(num_overlaps)
 
 	    vcf_merge[str(sv_id) + "_hap1_overlap_count"] = overlap_counts_1
 	    vcf_merge[str(sv_id) + "_hap2_overlap_count"] = overlap_counts_2
