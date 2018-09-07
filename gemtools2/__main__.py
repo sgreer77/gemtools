@@ -62,7 +62,7 @@ def get_option_parser():
 	parser.add_option("-g","--region_out",
 		dest="region_out",
 		help="Out regions")
-	parser.add_option("-h","--bc_select",
+	parser.add_option("-q","--bc_select",
 		dest="bc_select",choices=('all', 'shared'),
 		help="BCs to consider: all bcs or shared bcs")
 	return parser
