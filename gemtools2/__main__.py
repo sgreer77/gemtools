@@ -34,7 +34,7 @@ class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
 		return self.usage.lstrip().replace('%version', __version__)
 
-class CommandlineError(Exception):
+class CommandLineError(Exception):
 	pass
 
 def get_option_parser():
