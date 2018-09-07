@@ -49,11 +49,11 @@ def get_shared_bcs(outpre='out',**kwargs):
 	    start_1, end_1, start_2, end_2 = int(start_1), int(end_1), int(start_2), int(end_2)
 
 	    # Obtain + count SV-specific barcodes
-	    bc_1 = get_barcodes(bam_file,chrom_1,start_1,end_1,MIN_MAPQ,PERF_CIGAR)
+	    bc_1 = get_barcodes(bam_file,chrom_1,start_1,end_1,MIN_MAPQ)
 	    bc_1_unq = set(bc_1)
 	    bc_1_num = len(bc_1_unq)
 
-	    bc_2 = get_barcodes(bam_file,chrom_2,start_2,end_2,MIN_MAPQ,PERF_CIGAR)
+	    bc_2 = get_barcodes(bam_file,chrom_2,start_2,end_2,MIN_MAPQ)
 	    bc_2_unq = set(bc_2)
 	    bc_2_num = len(bc_2_unq)
 
