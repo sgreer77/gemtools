@@ -22,13 +22,13 @@ from gemtools2.get_hmw_summary_f import get_hmw_summary
 
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
-		return self.usage.lstrip().replace('%version', '0.1')
+		return self.usage.lstrip().replace('%version', __version__)
 
 class CommandlineError(Exception):
 	pass
 
 def get_option_parser():
-	parser = GemtoolsOptionParser(usage=__doc__, version='0.1')
+	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	
 	parser.add_option("-T", "--tool", default=None,
 		help="Name of tool to use", dest="tool")
