@@ -256,6 +256,17 @@ def main(cmdlineargs=None):
 			print "vcf file: " + str(options.vcf)
 		else:
 			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
+	
+	if options.tool=="get_phase_blocks":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+
+		if os.path.isfile(options.infile):
+			print "input file: " + str(options.infile)
+		else:
+			parser.error(str(options.infile) + " does not exist")
 
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
