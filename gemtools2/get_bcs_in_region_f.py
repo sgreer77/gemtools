@@ -44,7 +44,7 @@ def get_bcs_in_region(outpre='out',region_subset='None',**kwargs):
 		chr = str(reg).split(',')[0]
 		start = int(str(reg).split(',')[1])
 		stop = int(str(reg).split(',')[2])
-		region_bc_list = get_barcode_ids(bam_open, chr, start, stop, MIN_MAPQ, PERF_CIGAR)
+		region_bc_list = get_barcode_ids(bam_open, chr, start, stop, MIN_MAPQ)
 		bc_list.append(region_bc_list)
 	
 	flat_bc_list = [item for sublist in bc_list for item in sublist]
