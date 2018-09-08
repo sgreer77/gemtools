@@ -39,7 +39,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 		sys.exit()
 	
 	if str(phased_basic_file)!='None':
-		df=pd.read_table(infile, sep="\t", header=None, names=['chr','pos','hap1_bc_ct', 'hap1_bcs','hap2_bc_ct','hap2_bcs','gt','PS'], dtype={'chr':str,'gt':str,'PS':str})
+		df=pd.read_table(phased_basic_file, sep="\t", header=None, names=['chr','pos','hap1_bc_ct', 'hap1_bcs','hap2_bc_ct','hap2_bcs','gt','PS'], dtype={'chr':str,'gt':str,'PS':str})
 	elif str(phased_basic)!='None':
 		df = phased_basic
 		df.columns=['chr','pos','hap1_bc_ct', 'hap1_bcs','hap2_bc_ct','hap2_bcs','gt','PS']

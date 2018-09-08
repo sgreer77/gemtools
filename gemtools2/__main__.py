@@ -280,6 +280,19 @@ def main(cmdlineargs=None):
 			print "Bam file: " + str(options.bam)
 		else:
 			parser.error(str(options.bam) + " does not appear to be a bam file")
+	
+	if options.tool=="get_phased_bcs":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.phase_block:
+			parser.error('Phase block ID is required')
+
+		if os.path.isfile(options.infile):
+			print "input file: " + str(options.infile)
+		else:
+			parser.error(str(options.infile) + " does not exist")
 			
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
