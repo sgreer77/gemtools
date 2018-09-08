@@ -107,12 +107,12 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 			region_bcs.append(region_bc_list)
 
 		# Make list of SV-specific barcodes
-		
+				
 		if bc_subset=="shared":
-			bc_list = row['bc_overlap_id']
+			bc_list = ast.literal_eval(row['bc_overlap_id'])
 			print bc_list
 		elif bc_subset=="all":
-			bc_list = list(set(row['bc_1_id'] + row['bc_2_id']))
+			bc_list = list(set(ast.literal_eval(row['bc_1_id']) + ast.literal_eval(row['bc_2_id'])))
 			print bc_list
 		else:
 			print "bcs -- must be either 'shared' or 'all'"
