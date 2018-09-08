@@ -58,8 +58,8 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	sv_df = pd.read_table(sv_input, sep="\t")
 	sv_df[['name']] = sv_df[['name']].astype(str)
 	
-	print locals()
-	print str(sv_n)
+	#print locals()
+	#print str(sv_n)
 	
 	if str(sv_n)=="None":
 		sys.exit()
