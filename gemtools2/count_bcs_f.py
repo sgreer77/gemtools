@@ -81,6 +81,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	sv_df_full['w_start'] = w_start_list
 	sv_df_full['w_stop'] = w_stop_list
 
+	sv_df_full.to_csv("test.txt", sep="\t", index=False)
 
 	bam_open = pysam.Samfile(bam_input)
 
@@ -107,7 +108,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 			region_bcs.append(region_bc_list)
 
 		# Make list of SV-specific barcodes
-				
+			
 		if bc_subset=="shared":
 			bc_list = ast.literal_eval(row['bc_overlap_id'])
 			print bc_list
@@ -121,6 +122,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 
 		# For each SV-specific barcode, count the number of times it occurs in each region
 		for bc in bc_list:
+			print bc
 			df_name[bc] = [x.count(bc) for x in region_bcs]
 
 		
