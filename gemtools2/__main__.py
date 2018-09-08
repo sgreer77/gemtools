@@ -309,7 +309,29 @@ def main(cmdlineargs=None):
 		else:
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
+	if options.tool=="count_bcs_list":
+		if not options.bam:
+			parser.error('bam file is required')
+		if not options.region_in:
+			parser.error('Need to specify region in')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.bcs:
+			parser.error('Barcodes file is required')
 
+		if str(options.bam).endswith(".bam"):
+			print "Bam file: " + str(options.bam)
+		else:
+			parser.error(str(options.bam) + " does not appear to be a bam file")
+		if str(options.in_window).isdigit() and int(options.in_window)>0:
+			print "In window size: " + str(options.in_window)
+		else:
+			parser.error(str(options.in_window) + " must be an integer >0")
+		if os.path.isfile(options.bcs):
+			print "bcs file: " + str(options.bcs)
+		else:
+			parser.error(str(options.bcs) + " does not exist")
+			
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
