@@ -198,7 +198,7 @@ def main(cmdlineargs=None):
 			parser.error('Test vcf file is required')
 
 		if str(options.vcf_control).endswith(".vcf.gz"):
-			print "Control vcf file: " + str(options.bam)
+			print "Control vcf file: " + str(options.vcf_control)
 		else:
 			parser.error(str(options.vcf_control) + " does not appear to be a gzipped vcf file")		
 		if str(options.vcf_test).endswith(".vcf.gz"):
@@ -233,6 +233,29 @@ def main(cmdlineargs=None):
 		else:
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
+	if options.tool=="get_phased_basic":
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.vcf:
+			parser.error('vcf file is required')
+
+		if str(options.vcf).endswith(".vcf.gz"):
+			print "vcf file: " + str(options.vcf)
+		else:
+			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
+	
+	if options.tool=="get_phased_basic_chr":
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.vcf:
+			parser.error('vcf file is required')
+		if not options.chrom:
+			parser.error('chr is required')
+
+		if str(options.vcf).endswith(".vcf.gz"):
+			print "vcf file: " + str(options.vcf)
+		else:
+			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
 
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
