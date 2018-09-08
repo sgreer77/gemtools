@@ -71,7 +71,7 @@ def select_bcs(outpre='out',region_in_subset='None',region_out_subset='None',**k
 			chr = str(reg_out).split(',')[0]
 			start = int(str(reg_out).split(',')[1])+200
 			stop = int(str(reg_out).split(',')[2])-200
-			region_bc_list_out = get_barcode_ids(bam_open, chr, start, stop, MIN_MAPQ, PERF_CIGAR)
+			region_bc_list_out = get_barcode_ids(bam_open, chr, start, stop, MIN_MAPQ)
 			bc_list_out.append(region_bc_list_out)		
 		
 		bc_list_out_flat = [item for sublist in bc_list_out for item in sublist]

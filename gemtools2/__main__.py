@@ -293,7 +293,23 @@ def main(cmdlineargs=None):
 			print "input file: " + str(options.infile)
 		else:
 			parser.error(str(options.infile) + " does not exist")
+
+	if options.tool=="select_bcs":
+		if not options.bam:
+			parser.error('bam file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
+		if not options.region_in:
+			parser.error('Need to specify region in')
+		if not options.region_out:
+			parser.error('Need to specify region out')
 			
+		if str(options.bam).endswith(".bam"):
+			print "Bam file: " + str(options.bam)
+		else:
+			parser.error(str(options.bam) + " does not appear to be a bam file")
+
+
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
