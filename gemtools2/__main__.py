@@ -144,7 +144,6 @@ def pipeline_from_parsed_args(options):
 		pipeline = get_bcs_in_region(region=options.region_in,bam=options.bam, out=options.outfile)
 	return pipeline
 
-
 def main(cmdlineargs=None):
 	parser = get_option_parser()
 	if cmdlineargs is None:
