@@ -79,6 +79,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	bam_open = pysam.Samfile(bam_input)
 
 	df_list = []
+	melt_list=[]
 	for index,row in sv_df_full.iterrows():
 		bc_counter=1
 
@@ -134,7 +135,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		min_df.sort_values(by='min_val', inplace=True)
 		bc_order = min_df['bc'].tolist()
 
-		melt_list=[]
+		
 		for bo in bc_order:
 			df_bc = df_name[['window_start','window_end',bo]]
 			df_bc = df_bc.loc[df_bc[bo]>0]
@@ -149,7 +150,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 
 	
 		
-	# Write output to file
+		# Write output to file
 	df_full = pd.concat(melt_list)
 	df_full.to_csv(str(outpre), sep="\t", index=False)
 	return df_full
