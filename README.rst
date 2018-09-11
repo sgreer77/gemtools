@@ -29,11 +29,11 @@ General usage: **gemtools2 -T [tool] [-options]**
 
 **get_phased_basic**
 
-gemtools2 -T get_phased_basic -v [vcf_file] -o [output.phased_basic]
+	gemtools2 -T get_phased_basic -v [vcf_file] -o [output.phased_basic]
 
 **get_phase_blocks**
 
-gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
+	gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
 
 
 2. Generally useful tools:
