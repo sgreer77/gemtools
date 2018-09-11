@@ -23,20 +23,30 @@ gemtools2 is a collection of tools that use the **output of Long Ranger** (10X G
 Long Ranger output files are indicated in the instructions below with an **LR**
 
 General usage: **gemtools2 -T [tool] [-options]**
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
-1. Getting basic information about the phase blocks:
+Tools for getting basic information about the phase blocks:
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 **get_phased_basic**
 
 	gemtools2 -T get_phased_basic -v [LR_vcf_file] -o [output.phased_basic]
+	Ex: gemtools2 -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic
+	Input:
+		-v gzipped vcf file output from LR
+	Output:
+		-o output.phased_basic
 
 **get_phase_blocks**
 
 	gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
+	Ex: gemtools2 -T get_phase_blocks -i output.phased_basic -o output.phase_blocks
+	Input:
+		-i output from 'get_phased_basic' tool
+	Output:
+		-o output file
 
-
-2. Generally useful tools:
+Generally useful tools:
 """"""""""""""""""""""""""
 
 **get_phased_bcs**
@@ -59,7 +69,7 @@ General usage: **gemtools2 -T [tool] [-options]**
 
 	gemtools2 -T plot_hmw -i [out.bc_count] -o [out.pdf]
 
-3. SV analysis tools:
+SV analysis tools:
 """""""""""""""""""""
 
 **bedpe2window**
