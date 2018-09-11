@@ -18,19 +18,17 @@ pip install git+https://github.com/sgreer77/gemtools2.git
 Running gemtools2
 =================
 
-1. Run longranger
-"""""""""""""""""
-
-gemtools2 uses the output of longranger to perform additional analyses
+gemtools2 is a collection of tools that use the output of longranger to perform additional analyses
 
 
-2. Running tools in gemtools2
+Running tools in gemtools2
 """""""""""""""""""""""""""""
 General usage:
 
 **gemtools2 -T [tool] [-options]**
 
-a) Getting basic information about the phase blocks:
+1. Getting basic information about the phase blocks:
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 **get_phased_basic**
 
@@ -41,7 +39,8 @@ gemtools2 -T get_phased_basic -v [vcf_file] -o [output.phased_basic]
 gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
 
 
-b) Generally useful tools:
+2. Generally useful tools:
+""""""""""""""""""""""""""
 
 **get_phased_bcs**
 
@@ -63,7 +62,8 @@ gemtools2 -T count_bcs_list -b [bam_file] -f [region_in] -x [in_window] -b [bc_l
 
 gemtools2 -T plot_hmw -i [out.bc_count] -o [out.pdf]
 
-c) SV analysis tools:
+3. SV analysis tools:
+"""""""""""""""""""""
 
 **bedpe2window**
 
