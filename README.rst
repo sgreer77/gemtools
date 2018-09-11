@@ -8,12 +8,12 @@ Installation
 
 **Dependencies:**
 """""""""""""""""
-|Python packages:
-|pandas
-|numpy
-|pysam
-|pyvcf
-|rpy2
+Python packages:
+pandas`<br />`
+numpy
+pysam
+pyvcf
+rpy2
 
 R package:
 ggplot2
