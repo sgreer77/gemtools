@@ -143,6 +143,8 @@ def pipeline_from_parsed_args(options):
 		pipeline = count_bcs_list(region=options.region_in, in_window=options.in_window, bam=options.bam, bcs=options.bcs, out=options.outfile)
 	if options.tool=="get_bcs_in_region":
 		pipeline = get_bcs_in_region(region=options.region_in,bam=options.bam, out=options.outfile)
+	if options.tool=="plot_hmw":
+		pipeline = plot_hmw(in_windows=options.infile, out=options.outfile)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -332,16 +334,16 @@ def main(cmdlineargs=None):
 		else:
 			parser.error(str(options.bcs) + " does not exist")
 
-        if options.tool=="plot_hmw":
-                if not options.infile:
-                        parser.error('Input file is required')
-                if not options.outfile:
-                        parser.error('Output file is required')
+		if options.tool=="plot_hmw":
+			if not options.infile:
+				parser.error('Input file is required')
+			if not options.outfile:
+				parser.error('Output file is required')
 		
 		if os.path.isfile(options.infile):
-                        print "input file: " + str(options.infile)
-                else:
-                        parser.error(str(options.infile) + " does not exist")
+			print "input file: " + str(options.infile)
+		else:
+			parser.error(str(options.infile) + " does not exist")
 	
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
