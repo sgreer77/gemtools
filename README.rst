@@ -6,14 +6,14 @@ Installation
 
 **Dependencies:**
 """""""""""""""""
-Python packages:
-`<br pandas />`
+**Python packages**
+pandas
 numpy
 pysam
 pyvcf
 rpy2
 
-R package:
+**R package**
 ggplot2
 
 **To install gemtools2:**
