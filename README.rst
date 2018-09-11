@@ -18,14 +18,11 @@ pip install git+https://github.com/sgreer77/gemtools2.git
 Running gemtools2
 =================
 
-gemtools2 is a collection of tools that use the output of longranger to perform additional analyses
+gemtools2 is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses
 
+Long Ranger output files are indicated in the instructions below with an **LR**
 
-Running tools in gemtools2
-"""""""""""""""""""""""""""""
-General usage:
-
-**gemtools2 -T [tool] [-options]**
+General usage: **gemtools2 -T [tool] [-options]**
 
 1. Getting basic information about the phase blocks:
 """"""""""""""""""""""""""""""""""""""""""""""""""""
