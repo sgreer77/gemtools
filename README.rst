@@ -32,6 +32,7 @@ Tools for getting basic information about the phase blocks:
 	gemtools2 -T get_phased_basic -v [LR_vcf_file] -o [output.phased_basic]
 	
 	Ex: gemtools2 -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic
+	
 	Input:
 		-v gzipped vcf file output from LR
 	Output:
@@ -42,6 +43,7 @@ Tools for getting basic information about the phase blocks:
 	gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
 	
 	Ex: gemtools2 -T get_phase_blocks -i output.phased_basic -o output.phase_blocks
+	
 	Input:
 		-i output from 'get_phased_basic' tool
 	Output:
