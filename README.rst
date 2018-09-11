@@ -1,15 +1,13 @@
 gemtools2
 ---------
 
-Tools for working with linked-read sequencing data -- performing barcode analyses and SV structural analyses. 
-
 Installation
 ============
 
 **Dependencies:**
 """""""""""""""""
 Python packages:
-pandas`<br />`
+`<br pandas />`
 numpy
 pysam
 pyvcf
