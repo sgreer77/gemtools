@@ -5,7 +5,7 @@ import rpy2.robjects as robj
 import rpy2.robjects.pandas2ri # for dataframe conversion
 from rpy2.robjects.packages import importr
 
-def plot_hmw(outpre='out,**kwargs):
+def plot_hmw(outpre='out',**kwargs):
 
 	if 'in_windows' in kwargs:
 		infile= kwargs['in_windows']
