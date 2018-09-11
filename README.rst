@@ -6,19 +6,19 @@ Tools for working with linked-read sequencing data -- performing barcode analyse
 Installation
 ============
 
-Dependencies - the following python and R packages are required:
+**Dependencies:**
 
-Python:
-pandas
-numpy
-pysam
-pyvcf
-rpy2
+Python packages:
+|pandas
+|numpy
+|pysam
+|pyvcf
+|rpy2
 
-R:
+R package:
 ggplot2
 
-To install gemtools2:
+**To install gemtools2:**
 pip install git+https://github.com/sgreer77/gemtools2.git
 
 
