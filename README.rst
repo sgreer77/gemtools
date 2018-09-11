@@ -8,15 +8,19 @@ Installation
 
 Dependencies - the following python and R packages are required:
 
-Python:
-pandas
-numpy
-pysam
-pyvcf
-rpy2
+Python:_
+pandas_
+numpy_
+pysam_
+pyvcf_
+rpy2_
 
 R:
 ggplot2
+
+To install gemtools2:
+pip install git+https://github.com/sgreer77/gemtools2.git
+
 
 Running gemtools2
 =================
