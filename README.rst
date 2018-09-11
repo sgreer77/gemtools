@@ -7,8 +7,8 @@ Installation
 ============
 
 **Dependencies:**
-
-Python packages:
+"""""""""""""""""
+|Python packages:
 |pandas
 |numpy
 |pysam
@@ -19,6 +19,7 @@ R package:
 ggplot2
 
 **To install gemtools2:**
+"""""""""""""""""""""""""
 pip install git+https://github.com/sgreer77/gemtools2.git
 
 
