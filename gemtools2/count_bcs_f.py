@@ -64,12 +64,15 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	else:
 		sv_df = sv_df.loc[sv_df['name']==str(sv_n)]
 	
+	
+
 	sv_df1 = sv_df[['name','name1','chrom1','start1','stop1','bc_1_id','bc_2_id','bc_overlap_id']]
 	sv_df2 = sv_df[['name','name2','chrom2','start2','stop2','bc_1_id','bc_2_id','bc_overlap_id']]
 	full_names = ['id','name','chrom','start','stop','bc_1_id','bc_2_id','bc_overlap_id']
 	sv_df1.columns = full_names
 	sv_df2.columns = full_names
 	sv_df_full = pd.concat([sv_df1,sv_df2])
+
 
 	w_start_list = [x[0] for x in sv_df_full.apply(lambda row: make_window(row['start'],row['stop'], full_w_size), axis=1)]
 	w_stop_list = [x[1] for x in sv_df_full.apply(lambda row: make_window(row['start'],row['stop'], full_w_size), axis=1)]
@@ -79,9 +82,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	bam_open = pysam.Samfile(bam_input)
 
 	df_list = []
-	melt_list=[]
 	for index,row in sv_df_full.iterrows():
-		bc_counter=1
 
 		df_name = str(row['name'] + "_df")
 		# Create data frame of 1kb windows
@@ -119,39 +120,18 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 			print "bcs -- must be either 'shared' or 'all'"
 			sys.exit()
 		#bc_list = ast.literal_eval(row['bc_overlap_id'])
-				
+
+		
+		
 
 		# For each SV-specific barcode, count the number of times it occurs in each region
-		min_list=[]
 		for bc in bc_list:
 			df_name[bc] = [x.count(bc) for x in region_bcs]
-			df_tmp = df_name[['window_start',bc]]
-			df_tmp = df_tmp.loc[df_tmp[bc]>0]
-			min_val = df_tmp['window_start'].min()
-			max_val = df_tmp['window_start'].max()
-			min_list.append([bc,min_val,max_val])
 
-		min_df = pd.DataFrame(min_list, columns=['bc','min_val','max_val'])
-		min_df.sort_values(by='min_val', inplace=True)
-		bc_order = min_df['bc'].tolist()
-
+		df_list.append(df_name)
 		
-		for bo in bc_order:
-			df_bc = df_name[['window_start','window_end',bo]]
-			df_bc = df_bc.loc[df_bc[bo]>0]
-			if not df_bc.empty:
-				df_bc['value']=bc_counter
-				df_bc['variable']=bo
-				df_bc=df_bc[['window_start','window_end','value','variable']]
-				df_bc['bcs_split']= df_bc['variable'].apply(lambda x: x.split("-")[0])
-				bc_counter=bc_counter+1
-			melt_list.append(df_bc)
-		#df_list.append(df_name)
-
-	
-		
-		# Write output to file
-	df_full = pd.concat(melt_list)
+	# Write output to file
+	df_full = pd.concat(df_list)
 	df_full.to_csv(str(outpre), sep="\t", index=False)
 	return df_full
 

@@ -25,6 +25,7 @@ from gemtools2.get_bcs_in_region_f import get_bcs_in_region
 from gemtools2.get_phased_bcs_f import get_phased_bcs
 from gemtools2.select_bcs_f import select_bcs
 from gemtools2.count_bcs_list_f import count_bcs_list
+from gemtools2.plot_hmw_f import plot_hmw
 from gemtools2.extract_reads_v2_0_f import extract_reads_v2_0
 from gemtools2.extract_reads_v2_1_f import extract_reads_v2_1
 from gemtools2.get_hmw_summary_f import get_hmw_summary
@@ -330,7 +331,18 @@ def main(cmdlineargs=None):
 			print "bcs file: " + str(options.bcs)
 		else:
 			parser.error(str(options.bcs) + " does not exist")
-			
+
+        if options.tool=="plot_hmw":
+                if not options.infile:
+                        parser.error('Input file is required')
+                if not options.outfile:
+                        parser.error('Output file is required')
+		
+		if os.path.isfile(options.infile):
+                        print "input file: " + str(options.infile)
+                else:
+                        parser.error(str(options.infile) + " does not exist")
+	
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
