@@ -20,25 +20,25 @@ Running gemtools2
 
 gemtools2 is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses
 
-Long Ranger output files are indicated in the instructions below with an **LR**
+Long Ranger output files are indicated in the instructions below with an **LR** prefix
 
 **General usage: gemtools2 -T [tool] [-options]**
 
 Tools for getting basic information about the phase blocks:
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-**get_phased_basic**
+**get_phased_basic**: Obtain phasing information for all SNVs in the vcf file
 
-	gemtools2 -T get_phased_basic -v [LR_vcf_file] -o [output.phased_basic]
+	gemtools2 -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic]
 	
 	Ex: gemtools2 -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic
 	
 	Input:
 		-v gzipped vcf file output from LR
 	Output:
-		-o output.phased_basic
+		-o output file: each row is an SNV; columns are: chr,pos,number of hap1 barcodes, hap1 barcodes, number of hap2 barcodes, hap2 barcodes, genotype, phase block id
 
-**get_phase_blocks**
+**get_phase_blocks**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
 
 	gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
 	
@@ -47,7 +47,7 @@ Tools for getting basic information about the phase blocks:
 	Input:
 		-i output from 'get_phased_basic' tool
 	Output:
-		-o output file
+		-o output file: each row is a phase block, columns are phase block coordinates, phase block size, number of phased heterozygotes etc.
 
 Generally useful tools:
 """"""""""""""""""""""""""
@@ -58,15 +58,15 @@ Generally useful tools:
 
 **select_bcs**
 
-	gemtools2 -T select_bcs -b [LR_bam_file] -f [region_in] -g [region_out] -o [out.bcs]
+	gemtools2 -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]
 
 **get_bcs_in_region**
 
-	gemtools2 -T get_bcs_in_region -b [LR_bam_file] -f [region_in] -o [out.bcs]
+	gemtools2 -T get_bcs_in_region -b [LR.bam] -f [region_in] -o [out.bcs]
 
 **count_bcs_list**
 
-	gemtools2 -T count_bcs_list -b [LR_bam_file] -f [region_in] -x [in_window] -b [bc_list.txt] -o [out.bc_count]
+	gemtools2 -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -b [bc_list.txt] -o [out.bc_count]
 
 **plot_hmw**
 
@@ -85,11 +85,11 @@ SV analysis tools:
 
 **assign_sv_haps**
 
-	gemtools2 -T assign_sv_haps -i [out.shared] -c [LR_control.vcf] -t [LR_test.vcf] -o [out.haps]
+	gemtools2 -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]
 
 **count_bcs**
 
-	gemtools2 -T count_bcs -i [out.shared] -b [LR_bam_file] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count] 
+	gemtools2 -T count_bcs -i [out.shared] -b [LR.bam] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count] 
 
 **plot_hmw** (see above also)
 
