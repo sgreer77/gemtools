@@ -18,8 +18,7 @@ pip install git+https://github.com/sgreer77/gemtools.git
 Running gemtools
 =================
 
-gemtools is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses
-(Long Ranger output files are indicated in the instructions below with an **LR** prefix)
+gemtools is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses		(Long Ranger output files are indicated in the instructions below with an **LR** prefix)
 
 **General usage: gemtools -T [tool] [-options]**
 
