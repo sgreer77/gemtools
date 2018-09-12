@@ -36,25 +36,33 @@ Tools for getting basic information about the phase blocks:
 	Input:
 		-v gzipped vcf file output from LR
 	Output:
-		-o output file: each row is an SNV; columns are: chr,pos,number of hap1 barcodes, hap1 barcodes, number of hap2 barcodes, hap2 barcodes, genotype, phase block id
+		-o output file: each row is an SNV; columns are phasing information for each SNV
 
 **get_phase_blocks**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
 
-	gemtools2 -T get_phase_blocks -i [output.phased_basic] -o [output.phase_blocks]
+	gemtools2 -T get_phase_blocks -i [out.phased_basic] -o [out.phase_blocks]
 	
-	Ex: gemtools2 -T get_phase_blocks -i output.phased_basic -o output.phase_blocks
+	Ex: gemtools2 -T get_phase_blocks -i out.phased_basic -o out.phase_blocks
 	
 	Input:
 		-i output from 'get_phased_basic' tool
 	Output:
-		-o output file: each row is a phase block, columns are phase block coordinates, phase block size, number of phased heterozygotes etc.
+		-o output file: each row is a phase block, columns summarize information for each phase block (size etc.)
 
 Generally useful tools:
 """"""""""""""""""""""""""
 
-**get_phased_bcs**
+**get_phased_bcs**: For a particular phase block, return the haplotype 1 and haplotype 2 barcodes
 
-	gemtools2 -T get_phased_bcs -i [output.phased_basic] -p [phase_block_id] -o [out.phased_bcs]
+	gemtools2 -T get_phased_bcs -i [out.phased_basic] -p [phase_block_id] -o [out.phased_bcs]
+	
+	Ex: gemtools2 -T get_phased_bcs -i out.phased_basic -p 1356780 -o out.phased_bcs
+
+	Input:
+		-i output from 'get_phased_basic' tool
+		-p id number for phase block of interest (phase block ids are originally assigned in the LR.vcf.gz file)
+	Output:
+		-o output file: a table with the haplotype 1 and haplotype 2 barcodes indicated
 
 **select_bcs**
 
