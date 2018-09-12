@@ -19,10 +19,10 @@ Running gemtools
 =================
 
 gemtools is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses
-
-Long Ranger output files are indicated in the instructions below with an **LR** prefix
+(Long Ranger output files are indicated in the instructions below with an **LR** prefix)
 
 **General usage: gemtools -T [tool] [-options]**
+
 
 Tools for getting basic information about the phase blocks:
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -38,6 +38,21 @@ Tools for getting basic information about the phase blocks:
 	Output:
 		-o output file: each row is an SNV; columns are phasing information for each SNV
 
+**get_phased_basic_chr**: Obtain phasing information for all SNVs in the vcf file for a particular chromosome
+
+	gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic]
+	
+	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic -n 22
+	
+	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic -n chr22
+	
+	Input:
+		-v gzipped vcf file output from LR
+		
+		-n chromosome 
+	Output:
+		-o output file: each row is an SNV; columns are phasing information for each SNV
+
 **get_phase_blocks**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
 
 	gemtools -T get_phase_blocks -i [out.phased_basic] -o [out.phase_blocks]
@@ -45,9 +60,10 @@ Tools for getting basic information about the phase blocks:
 	Ex: gemtools -T get_phase_blocks -i out.phased_basic -o out.phase_blocks
 	
 	Input:
-		-i output from 'get_phased_basic' tool
+		-i output from 'get_phased_basic' (or 'get_phased_basic_chr') tool
 	Output:
 		-o output file: each row is a phase block, columns summarize information for each phase block (size etc.)
+
 
 Generally useful tools:
 """"""""""""""""""""""""""
@@ -124,6 +140,7 @@ Generally useful tools:
 		
 	Output:
 		-o output file: plot of barcode mapping locations in a given region
+
 
 SV analysis tools:
 """""""""""""""""""""
