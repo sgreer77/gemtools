@@ -14,7 +14,7 @@ pd.options.mode.chained_assignment = None
 def vcf_info_norm(n,bn,c,s,e,olist):
     c = str(c)
     for record in vcf_reader_norm.fetch(c, s, e):
-    	print record
+        print record
         if record.is_snp:
             format_list = (record.FORMAT).split(":")
             geno_list = set(record.genotype(norm_smpl)['GT'].split('|'))
