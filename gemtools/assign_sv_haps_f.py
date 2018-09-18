@@ -12,7 +12,6 @@ pd.options.mode.chained_assignment = None
 ### DEFINE FUNCTIONS TO PARSE VCF FILES
 
 def vcf_info_norm(n,bn,c,s,e,olist):
-	c = str(c)
 	for record in vcf_reader_norm.fetch(c, s, e):
 		print record
 		if record.is_snp:
@@ -75,6 +74,9 @@ def assign_sv_haps(outpre='out',**kwargs):
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
 		start_1,end_1,start_2,end_2 = int(start_1),int(end_1),int(start_2),int(end_2)
 
+		print name
+		print name_1
+		print chrom_1
 		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
 		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
 
