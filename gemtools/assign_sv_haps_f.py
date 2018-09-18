@@ -79,7 +79,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 		print chrom_1
 		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
 		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
-
+		print vcf_info_norm
 
 	## OBTAIN SNVs + INFO FROM TUMOR VCF FILE -- will use tumor file to obtain barcodes of phased variants
 
