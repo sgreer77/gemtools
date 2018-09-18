@@ -54,6 +54,9 @@ def assign_sv_haps(outpre='out',**kwargs):
 	global norm_smpl 
 	norm_smpl = vcf_reader_norm.samples[0]
 	vcf_data_norm = []
+	
+	print vcf_norm_input
+	print norm_smpl
 
 	global vcf_reader_tum
 	vcf_reader_tum = vcf.Reader(filename=vcf_tum_input)
@@ -61,6 +64,8 @@ def assign_sv_haps(outpre='out',**kwargs):
 	tum_smpl = vcf_reader_tum.samples[0]
 	vcf_data_tum = []
 
+	print vcf_tum_input
+	print tum_smpl
 
 	## OBTAIN SNVs + INFO FROM NORMAL VCF FILE -- will use normal file to define phase blocks + phase of variants 
 
