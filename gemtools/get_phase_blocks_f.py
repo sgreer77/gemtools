@@ -65,7 +65,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 
 		phased_het=len(group_phsd)
 	
-		group_phsd['hap1_bcs_ls']=group_phsd['hap1_bcs'].apply(lambda x: x.split(";"))	
+		group_phsd['hap1_bcs_ls']=group_phsd['hap1_bcs'].apply(lambda x: str(x).split(";"))	
 		group_phsd['hap1_bcs_rm']=group_phsd['hap1_bcs_ls'].apply(lambda x: barcodeSplit(x))
 		group_phsd['hap1_bcs_na']=group_phsd['hap1_bcs_rm'].apply(lambda x: naDrop(x))
 		hap1_bcs_all=group_phsd['hap1_bcs_na'].tolist()
@@ -73,7 +73,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		hap1_total=len(hap1_bcs_all_zip)	
 		hap1_unique=len(set(hap1_bcs_all_zip))
 
-		group_phsd['hap2_bcs_ls']=group_phsd['hap2_bcs'].apply(lambda x: x.split(";"))
+		group_phsd['hap2_bcs_ls']=group_phsd['hap2_bcs'].apply(lambda x: str(x).split(";"))
 		group_phsd['hap2_bcs_rm']=group_phsd['hap2_bcs_ls'].apply(lambda x: barcodeSplit(x))
 		group_phsd['hap2_bcs_na']=group_phsd['hap2_bcs_rm'].apply(lambda x: naDrop(x))
 		hap2_bcs_all=group_phsd['hap2_bcs_na'].tolist()
