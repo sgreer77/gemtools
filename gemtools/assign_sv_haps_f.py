@@ -54,9 +54,6 @@ def assign_sv_haps(outpre='out',**kwargs):
 	global norm_smpl 
 	norm_smpl = vcf_reader_norm.samples[0]
 	vcf_data_norm = []
-	
-	print vcf_norm_input
-	print norm_smpl
 
 	global vcf_reader_tum
 	vcf_reader_tum = vcf.Reader(filename=vcf_tum_input)
@@ -64,8 +61,6 @@ def assign_sv_haps(outpre='out',**kwargs):
 	tum_smpl = vcf_reader_tum.samples[0]
 	vcf_data_tum = []
 
-	print vcf_tum_input
-	print tum_smpl
 
 	## OBTAIN SNVs + INFO FROM NORMAL VCF FILE -- will use normal file to define phase blocks + phase of variants 
 
@@ -78,15 +73,8 @@ def assign_sv_haps(outpre='out',**kwargs):
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
 		start_1,end_1,start_2,end_2 = int(start_1),int(end_1),int(start_2),int(end_2)
-
-		print name
-		print name_1
-		print chrom_1
-		print start_1
-		print end_1
 		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
 		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
-		print vcf_data_norm
 
 	## OBTAIN SNVs + INFO FROM TUMOR VCF FILE -- will use tumor file to obtain barcodes of phased variants
 
@@ -131,7 +119,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## INTERSECT "SV-SPECIFIC" BARCODES WITH LIST OF BCS FOR EACH PHASED VARIANT (GENERATED ABOVE) -- COUNT NUMBER OF OVERLAPPING BARCODES
 
 	for index, row in df_sv.iterrows():    
-   		
+
 	    #print row['bc_overlap_id']
 	    print type(row['bc_overlap_id'])
 	    sv_bcs = literal_eval(row['bc_overlap_id'])
