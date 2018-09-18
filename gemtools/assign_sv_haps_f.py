@@ -12,26 +12,26 @@ pd.options.mode.chained_assignment = None
 ### DEFINE FUNCTIONS TO PARSE VCF FILES
 
 def vcf_info_norm(n,bn,c,s,e,olist):
-    c = str(c)
-    for record in vcf_reader_norm.fetch(c, s, e):
-        print record
-        if record.is_snp:
-            format_list = (record.FORMAT).split(":")
-            geno_list = set(record.genotype(norm_smpl)['GT'].split('|'))
-            if 'PS' in format_list and len(geno_list)>1:
-                fields = "n,bn,record.genotype(norm_smpl)['PS'], record.CHROM, record.POS, record.REF, record.ALT, record.genotype(norm_smpl)['GT']"
-                olist.append(eval(fields))
+	c = str(c)
+	for record in vcf_reader_norm.fetch(c, s, e):
+		print record
+		if record.is_snp:
+			format_list = (record.FORMAT).split(":")
+			geno_list = set(record.genotype(norm_smpl)['GT'].split('|'))
+			if 'PS' in format_list and len(geno_list)>1:
+				fields = "n,bn,record.genotype(norm_smpl)['PS'], record.CHROM, record.POS, record.REF, record.ALT, record.genotype(norm_smpl)['GT']"
+				olist.append(eval(fields))
 
 def vcf_info_tum(n,bn,c,s,e,olist):
-    for record in vcf_reader_tum.fetch(c, s, e):
-        if record.is_snp:
-            format_list = (record.FORMAT).split(":")
-            geno_list = set(record.genotype(tum_smpl)['GT'].split('|'))
-            if 'PS' in format_list and 'BX' in format_list and len(geno_list)>1:
-                bc_1 = record.genotype(tum_smpl)['BX'][0]
-                bc_2 = record.genotype(tum_smpl)['BX'][1]
-                fields = "n, bn,record.genotype(tum_smpl)['PS'], record.CHROM, record.POS, record.REF, record.ALT, record.genotype(tum_smpl)['GT'], bc_1, bc_2"
-                olist.append(eval(fields))     
+	for record in vcf_reader_tum.fetch(c, s, e):
+		if record.is_snp:
+			format_list = (record.FORMAT).split(":")
+			geno_list = set(record.genotype(tum_smpl)['GT'].split('|'))
+			if 'PS' in format_list and 'BX' in format_list and len(geno_list)>1:
+				bc_1 = record.genotype(tum_smpl)['BX'][0]
+				bc_2 = record.genotype(tum_smpl)['BX'][1]
+				fields = "n, bn,record.genotype(tum_smpl)['PS'], record.CHROM, record.POS, record.REF, record.ALT, record.genotype(tum_smpl)['GT'], bc_1, bc_2"
+				olist.append(eval(fields))     
 		
 def assign_sv_haps(outpre='out',**kwargs):
 
@@ -72,17 +72,17 @@ def assign_sv_haps(outpre='out',**kwargs):
 	sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
-	    name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
-	    start_1,end_1,start_2,end_2 = int(start_1),int(end_1),int(start_2),int(end_2)
+		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
+		start_1,end_1,start_2,end_2 = int(start_1),int(end_1),int(start_2),int(end_2)
 
-	    vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
-	    vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
+		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
+		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
 
 
 	## OBTAIN SNVs + INFO FROM TUMOR VCF FILE -- will use tumor file to obtain barcodes of phased variants
 
-	    vcf_info_tum(name,name_1,chrom_1,start_1,end_1,vcf_data_tum)
-	    vcf_info_tum(name,name_2,chrom_2,start_2,end_2,vcf_data_tum)
+		vcf_info_tum(name,name_1,chrom_1,start_1,end_1,vcf_data_tum)
+		vcf_info_tum(name,name_2,chrom_2,start_2,end_2,vcf_data_tum)
 
 
 	## MERGE VCF INFO DATA FRAMES THEN ADJUST BARCODE COLUMN ORDER TO REFLECT HAPLOTYPES
