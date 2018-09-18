@@ -82,6 +82,8 @@ def assign_sv_haps(outpre='out',**kwargs):
 		print name
 		print name_1
 		print chrom_1
+		print start_1
+		print end_1
 		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
 		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
 		print vcf_data_norm
