@@ -29,7 +29,7 @@ def get_phased_basic(inputvcf='None',outpre='out',**kwargs):
 		alt_allele = record.ALT
 		geno = record.genotype(cur_sample)['GT']
 		
-		allele_list = list(ref_allele) + alt_allele
+		allele_list = [ref_allele] + alt_allele
 		num_alts = len(alt_allele)
 		format_field=(record.FORMAT).split(":")
 		
@@ -81,6 +81,6 @@ def get_phased_basic(inputvcf='None',outpre='out',**kwargs):
 	df=pd.DataFrame(vcf_data)
 	df.columns=['chrom','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
 
-	df.to_csv(str(outpre), sep="\t", index=False, header=False)
+	df.to_csv(str(outpre), sep="\t", index=False)
 
 	return df
