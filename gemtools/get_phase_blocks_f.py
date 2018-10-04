@@ -77,7 +77,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		total=len(bcs_all)
 		unique=len(set(bcs_all))	
 
-		phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique])
+		phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, bc1_total, bc1_unique, bc2_total, bc2_unique])
 
 	df=pd.DataFrame(phase_data)
 	df.columns=["chr", "beg_pos", "end_pos", "dist", "PS", "all_SNVs", "phased_het", "total", "unique", "hap1_total", "hap1_unique", "hap2_total", "hap2_unique"]
