@@ -10,12 +10,12 @@ import vcf
 
 def barcodeSplit(bc_str):
 		bc_list = str(bc_str).split(";")
-        bc_list_pre = [value.partition('_')[0] for value in bc_list if '_' in value]
-        if "n/a" in bc_list_pre:
-        	nona_list = [value for value in bc_list_pre if value!="n/a"]
-        	return nona_list
-        else:
-        	return bc_list_pre
+		bc_list_pre = [value.partition('_')[0] for value in bc_list if '_' in value]
+		if "n/a" in bc_list_pre:
+			nona_list = [value for value in bc_list_pre if value!="n/a"]
+			return nona_list
+		else:
+			return bc_list_pre
 
 def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',**kwargs):
 
