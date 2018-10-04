@@ -34,21 +34,8 @@ Tools for getting basic information about the phase blocks:
 	
 	Input:
 		-v gzipped vcf file output from LR
-	Output:
-		-o output file: each row is an SNV; columns are phasing information for each SNV
-
-**get_phased_basic_chr**: Obtain phasing information for all SNVs in the vcf file for a particular chromosome
-
-	gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic]
-	
-	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic -n 22
-	
-	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic -n chr22
-	
-	Input:
-		-v gzipped vcf file output from LR
 		
-		-n chromosome 
+		-n chromosome (optional)
 	Output:
 		-o output file: each row is an SNV; columns are phasing information for each SNV
 
