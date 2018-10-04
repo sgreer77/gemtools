@@ -12,6 +12,7 @@ import vcf
 def parse_phase_blocks(r,s):
 	chr = r.CHROM
 	pos = r.POS
+	pos_0 = int(pos)-1
 	ref_allele = r.REF
 	alt_allele = r.ALT
 	geno = r.genotype(s)['GT']
@@ -63,7 +64,7 @@ def parse_phase_blocks(r,s):
 	else:
 		bc1,bc2,bc1_ct,bc2_ct="n/a"
 
-	return [chr,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
+	return [chr,pos_0,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
 
 
 def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
@@ -96,7 +97,7 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 			print len(vcf_data)
 
 	df=pd.DataFrame(vcf_data)
-	df.columns=['chrom','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
+	df.columns=['chrom','pos_0','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
 
 	df.to_csv(str(outpre), sep="\t", index=False)
 
