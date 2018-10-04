@@ -10,6 +10,7 @@ import vcf
 
 
 def parse_phase_blocks(r,s):
+	print r
 	chr = r.CHROM
 	pos = r.POS
 	pos_0 = int(pos)-1
