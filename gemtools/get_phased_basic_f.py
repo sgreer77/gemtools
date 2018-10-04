@@ -66,14 +66,14 @@ def parse_phase_blocks(r,s):
 	return [chr,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
 
 
-def get_phased_basic(inputvcf='None',outpre='out',chrom='None',**kwargs):
+def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 
 	if 'vcf' in kwargs:
 		inputvcf = kwargs['vcf']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
-	if 'chr' in kwargs:
-		chrom = kwargs['chr']
+	if 'chrom' in kwargs:
+		c = kwargs['chrom']
 
 	vcf_reader = vcf.Reader(open(inputvcf,'r'))
 
@@ -82,14 +82,14 @@ def get_phased_basic(inputvcf='None',outpre='out',chrom='None',**kwargs):
 
 	vcf_data=[]
 	
-	if chrom=='None':
+	if c=='None':
 		for record in vcf_reader:
 			parsed_record = parse_phase_blocks(record, cur_sample)
 			print len(parsed_record)
 			vcf_data.append(parsed_record)
 			print len(vcf_data)
 	else:
-		for record in vcf_reader.fetch(str(chrom)):
+		for record in vcf_reader.fetch(str(c)):
 			parsed_record = parse_phase_blocks(record, cur_sample)
 			print len(parsed_record)
 			vcf_data.append(parsed_record)
