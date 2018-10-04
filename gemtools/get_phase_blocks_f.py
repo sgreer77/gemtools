@@ -59,7 +59,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		all_SNVs=len(group)
 	
 		group_sub = group.loc[(group['phase_status']=="phased") & (group['hom_status']=="het") & (group['var_type']=="snv")]
-		phased_het=len(group_phsd)
+		phased_het=len(group_sub)
 	
 		group_sub['bc1_ls']=group_sub['bc1'].apply(lambda x: barcodeSplit(x))
 		bc1_all=group_sub['bc1_ls'].tolist()
