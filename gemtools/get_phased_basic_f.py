@@ -59,7 +59,7 @@ def get_phased_basic(inputvcf='None',outpre='out',**kwargs):
 		else:
 			var_type = "indel"
 
-		if ('BX' in format_field and allele_1.isdigit() == True and allele_2.isdigit() == True):
+		if ('BX' in format_field and str(allele_1).isdigit() == True and str(allele_2).isdigit() == True):
 			bc1=record.genotype(cur_sample)['BX'][int(allele_1)]
 			bc2=record.genotype(cur_sample)['BX'][int(allele_2)]
 			if bc1=='':
