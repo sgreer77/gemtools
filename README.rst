@@ -28,9 +28,11 @@ Tools for getting basic information about the phase blocks:
 
 **get_phased_basic**: Obtain phasing information for all SNVs in the vcf file
 
-	gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic]
+	gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic] -n [chr_num]
 	
 	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic
+	
+	Ex: gemtools -T get_phased_basic -v phased_variants.vcf.gz -o output.phased_basic -n 22
 	
 	Input:
 		-v gzipped vcf file output from LR
