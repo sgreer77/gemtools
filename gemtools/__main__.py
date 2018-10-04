@@ -19,7 +19,7 @@ from gemtools.get_shared_bcs_f import get_shared_bcs
 from gemtools.assign_sv_haps_f import assign_sv_haps
 from gemtools.count_bcs_f import count_bcs
 from gemtools.get_phased_basic_f import get_phased_basic
-from gemtools.get_phased_basic_chr_f import get_phased_basic_chr
+#from gemtools.get_phased_basic_chr_f import get_phased_basic_chr
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -131,8 +131,6 @@ def pipeline_from_parsed_args(options):
 		pipeline = count_bcs(bam=options.bam, sv=options.infile, in_window=options.in_window, out_window=options.out_window, sv_name=options.sv_name, bcs=options.bc_select, out=options.outfile)
 	if options.tool=="get_phased_basic":
 		pipeline = get_phased_basic(vcf=options.vcf, out=options.outfile)
-	if options.tool=="get_phased_basic_chr":
-		pipeline = get_phased_basic_chr(vcf=options.vcf, chr=options.chrom, out=options.outfile)
 	if options.tool=="get_phase_blocks":
 		pipeline = get_phase_blocks(infile_basic=options.infile, out=options.outfile)
 	if options.tool=="get_phased_bcs":
@@ -240,19 +238,6 @@ def main(cmdlineargs=None):
 			parser.error('Output file is required')
 		if not options.vcf:
 			parser.error('vcf file is required')
-
-		if str(options.vcf).endswith(".vcf.gz"):
-			print "vcf file: " + str(options.vcf)
-		else:
-			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
-	
-	if options.tool=="get_phased_basic_chr":
-		if not options.outfile:
-			parser.error('Output file is required')
-		if not options.vcf:
-			parser.error('vcf file is required')
-		if not options.chrom:
-			parser.error('chr is required')
 
 		if str(options.vcf).endswith(".vcf.gz"):
 			print "vcf file: " + str(options.vcf)
