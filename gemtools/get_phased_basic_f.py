@@ -14,7 +14,7 @@ def parse_phase_blocks(r,s):
 	pos = r.POS
 	ref_allele = r.REF
 	alt_allele = r.ALT
-	geno = r.genotype(cur_sample)['GT']
+	geno = r.genotype(s)['GT']
 	
 	allele_list = [ref_allele] + alt_allele
 	num_alts = len(alt_allele)
@@ -47,8 +47,8 @@ def parse_phase_blocks(r,s):
 		var_type = "indel"
 
 	if ('BX' in format_field and str(allele_1).isdigit() == True and str(allele_2).isdigit() == True):
-		bc1=r.genotype(cur_sample)['BX'][int(allele_1)]
-		bc2=r.genotype(cur_sample)['BX'][int(allele_2)]
+		bc1=r.genotype(s)['BX'][int(allele_1)]
+		bc2=r.genotype(s)['BX'][int(allele_2)]
 		if bc1=='':
 			bc1="n/a"	
 			bc1_ct=0
