@@ -130,7 +130,7 @@ def pipeline_from_parsed_args(options):
 	if options.tool=="count_bcs":
 		pipeline = count_bcs(bam=options.bam, sv=options.infile, in_window=options.in_window, out_window=options.out_window, sv_name=options.sv_name, bcs=options.bc_select, out=options.outfile)
 	if options.tool=="get_phased_basic":
-		pipeline = get_phased_basic(vcf=options.vcf, out=options.outfile)
+		pipeline = get_phased_basic(vcf=options.vcf, out=options.outfile, chrom=options.chrom)
 	if options.tool=="get_phase_blocks":
 		pipeline = get_phase_blocks(infile_basic=options.infile, out=options.outfile)
 	if options.tool=="get_phased_bcs":
