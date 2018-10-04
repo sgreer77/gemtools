@@ -8,16 +8,14 @@ import pysam
 import numpy as np
 import vcf
 
-def barcodeSplit(bc_list):
-        new_list = [value.partition('_')[0] for value in bc_list if '_' in value]
-        return new_list
-
-def naDrop(bc_list):
-        if "n/a" in bc_list:
-                new_list = [value for value in bc_list if value!="n/a"]
-                return new_list
+def barcodeSplit(bc_str):
+		bc_list = str(bc_str).split(";")
+        bc_list_pre = [value.partition('_')[0] for value in bc_list if '_' in value]
+        if "n/a" in bc_list_pre:
+        	nona_list = [value for value in bc_list_pre if value!="n/a"]
+        	return nona_list
         else:
-                return bc_list
+        	return bc_list_pre
 
 def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',**kwargs):
 
@@ -38,50 +36,44 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		sys.exit()
 	
 	if str(phased_basic_file)!='None':
-		df=pd.read_table(phased_basic_file, sep="\t", header=None, names=['chr','pos','hap1_bc_ct', 'hap1_bcs','hap2_bc_ct','hap2_bcs','gt','PS'], dtype={'chr':str,'gt':str,'PS':str})
+		df=pd.read_table(phased_basic_file, sep="\t", dtype={'chrom':str,'gt':str,'block_id':str})
 	elif str(phased_basic)!='None':
 		df = phased_basic
-		df.columns=['chr','pos','hap1_bc_ct', 'hap1_bcs','hap2_bc_ct','hap2_bcs','gt','PS']
-		df[['chr','gt','PS']] = df[['chr','gt','PS']].astype(str)
+		df[['chrom','gt','block_id']] = df[['chrom','gt','block_id']].astype(str)
 	else:
 		print "Must specify input"
 		sys.exit()	
 	
 ### END OF INPUT ###
 	
-	df.sort_values(by='PS', inplace=True)
-	grouped=df.groupby('PS')
+	df.sort_values(by='block_id', inplace=True)
+	grouped=df.groupby('block_id')
 
 	phase_data=[]
 
 	for name, group in grouped:
-		chr=group['chr'].unique()[0]
+		chr=group['chrom'].unique()[0]
 		beg_pos=group['pos'].min()
 		end_pos=group['pos'].max()
 		dist=end_pos-beg_pos+1
 		all_SNVs=len(group)
 	
-		group_phsd=group.loc[group['gt'].isin(['0|1','1|0'])]
-
+		group_sub = group.loc[(group['phase_status']=="phased") & (group['hom_status']=="het") & (group['var_type']=="snv")]
 		phased_het=len(group_phsd)
 	
-		group_phsd['hap1_bcs_ls']=group_phsd['hap1_bcs'].apply(lambda x: str(x).split(";"))	
-		group_phsd['hap1_bcs_rm']=group_phsd['hap1_bcs_ls'].apply(lambda x: barcodeSplit(x))
-		group_phsd['hap1_bcs_na']=group_phsd['hap1_bcs_rm'].apply(lambda x: naDrop(x))
-		hap1_bcs_all=group_phsd['hap1_bcs_na'].tolist()
-		hap1_bcs_all_zip=sum(hap1_bcs_all,[])
-		hap1_total=len(hap1_bcs_all_zip)	
-		hap1_unique=len(set(hap1_bcs_all_zip))
+		group_sub['bc1_ls']=group_sub['bc1'].apply(lambda x: barcodeSplit(x))
+		bc1_all=group_sub['bc1_ls'].tolist()
+		bc1_all_zip=sum(bc1_all,[])
+		bc1_total=len(bc1_all_zip)	
+		bc1_unique=len(set(bc1_all_zip))
 
-		group_phsd['hap2_bcs_ls']=group_phsd['hap2_bcs'].apply(lambda x: str(x).split(";"))
-		group_phsd['hap2_bcs_rm']=group_phsd['hap2_bcs_ls'].apply(lambda x: barcodeSplit(x))
-		group_phsd['hap2_bcs_na']=group_phsd['hap2_bcs_rm'].apply(lambda x: naDrop(x))
-		hap2_bcs_all=group_phsd['hap2_bcs_na'].tolist()
-		hap2_bcs_all_zip=sum(hap2_bcs_all,[])
-		hap2_total=len(hap2_bcs_all_zip)
-		hap2_unique=len(set(hap2_bcs_all_zip))	
+		group_sub['bc2_ls']=group_sub['bc2'].apply(lambda x: barcodeSplit(x))
+		bc2_all=group_sub['bc2_ls'].tolist()
+		bc2_all_zip=sum(bc2_all,[])
+		bc2_total=len(bc2_all_zip)
+		bc2_unique=len(set(bc2_all_zip))	
 
-		bcs_all=hap1_bcs_all_zip+hap2_bcs_all_zip
+		bcs_all=bc1_all_zip+bc2_all_zip
 		total=len(bcs_all)
 		unique=len(set(bcs_all))	
 
