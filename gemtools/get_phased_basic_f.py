@@ -32,14 +32,22 @@ def parse_phase_blocks(r,s):
 		phase_status = 'phased'
 		allele_1 = int(geno.split("|")[0])
 		allele_2 = int(geno.split("|")[1])
-	else:
+	elif '/' in geno:
 		phase_status = 'not_phased'
 		allele_1 = int(geno.split("/")[0])
 		allele_2 = int(geno.split("/")[1])
+	else:
+		phase_status = 'not_phased'
+		allele_1 = "n/a"
+		allele_2 = "n/a"
 		
 	if str(allele_1)==str(allele_2):
-		num_alleles = 1
-		hom_status = "hom"
+		if str(allele_1)=="n/a":
+			num_alleles="n/a"
+			hom_status="n/a"
+		else:
+			num_alleles = 1
+			hom_status = "hom"
 	else:
 		num_alleles = 2
 		hom_status = "het"
