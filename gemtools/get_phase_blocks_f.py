@@ -36,10 +36,10 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		sys.exit()
 	
 	if str(phased_basic_file)!='None':
-		df=pd.read_table(phased_basic_file, sep="\t", dtype={'chrom':str,'gt':str,'block_id':str})
+		df=pd.read_table(phased_basic_file, sep="\t", dtype={'#chrom':str,'gt':str,'block_id':str})
 	elif str(phased_basic)!='None':
 		df = phased_basic
-		df[['chrom','gt','block_id']] = df[['chrom','gt','block_id']].astype(str)
+		df[['#chrom','gt','block_id']] = df[['#chrom','gt','block_id']].astype(str)
 	else:
 		print "Must specify input"
 		sys.exit()	
@@ -52,7 +52,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 	phase_data=[]
 
 	for name, group in grouped:
-		chr=group['chrom'].unique()[0]
+		chr=group['#chrom'].unique()[0]
 		beg_pos=group['pos'].min()
 		end_pos=group['pos'].max()
 		dist=end_pos-beg_pos+1

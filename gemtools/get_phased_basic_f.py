@@ -10,14 +10,12 @@ import vcf
 
 
 def parse_phase_blocks(r,s):
-	print r
 	chr = r.CHROM
 	pos = r.POS
 	pos_0 = int(pos)-1
 	ref_allele = r.REF
 	alt_allele = r.ALT
 	geno = r.genotype(s)['GT']
-	print geno
 	
 	allele_list = [ref_allele] + alt_allele
 	num_alts = len(alt_allele)
@@ -36,7 +34,7 @@ def parse_phase_blocks(r,s):
 		phase_status = 'not_phased'
 		allele_1 = int(geno.split("/")[0])
 		allele_2 = int(geno.split("/")[1])
-	else:
+	else: # For cases when genotype is just one number and don't want to make assumptions about what it means
 		phase_status = 'not_phased'
 		allele_1 = "n/a"
 		allele_2 = "n/a"
@@ -96,18 +94,14 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 	if c=='None':
 		for record in vcf_reader:
 			parsed_record = parse_phase_blocks(record, cur_sample)
-			print len(parsed_record)
 			vcf_data.append(parsed_record)
-			print len(vcf_data)
 	else:
 		for record in vcf_reader.fetch(str(c)):
 			parsed_record = parse_phase_blocks(record, cur_sample)
-			print len(parsed_record)
 			vcf_data.append(parsed_record)
-			print len(vcf_data)
 
 	df=pd.DataFrame(vcf_data)
-	df.columns=['chrom','pos_0','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
+	df.columns=['#chrom','pos_0','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
 
 	df.to_csv(str(outpre), sep="\t", index=False)
 
