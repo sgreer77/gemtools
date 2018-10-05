@@ -38,6 +38,13 @@ def parse_phase_blocks(r,s):
 		phase_status = 'not_phased'
 		allele_1 = "n/a"
 		allele_2 = "n/a"
+	
+	if (str(allele_1).isdigit() == True and str(allele_2).isdigit() == True):
+		base_1 = allele_list[int(allele_1)]
+		base_2 = allele_list[int(allele_2)]
+	else:
+		base_1=base_2="n/a"
+	
 		
 	if str(allele_1)==str(allele_2):
 		if str(allele_1)=="n/a":
@@ -72,7 +79,7 @@ def parse_phase_blocks(r,s):
 	else:
 		bc1=bc2=bc1_ct=bc2_ct="n/a"
 
-	return [chr,pos_0,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
+	return [chr,pos_0,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,base_1,base_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
 
 
 def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
@@ -101,7 +108,7 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 			vcf_data.append(parsed_record)
 
 	df=pd.DataFrame(vcf_data)
-	df.columns=['#chrom','pos_0','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
+	df.columns=['#chrom','pos_0','pos','ref','alt','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','base_1','base_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
 
 	df.to_csv(str(outpre), sep="\t", index=False)
 
