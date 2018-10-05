@@ -63,7 +63,7 @@ def parse_phase_blocks(r,s):
 			bc2_ct=len(bc2.split(";"))
 
 	else:
-		bc1,bc2,bc1_ct,bc2_ct="n/a"
+		bc1=bc2=bc1_ct=bc2_ct="n/a"
 
 	return [chr,pos_0,pos,ref_allele,alt_allele,geno,allele_list,num_alts,block_id,phase_status,allele_1,allele_2,num_alleles,hom_status,var_type,bc1,bc1_ct,bc2,bc2_ct]
 
