@@ -17,6 +17,7 @@ def parse_phase_blocks(r,s):
 	ref_allele = r.REF
 	alt_allele = r.ALT
 	geno = r.genotype(s)['GT']
+	print geno
 	
 	allele_list = [ref_allele] + alt_allele
 	num_alts = len(alt_allele)
