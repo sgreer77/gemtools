@@ -36,7 +36,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		sys.exit()
 	
 	if str(phased_basic_file)!='None':
-		df=pd.read_table(phased_basic_file, sep="\t", dtype={'#chrom':str,'gt':str,'block_id':str})
+		df=pd.read_table(phased_basic_file, sep="\t", dtype={'#chrom':str,'gt':str,'block_id':str,'filter':str})
 	elif str(phased_basic)!='None':
 		df = phased_basic
 		df[['#chrom','gt','block_id']] = df[['#chrom','gt','block_id']].astype(str)
@@ -58,7 +58,7 @@ def get_phase_blocks(phased_basic='None',phased_basic_file='None',outpre='out',*
 		dist=end_pos-beg_pos+1
 		all_SNVs=len(group)
 	
-		group_sub = group.loc[(group['phase_status']=="phased") & (group['hom_status']=="het") & (group['var_type']=="snv")]
+		group_sub = group.loc[(group['phase_status']=="phased") & (group['hom_status']=="het") & (group['var_type']=="snv") & (group['filter']=="[]")]
 		phased_het=len(group_sub)
 	
 		group_sub['bc1_ls']=group_sub['bc1'].apply(lambda x: barcodeSplit(x))
