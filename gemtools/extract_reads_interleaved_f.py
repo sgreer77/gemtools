@@ -17,8 +17,8 @@ def extract_reads_interleaved(out_dir='fastq_bc',**kwargs):
 		lanes = kwargs['lanes']	
 	if 'bcs' in kwargs:
 		bc_file = kwargs['bcs']
-	if 'outdir' in kwargs:
-		out_dir = kwargs['outdir']
+	if 'fq_outdir' in kwargs:
+		out_dir = kwargs['fq_outdir']
 
 	print out_dir
 

@@ -159,7 +159,7 @@ def pipeline_from_parsed_args(options):
 	if options.tool=="plot_hmw":
 		pipeline = plot_hmw(in_windows=options.infile, out=options.outfile)
 	if options.tool=="extract_reads_interleaved":
-		pipeline = extract_reads_interleaved(fqdir=options.fqdir, s_bcs=options.s_bcs, lanes=options.lanes, bcs=options.bcs, outdir=options.outdir)
+		pipeline = extract_reads_interleaved(fqdir=options.fqdir, s_bcs=options.s_bcs, lanes=options.lanes, bcs=options.bcs, fq_outdir=options.outdir)
 	return pipeline
 
 def main(cmdlineargs=None):
