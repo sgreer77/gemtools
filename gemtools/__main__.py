@@ -26,8 +26,8 @@ from gemtools.get_phased_bcs_f import get_phased_bcs
 from gemtools.select_bcs_f import select_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
 from gemtools.plot_hmw_f import plot_hmw
-from gemtools.extract_reads_v2_0_f import extract_reads_v2_0
-from gemtools.extract_reads_v2_1_f import extract_reads_v2_1
+from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
+from gemtools.extract_reads_separate_f import extract_reads_separate
 from gemtools.get_hmw_summary_f import get_hmw_summary
 
 
