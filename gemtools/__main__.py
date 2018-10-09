@@ -118,6 +118,21 @@ def get_option_parser():
 		help="Name of SV; ex: 'call_144', '144'")
 	parser.add_option_group(group)
 
+	group = OptionGroup(parser, "Fastq")
+	group.add_option("-d","--fq_dir", metavar="FQ_DIR",
+		dest="fqdir",
+		help="Fastq output directory")
+	group.add_option("-j","--sample_bcs",
+		dest="s_bcs", metavar="SAMPLE_BCS",
+		help="Sample barcodes")
+	group.add_option("-k","--lanes",
+		dest="lanes", metavar="LANES",
+		help="Numbers of sequencing lanes; ex: '1,5'")
+	group.add_option("-z","--outdir",
+		dest="outdir", metavar="OUT_DIR",
+		help="Name of output directory")
+	parser.add_option_group(group)
+
 	return parser
 
 def pipeline_from_parsed_args(options):
@@ -143,6 +158,8 @@ def pipeline_from_parsed_args(options):
 		pipeline = get_bcs_in_region(region=options.region_in,bam=options.bam, out=options.outfile)
 	if options.tool=="plot_hmw":
 		pipeline = plot_hmw(in_windows=options.infile, out=options.outfile)
+	if options.tool=="extract_reads_interleaved":
+		pipeline = extract_reads_interleaved(fqdir=options.fqdir, s_bcs=options.s_bcs, lanes=options.lanes, bcs=options.bcs, outdir=options.outdir)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -319,16 +336,34 @@ def main(cmdlineargs=None):
 		else:
 			parser.error(str(options.bcs) + " does not exist")
 
-		if options.tool=="plot_hmw":
-			if not options.infile:
-				parser.error('Input file is required')
-			if not options.outfile:
-				parser.error('Output file is required')
+	if options.tool=="plot_hmw":
+		if not options.infile:
+			parser.error('Input file is required')
+		if not options.outfile:
+			parser.error('Output file is required')
 		
 		if os.path.isfile(options.infile):
 			print "input file: " + str(options.infile)
 		else:
 			parser.error(str(options.infile) + " does not exist")
+
+	if options.tool=="extract_reads_interleaved":
+		if not options.fqdir:
+			parser.error('Fastq dir is required')
+		if not options.s_bcs:
+			parser.error('Sample barcodes are required')
+		if not options.lanes:
+			parser.error('Sample lanes are required')
+		if not options.bcs:
+			parser.error('Droplet barcodes are required')
+		
+		if os.path.isfile(options.bcs):
+			print "bcs file: " + str(options.bcs)
+		else:
+			parser.error(str(options.bcs) + " does not exist")
+		if os.path.isdir(str(options.fqdir)):
+			parser.error(str(options.fqdir) + " already exists")
+		
 	
 	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
