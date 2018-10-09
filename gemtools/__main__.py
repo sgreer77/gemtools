@@ -361,8 +361,6 @@ def main(cmdlineargs=None):
 			print "bcs file: " + str(options.bcs)
 		else:
 			parser.error(str(options.bcs) + " does not exist")
-		if os.path.isdir(str(options.outdir)):
-			parser.error(str(options.outdir) + " already exists")
 		
 	
 	pipeline = pipeline_from_parsed_args(options)

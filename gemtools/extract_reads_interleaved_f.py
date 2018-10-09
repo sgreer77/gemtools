@@ -7,6 +7,8 @@ import time
 
 def extract_reads_interleaved(out_dir='fastq_bc',**kwargs):
 
+	print out_dir
+
 	if 'fqdir' in kwargs:
 		fq_path = kwargs['fqdir']
 	if 's_bcs' in kwargs:
@@ -17,6 +19,12 @@ def extract_reads_interleaved(out_dir='fastq_bc',**kwargs):
 		bc_file = kwargs['bcs']
 	if 'outdir' in kwargs:
 		out_dir = kwargs['outdir']
+
+	print out_dir
+
+	if os.path.isdir(out_dir):
+		print str(out_dir) + " already exists -- exiting"
+		sys.exit()
 
 	if not os.path.isdir(out_dir):
 		os.makedirs(out_dir)
