@@ -215,9 +215,9 @@ Tools for extracting subset barcoded reads from fastq files:
 
 **extract_reads_separate**: Obtain reads with particular barcodes from Long Ranger fastq files (where output is R1,R2,I1)
 
-	gemtools -T extract_reads_separate -b [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]
+	gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]
 	
-	Ex: gemtools -T extract_reads_separate -b bc_list.txt -z fastq_subset --read1 SAMPLE_S1_L001_R1_001.fastq.gz --read2 SAMPLE_S1_L001_R2_001.fastq.gz --index1 SAMPLE_S1_L001_I1_001.fastq.gz
+	Ex: gemtools -T extract_reads_separate -l bc_list.txt -z fastq_subset --read1 SAMPLE_S1_L001_R1_001.fastq.gz --read2 SAMPLE_S1_L001_R2_001.fastq.gz --index1 SAMPLE_S1_L001_I1_001.fastq.gz
 	
 	Input:
 		-l file containing list of barcodes (one barcode per line)
@@ -232,12 +232,12 @@ Tools for extracting subset barcoded reads from fastq files:
 
 **extract_reads_interleaved**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
 
-	gemtools -T extract_reads_interleaved -b [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]
+	gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]
 	
-	Ex: gemtools -T extract_reads_interleaved -b bc_list.txt -z fastq_subset -d fastq -j 'ACGACGCT,CGCCATTC,GTAGTCAG,TATTGAGA' -k '1,5'
+	Ex: gemtools -T extract_reads_interleaved -l bc_list.txt -z fastq_subset -d fastq -j 'ACGACGCT,CGCCATTC,GTAGTCAG,TATTGAGA' -k '1,5'
 	
 	Input:
-		-b file containing list of barcodes (one barcode per line)
+		-l file containing list of barcodes (one barcode per line)
 		
 		-d Long Ranger fastq directory, containing RA and I1 fastq files
 		
