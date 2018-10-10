@@ -27,6 +27,7 @@ from gemtools.count_bcs_list_f import count_bcs_list
 from gemtools.plot_hmw_f import plot_hmw
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
 from gemtools.extract_reads_separate_f import extract_reads_separate
+
 from gemtools.get_hmw_summary_f import get_hmw_summary
 
 
@@ -380,11 +381,15 @@ def main(cmdlineargs=None):
 			parser.error('Sample lanes are required')
 		if not options.bcs:
 			parser.error('Droplet barcodes are required')
+		if not options.outdir:
+			parser.error('Output dir is required')
 		
 		if os.path.isfile(options.bcs):
 			print "bcs file: " + str(options.bcs)
 		else:
 			parser.error(str(options.bcs) + " does not exist")
+		if os.path.isdir(options.outdir):
+			parser.error(str(options.outdir) + " already exists")
 	
 	if options.tool=="extract_reads_separate":
 		if not options.bcs:
@@ -395,6 +400,8 @@ def main(cmdlineargs=None):
 			parser.error('Read2 file is required')
 		if not options.index1:
 			parser.error('Index1 file is required')
+		if not options.outdir:
+			parser.error('Output dir is required')
 			
 		if os.path.isfile(options.bcs):
 			print "bcs file: " + str(options.bcs)

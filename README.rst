@@ -228,7 +228,7 @@ Tools for extracting subset barcoded reads from fastq files:
 		
 		-r Long Ranger index 1 fastq
 	Output:
-		-z Output directory for output fastq files (Optional); subsetted R1, R2 and I1 files will be generated here
+		-z Output directory for output fastq files; subsetted R1, R2 and I1 files will be generated here
 
 **extract_reads_interleaved**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
 
@@ -245,4 +245,4 @@ Tools for extracting subset barcoded reads from fastq files:
 		
 		-k seq lanes to consider
 	Output:
-		-z Output directory for output fastq files (Optional); subsetted RA and I1 files will be generated here
+		-z Output directory for output fastq files; subsetted RA and I1 files will be generated here
