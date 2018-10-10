@@ -130,7 +130,7 @@ def get_option_parser():
 	group.add_option("-m","--read1",
 		dest="read1", metavar="READ1",
 		help="read1 fastq file")
-	group.add_option("-n","--read2",
+	group.add_option("-u","--read2",
 		dest="read2", metavar="READ2",
 		help="read2 fastq file")
 	group.add_option("-r","--index1",
