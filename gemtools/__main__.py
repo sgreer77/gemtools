@@ -19,7 +19,6 @@ from gemtools.get_shared_bcs_f import get_shared_bcs
 from gemtools.assign_sv_haps_f import assign_sv_haps
 from gemtools.count_bcs_f import count_bcs
 from gemtools.get_phased_basic_f import get_phased_basic
-#from gemtools.get_phased_basic_chr_f import get_phased_basic_chr
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -168,6 +167,9 @@ def main(cmdlineargs=None):
 		cmdlineargs = sys.argv[1:]
 	options, args = parser.parse_args(args=cmdlineargs)
 	
+	if not options.tool:
+		parser.error("Must provide a tool to run with -T")
+		
 	if options.tool=="bedpe2window":
 		if not options.infile:
 			parser.error('Input file is required')

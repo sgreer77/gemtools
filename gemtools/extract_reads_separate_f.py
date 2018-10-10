@@ -5,14 +5,47 @@ import time
 from itertools import izip_longest, islice
 
 
-def extract_reads_separate(r1, r2, i1, bcs, out_r1, out_r2, out_i1):
-		   
+def extract_reads_separate(r1, r2, i1, bcs, out_dir):
+	
+def extract_reads_separate(**kwargs):	
+
+	if 'read1' in kwargs:
+		r1 = kwargs['read1']
+	if 'read2' in kwargs:
+		r2 = kwargs['read2']
+	if 'index1' in kwargs:
+		i1 = kwargs['index1']	
+	if 'bcs' in kwargs:
+		bc_file = kwargs['bcs']
+	if 'fq_outdir' in kwargs:
+		out_dir = kwargs['fq_outdir']
+	
+	if not out_dir.endswith("/"):
+    	out_dir = out_dir + "/"
+	
+	out_r1 = str(out_dir) + str(r1)
+	out_r2 = str(out_dir) + str(r2)
+	out_i1 = str(out_dir) + str(i1)
+	
+	if os.path.isfile(out_r1)
+		print str(out_r1) + " already exists"
+		sys.exit()
+	
+	if os.path.isfile(out_r2)
+		print str(out_r2) + " already exists"
+		sys.exit()
+
+	if os.path.isfile(out_i1)
+		print str(out_i1) + " already exists"
+		sys.exit()
+
+	
 	bcs_list = []
 	out_r1_file = gzip.open(out_r1,'w')
 	out_r2_file = gzip.open(out_r2,'w')
 	out_si_file = gzip.open(out_i1,'w')
 
-	with open(bcs,'r') as f:
+	with open(bc_file,'r') as f:
 		for line in csv.reader(f,delimiter='\t'):
 			bcs_list.append(line[0])
 
