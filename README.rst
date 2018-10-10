@@ -213,7 +213,7 @@ SV analysis tools:
 Tools for extracting subset barcoded reads from fastq files:
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-**extract_reads_separate**: Obtain reads with particular barcodes from Long Ranger fastq files (where output is R1,R2,I1)
+**extract_reads_separate**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is R1,R2,I1)
 
 	gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]
 	
@@ -230,7 +230,7 @@ Tools for extracting subset barcoded reads from fastq files:
 	Output:
 		-z Output directory for output fastq files; subsetted R1, R2 and I1 files will be generated here
 
-**extract_reads_interleaved**: Summarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
+**extract_reads_interleaved**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is RA,I1,I2)
 
 	gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]
 	
