@@ -25,15 +25,15 @@ def extract_reads_separate(**kwargs):
 	out_r2 = str(out_dir) + str(r2)
 	out_i1 = str(out_dir) + str(i1)
 	
-	if os.path.isfile(out_r1)
+	if os.path.isfile(out_r1):
 		print str(out_r1) + " already exists"
 		sys.exit()
 	
-	if os.path.isfile(out_r2)
+	if os.path.isfile(out_r2):
 		print str(out_r2) + " already exists"
 		sys.exit()
 
-	if os.path.isfile(out_i1)
+	if os.path.isfile(out_i1):
 		print str(out_i1) + " already exists"
 		sys.exit()
 
