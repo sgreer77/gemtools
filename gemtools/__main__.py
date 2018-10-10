@@ -179,6 +179,7 @@ def main(cmdlineargs=None):
 		parser.error("Must provide a tool to run with -T")
 		
 	if options.tool=="bedpe2window":
+		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -194,6 +195,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.window_size) + " must be an integer >0")
 	
 	if options.tool=="get_shared_bcs":
+		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -215,6 +217,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="assign_sv_haps":
+		print "gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -234,6 +237,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.vcf_test) + " does not appear to be a gzipped vcf file")
 
 	if options.tool=="count_bcs":
+		print "gemtools -T count_bcs -i [out.shared] -b [LR.bam] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -273,6 +277,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
 	
 	if options.tool=="get_phase_blocks":
+		print "gemtools -T get_phase_blocks -i [out.phased_basic] -o [out.phase_blocks]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -284,6 +289,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="get_bcs_in_region":
+		print "gemtools -T get_bcs_in_region -b [LR.bam] -f [region_in] -o [out.bcs]"
 		if not options.outfile:
 			parser.error('Output file is required')
 		if not options.bam:
@@ -297,6 +303,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 	
 	if options.tool=="get_phased_bcs":
+		print "gemtools -T get_phased_bcs -i [out.phased_basic] -p [phase_block_id] -o [out.phased_bcs]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
@@ -310,6 +317,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="select_bcs":
+		print "gemtools -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]"
 		if not options.bam:
 			parser.error('bam file is required')
 		if not options.outfile:
@@ -325,6 +333,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="count_bcs_list":
+		print "gemtools -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -b [bc_list] -o [out.bc_count]"
 		if not options.bam:
 			parser.error('bam file is required')
 		if not options.region_in:
@@ -348,6 +357,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bcs) + " does not exist")
 
 	if options.tool=="plot_hmw":
+		print "gemtools -T plot_hmw -i [out.bc_count] -o [out.pdf]"
 		if not options.infile:
 			parser.error('Input file is required')
 		if not options.outfile:
