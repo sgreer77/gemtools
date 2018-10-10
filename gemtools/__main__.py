@@ -118,6 +118,9 @@ def get_option_parser():
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Fastq")
+	group.add_option("-d","--fqdir",
+		dest="fqdir", metavar="FQ_DIR",
+		help="Long Rnager fastq directory")
 	group.add_option("-j","--sample_bcs",
 		dest="s_bcs", metavar="SAMPLE_BCS",
 		help="Sample barcodes")
