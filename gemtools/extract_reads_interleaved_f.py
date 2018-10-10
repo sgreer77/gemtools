@@ -67,6 +67,7 @@ def extract_reads(args_fq):
                         bcs.append(line[0])
 
         bcs = set(bcs)
+        bcs = [b.split("-")[0] for b in bcs]
 
         n = 0
         i = 0

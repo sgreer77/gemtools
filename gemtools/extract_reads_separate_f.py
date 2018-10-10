@@ -51,6 +51,7 @@ def extract_reads_separate(**kwargs):
 			bcs_list.append(line[0])
 
 	bcs_set = set(bcs_list)
+	bcs_set = [b.split("-")[0] for b in bcs_set]
 
 	n = 0
 	i = 0
