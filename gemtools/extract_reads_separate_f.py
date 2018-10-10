@@ -5,8 +5,6 @@ import time
 from itertools import izip_longest, islice
 
 
-def extract_reads_separate(r1, r2, i1, bcs, out_dir):
-	
 def extract_reads_separate(**kwargs):	
 
 	if 'read1' in kwargs:
