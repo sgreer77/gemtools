@@ -118,15 +118,24 @@ def get_option_parser():
 	parser.add_option_group(group)
 
 	group = OptionGroup(parser, "Fastq")
-	group.add_option("-d","--fq_dir", metavar="FQ_DIR",
-		dest="fqdir",
-		help="Fastq output directory")
 	group.add_option("-j","--sample_bcs",
 		dest="s_bcs", metavar="SAMPLE_BCS",
 		help="Sample barcodes")
 	group.add_option("-k","--lanes",
 		dest="lanes", metavar="LANES",
 		help="Numbers of sequencing lanes; ex: '1,5'")
+	group.add_option("-z","--outdir",
+		dest="outdir", metavar="OUT_DIR",
+		help="Name of output directory")
+	group.add_option("-m","--read1",
+		dest="read1", metavar="READ1",
+		help="read1 fastq file")
+	group.add_option("-n","--read2",
+		dest="read2", metavar="READ2",
+		help="read2 fastq file")
+	group.add_option("-r","--index1",
+		dest="index1", metavar="INDEX1",
+		help="index1 fastq file")
 	group.add_option("-z","--outdir",
 		dest="outdir", metavar="OUT_DIR",
 		help="Name of output directory")
@@ -159,6 +168,8 @@ def pipeline_from_parsed_args(options):
 		pipeline = plot_hmw(in_windows=options.infile, out=options.outfile)
 	if options.tool=="extract_reads_interleaved":
 		pipeline = extract_reads_interleaved(fqdir=options.fqdir, s_bcs=options.s_bcs, lanes=options.lanes, bcs=options.bcs, fq_outdir=options.outdir)
+	if options.tool=="extract_reads_separate":
+		pipeline = extract_reads_separate(bcs=options.bcs, fq_outdir=options.outdir, read1=options.read1, read2=options.read2, index1=options.index1)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -253,6 +264,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="get_phased_basic":
+		print "gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic] -n [chr_num]"
 		if not options.outfile:
 			parser.error('Output file is required')
 		if not options.vcf:
@@ -359,6 +371,21 @@ def main(cmdlineargs=None):
 		if not options.bcs:
 			parser.error('Droplet barcodes are required')
 		
+		if os.path.isfile(options.bcs):
+			print "bcs file: " + str(options.bcs)
+		else:
+			parser.error(str(options.bcs) + " does not exist")
+	
+	if options.tool=="extract_reads_separate":
+		if not options.bcs:
+			parser.error('Droplet barcodes are required')
+		if not options.read1:
+			parser.error('Read1 file is required')
+		if not options.read2:
+			parser.error('Read2 file is required')
+		if not options.index1:
+			parser.error('Index1 file is required')
+			
 		if os.path.isfile(options.bcs):
 			print "bcs file: " + str(options.bcs)
 		else:
