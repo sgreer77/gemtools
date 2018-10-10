@@ -19,7 +19,7 @@ def extract_reads_separate(**kwargs):
 		out_dir = kwargs['fq_outdir']
 	
 	if not out_dir.endswith("/"):
-    	out_dir = out_dir + "/"
+		out_dir = out_dir + "/"
 	
 	out_r1 = str(out_dir) + str(r1)
 	out_r2 = str(out_dir) + str(r2)
