@@ -6,7 +6,7 @@ gemtools version %version
 Copyright (C) 2018 Stephanie Greer <sgreer2@stanford.edu>
 gemtools is a suite of tools to work with linked read sequencing data.
 Usage:
-    gemtools -T TOOL [options] [-o output]
+    gemtools -T TOOL [options]
 """
 
 import os
@@ -337,7 +337,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="count_bcs_list":
-		print "gemtools -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -b [bc_list] -o [out.bc_count]"
+		print "gemtools -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -l [bc_list] -o [out.bc_count]"
 		if not options.bam:
 			parser.error('bam file is required')
 		if not options.region_in:
@@ -373,6 +373,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="extract_reads_interleaved":
+		print "gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]"
 		if not options.fqdir:
 			parser.error('Fastq dir is required')
 		if not options.s_bcs:
@@ -392,6 +393,7 @@ def main(cmdlineargs=None):
 			parser.error(str(options.outdir) + " already exists")
 	
 	if options.tool=="extract_reads_separate":
+		print "gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]"
 		if not options.bcs:
 			parser.error('Droplet barcodes are required')
 		if not options.read1:
