@@ -21,9 +21,9 @@ def extract_reads_separate(**kwargs):
 	if not out_dir.endswith("/"):
 		out_dir = out_dir + "/"
 	
-	out_r1 = str(out_dir) + str(r1)
-	out_r2 = str(out_dir) + str(r2)
-	out_i1 = str(out_dir) + str(i1)
+	out_r1 = str(out_dir) + str(r1.split("/")[-1])
+	out_r2 = str(out_dir) + str(r2.split("/")[-1])
+	out_i1 = str(out_dir) + str(i1.split("/")[-1])
 	
 	if os.path.isfile(out_r1):
 		print str(out_r1) + " already exists"
