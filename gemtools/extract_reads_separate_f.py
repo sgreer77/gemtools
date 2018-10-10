@@ -38,6 +38,8 @@ def extract_reads_separate(**kwargs):
 		print str(out_i1) + " already exists"
 		sys.exit()
 
+	if not os.path.isdir(out_dir):
+		os.makedirs(out_dir)
 	
 	bcs_list = []
 	out_r1_file = gzip.open(out_r1,'w')
