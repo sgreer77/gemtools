@@ -5,7 +5,7 @@ import gzip
 import time
 
 
-def extract_reads_interleaved(out_dir='fastq_bc',**kwargs):
+def extract_reads_interleaved(**kwargs):
 
 	print out_dir
 
