@@ -136,9 +136,6 @@ def get_option_parser():
 	group.add_option("-r","--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
-	group.add_option("-z","--outdir",
-		dest="outdir", metavar="OUT_DIR",
-		help="Name of output directory")
 	parser.add_option_group(group)
 
 	return parser
