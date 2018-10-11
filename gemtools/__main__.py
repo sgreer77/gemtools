@@ -108,7 +108,7 @@ def get_option_parser():
 
 	group = OptionGroup(parser, "Specifics")
 	group.add_option("-n","--chrom", metavar="CHR",
-		dest="chrom",
+		dest="chrom", default="None",
 		help="Chromosome number; ex: 'chr22','22'")
 	group.add_option("-p","--phase_block",
 		dest="phase_block", metavar="PHASE_ID",
