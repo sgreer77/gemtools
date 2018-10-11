@@ -98,6 +98,8 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 	cur_sample = sample_list[0]
 
 	vcf_data=[]
+
+	print c
 	
 	if c=='None':
 		for record in vcf_reader:
