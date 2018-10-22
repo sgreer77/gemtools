@@ -81,10 +81,12 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 
 	bam_open = pysam.Samfile(bam_input)
 
+	sv_df_full.to_csv("tester.txt", sep="\t", index=False)
+
 	df_list = []
 	for index,row in sv_df_full.iterrows():
 
-		df_name = str(str(row['name']) + "_df")
+		df_name = str(row['name']) + "_df"
 		# Create data frame of 1kb windows
 		start = int(row['w_start'])
 		stop = int(row['w_stop'])
