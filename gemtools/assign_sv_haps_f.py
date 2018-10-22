@@ -12,7 +12,7 @@ pd.options.mode.chained_assignment = None
 ### DEFINE FUNCTIONS TO PARSE VCF FILES
 
 def vcf_info_norm(n,bn,c,s,e,olist):
-	for record in vcf_reader_norm.fetch(str(c), s, e):
+	for record in vcf_reader_norm.fetch(str(c), int(s), int(e)):
 		print record
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
