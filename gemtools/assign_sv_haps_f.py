@@ -12,8 +12,7 @@ pd.options.mode.chained_assignment = None
 ### DEFINE FUNCTIONS TO PARSE VCF FILES
 
 def vcf_info_norm(n,bn,c,s,e,olist):
-	for record in vcf_reader_norm.fetch(str(c), int(s), int(e)):
-		print record
+	for record in vcf_reader_norm.fetch(c, s, e):
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
 			geno_list = set(record.genotype(norm_smpl)['GT'].split('|'))
@@ -22,8 +21,7 @@ def vcf_info_norm(n,bn,c,s,e,olist):
 				olist.append(eval(fields))
 
 def vcf_info_tum(n,bn,c,s,e,olist):
-	for record in vcf_reader_tum.fetch(str(c), s, e):
-		print record
+	for record in vcf_reader_tum.fetch(c, s, e):
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
 			geno_list = set(record.genotype(tum_smpl)['GT'].split('|'))
@@ -66,21 +64,15 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## OBTAIN SNVs + INFO FROM NORMAL VCF FILE -- will use normal file to define phase blocks + phase of variants 
 
 	df_sv = pd.read_table(sv_input, sep="\t")
-	print df_sv
 	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
 
 	## Generate list of columns to loop through
 	sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
-	print sv_wndw
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
 		start_1,end_1,start_2,end_2 = int(start_1),int(end_1),int(start_2),int(end_2)
-		print name
-		print name_1
-		print chrom_1
-		print start_1
-		print end_1
+
 		vcf_info_norm(name,name_1,chrom_1,start_1,end_1,vcf_data_norm)
 		vcf_info_norm(name,name_2,chrom_2,start_2,end_2,vcf_data_norm)
 
@@ -93,7 +85,6 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## MERGE VCF INFO DATA FRAMES THEN ADJUST BARCODE COLUMN ORDER TO REFLECT HAPLOTYPES
 
 	df_norm = pd.DataFrame(vcf_data_norm)
-	print df_norm
 	df_norm.columns = ['name','bp_name','phase_id_norm','chr','pos','ref_norm','alt_norm','gt_norm']
 
 	df_tum = pd.DataFrame(vcf_data_tum)
