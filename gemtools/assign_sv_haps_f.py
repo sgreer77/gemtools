@@ -12,7 +12,8 @@ pd.options.mode.chained_assignment = None
 ### DEFINE FUNCTIONS TO PARSE VCF FILES
 
 def vcf_info_norm(n,bn,c,s,e,olist):
-	for record in vcf_reader_norm.fetch(c, s, e):
+	for record in vcf_reader_norm.fetch(str(c), s, e):
+		print record
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
 			geno_list = set(record.genotype(norm_smpl)['GT'].split('|'))
@@ -21,7 +22,7 @@ def vcf_info_norm(n,bn,c,s,e,olist):
 				olist.append(eval(fields))
 
 def vcf_info_tum(n,bn,c,s,e,olist):
-	for record in vcf_reader_tum.fetch(c, s, e):
+	for record in vcf_reader_tum.fetch(str(c), s, e):
 		print record
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
