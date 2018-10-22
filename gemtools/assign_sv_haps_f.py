@@ -22,6 +22,7 @@ def vcf_info_norm(n,bn,c,s,e,olist):
 
 def vcf_info_tum(n,bn,c,s,e,olist):
 	for record in vcf_reader_tum.fetch(c, s, e):
+		print record
 		if record.is_snp:
 			format_list = (record.FORMAT).split(":")
 			geno_list = set(record.genotype(tum_smpl)['GT'].split('|'))
@@ -84,6 +85,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## MERGE VCF INFO DATA FRAMES THEN ADJUST BARCODE COLUMN ORDER TO REFLECT HAPLOTYPES
 
 	df_norm = pd.DataFrame(vcf_data_norm)
+	print df_norm
 	df_norm.columns = ['name','bp_name','phase_id_norm','chr','pos','ref_norm','alt_norm','gt_norm']
 
 	df_tum = pd.DataFrame(vcf_data_tum)
