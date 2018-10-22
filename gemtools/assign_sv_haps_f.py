@@ -66,10 +66,12 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## OBTAIN SNVs + INFO FROM NORMAL VCF FILE -- will use normal file to define phase blocks + phase of variants 
 
 	df_sv = pd.read_table(sv_input, sep="\t")
+	print df_sv
 	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
 
 	## Generate list of columns to loop through
 	sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
+	print sv_wndw
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
