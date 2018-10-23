@@ -69,14 +69,10 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 			print "ERROR: SV named " + str(s) + " is not present in input table"
 			sys.exit()
 	
-	print sv_list
-	
 	if str(sv_n)=="None":
 		sys.exit()
 	else:
 		sv_df = sv_df.loc[sv_df['name'].isin(sv_list)]
-	
-	print sv_df
 	
 	# Make list of SV-specific barcodes
 		
@@ -117,48 +113,44 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sv_df2.columns = full_names
 		sv_df_full = pd.concat([sv_df1,sv_df2])
 
-		print s
-		print sv_df_full
-		sys.exit()
-
-
 		w_start_list = [x[0] for x in sv_df_full.apply(lambda row: make_window(row['start'],row['stop'], full_w_size), axis=1)]
 		w_stop_list = [x[1] for x in sv_df_full.apply(lambda row: make_window(row['start'],row['stop'], full_w_size), axis=1)]
 		sv_df_full['w_start'] = w_start_list
 		sv_df_full['w_stop'] = w_stop_list
 
+	print sv_df_full
+	sys.exit()
+
+	df_list = []
+	for index,row in sv_df_full.iterrows():
+
+		df_name = str(row['name']) + "_df"
+		# Create data frame of 1kb windows
+		start = int(row['w_start'])
+		stop = int(row['w_stop'])
+		window_start = np.arange(start, start+full_w_size, small_w_size+1)
+		window_end = window_start+small_w_size
+		df_name = pd.DataFrame([window_start, window_end]).transpose()
+		df_name.columns = ['window_start','window_end']
+		df_name['chrom'] = str(row['chrom'])
+		df_name['id'] = str(row['id'])
+		df_name['name'] = str(row['name'])
+		df_name = df_name[['id','name','chrom','window_start','window_end']]
+
+		# Make a list of barcodes in each of the 1kb windows
+		region_bcs = []
+		for i,r in df_name.iterrows():  
+			region_bc_list = get_barcode_ids(bam_open, r['chrom'], r['window_start'], r['window_end'], MIN_MAPQ)
+			region_bcs.append(region_bc_list)
 
 
-		df_list = []
-		for index,row in sv_df_full.iterrows():
+		#bc_list = ast.literal_eval(row['bc_overlap_id'])
 
-			df_name = str(row['name']) + "_df"
-			# Create data frame of 1kb windows
-			start = int(row['w_start'])
-			stop = int(row['w_stop'])
-			window_start = np.arange(start, start+full_w_size, small_w_size+1)
-			window_end = window_start+small_w_size
-			df_name = pd.DataFrame([window_start, window_end]).transpose()
-			df_name.columns = ['window_start','window_end']
-			df_name['chrom'] = str(row['chrom'])
-			df_name['id'] = str(row['id'])
-			df_name['name'] = str(row['name'])
-			df_name = df_name[['id','name','chrom','window_start','window_end']]
+		# For each SV-specific barcode, count the number of times it occurs in each region
+		for bc in bc_list:
+			df_name[bc] = [x.count(bc) for x in region_bcs]
 
-			# Make a list of barcodes in each of the 1kb windows
-			region_bcs = []
-			for i,r in df_name.iterrows():  
-				region_bc_list = get_barcode_ids(bam_open, r['chrom'], r['window_start'], r['window_end'], MIN_MAPQ)
-				region_bcs.append(region_bc_list)
-
-
-			#bc_list = ast.literal_eval(row['bc_overlap_id'])
-
-			# For each SV-specific barcode, count the number of times it occurs in each region
-			for bc in bc_list:
-				df_name[bc] = [x.count(bc) for x in region_bcs]
-
-			df_list.append(df_name)
+		df_list.append(df_name)
 		
 	# Write output to file
 	df_full = pd.concat(df_list)
