@@ -82,6 +82,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		
 	if bc_subset=="shared":
 		bc_list = sv_df['bc_overlap_id'].sum()
+		print bc_list
 		bc_list=ast.literal_eval(str(bc_list))
 		#bc_list = ast.literal_eval(row['bc_overlap_id'])
 		if len(bc_list)<1:
