@@ -81,7 +81,8 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	# Make list of SV-specific barcodes
 		
 	if bc_subset=="shared":
-		bc_list = ast.literal_eval(str(sv_df['bc_overlap_id'].sum()))
+		bc_list = sv_df['bc_overlap_id'].sum()
+		bc_list=ast.literal_eval(str(bc_list))
 		#bc_list = ast.literal_eval(row['bc_overlap_id'])
 		if len(bc_list)<1:
 			print "No shared barcodes -- exiting"
@@ -99,10 +100,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sys.exit()
 	
 	print bc_list
-	for b in bc_list:
-		print b
-	print (bc_list)
-	sys.exit()
+	print len(bc_list)
 	
 	bam_open = pysam.Samfile(bam_input)
 
@@ -115,6 +113,10 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sv_df1.columns = full_names
 		sv_df2.columns = full_names
 		sv_df_full = pd.concat([sv_df1,sv_df2])
+
+		print s
+		print sv_df_full
+		sys.exit()
 
 
 		w_start_list = [x[0] for x in sv_df_full.apply(lambda row: make_window(row['start'],row['stop'], full_w_size), axis=1)]
