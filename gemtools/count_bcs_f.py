@@ -104,10 +104,10 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	bam_open = pysam.Samfile(bam_input)
 
 	for s in sv_list:
-		sv_df_cur = sv_df.loc[sv_df['name']==str(s)]
+		#sv_df_cur = sv_df.loc[sv_df['name']==str(s)]
 
-		sv_df1 = sv_df_cur[['name','name1','chrom1','start1','stop1','bc_1_id','bc_2_id','bc_overlap_id']]
-		sv_df2 = sv_df_cur[['name','name2','chrom2','start2','stop2','bc_1_id','bc_2_id','bc_overlap_id']]
+		sv_df1 = sv_df[['name','name1','chrom1','start1','stop1','bc_1_id','bc_2_id','bc_overlap_id']]
+		sv_df2 = sv_df[['name','name2','chrom2','start2','stop2','bc_1_id','bc_2_id','bc_overlap_id']]
 		full_names = ['id','name','chrom','start','stop','bc_1_id','bc_2_id','bc_overlap_id']
 		sv_df1.columns = full_names
 		sv_df2.columns = full_names
