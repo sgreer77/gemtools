@@ -81,11 +81,12 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	# Make list of SV-specific barcodes
 		
 	if bc_subset=="shared":
-		bc_list = sv_df['bc_overlap_id'].sum()
-		print bc_list
-		print type(bc_list)
-		bc_list=ast.literal_eval(str(bc_list))
-		#bc_list = ast.literal_eval(row['bc_overlap_id'])
+		bc_list=[]
+		bc_tups = sv_df['bc_overlap_id'].tolist()
+		for b in bc_tups:
+			c = list(ast.literal_eval(str(b))
+			bc_list = bc_list + c
+
 		if len(bc_list)<1:
 			print "No shared barcodes -- exiting"
 			sys.exit()
