@@ -89,7 +89,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		
 	elif bc_subset=="all":
 		sv_df['all_bcs'] = sv_df.apply(lambda row: tuple(set(row['bc_1_id'] + row['bc_2_id'])), axis=1)
-		bc_list sv_df[['all_bcs']].sum()
+		bc_list = sv_df[['all_bcs']].sum()
 		#bc_list = list(set(ast.literal_eval(row['bc_1_id']) + ast.literal_eval(row['bc_2_id'])))
 		if len(bc_list)<1:
 			print "No barcodes -- exiting"
