@@ -119,7 +119,6 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sv_df_full['w_stop'] = w_stop_list
 
 	print sv_df_full
-	sys.exit()
 
 	df_list = []
 	for index,row in sv_df_full.iterrows():
