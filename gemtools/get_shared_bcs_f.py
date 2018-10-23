@@ -61,7 +61,7 @@ def get_shared_bcs(outpre='out',**kwargs):
 	    bc_overlap = bc_1_unq & bc_2_unq
 	    num_overlaps = len(bc_overlap)
 
-	    bam_bc_list = [name, bc_1_num, bc_2_num, num_overlaps, list(bc_1_unq), list(bc_2_unq), list(bc_overlap)]
+	    bam_bc_list = [name, bc_1_num, bc_2_num, num_overlaps, tuple(bc_1_unq), tuple(bc_2_unq), tuple(bc_overlap)]
 
 	    bam_data.append(bam_bc_list)
 
