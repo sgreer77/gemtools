@@ -65,7 +65,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	sv_list = [str(s) for s in sv_list]
 	
 	for s in sv_list:
-		if not sv in svs_in_df:
+		if not s in svs_in_df:
 			print str(sv) + " not present in table"
 			sys.exit()
 	
