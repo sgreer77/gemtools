@@ -17,6 +17,13 @@ def plot_hmw(outpre='out',**kwargs):
 
 	df=pd.read_table(infile,sep="\t")
 
+	chr_list = list(set(df['chrom'].tolist()))
+	if len(chr_list)>1:
+		print "Can only plot breakpoints on one chromosome, at this time -- exiting"
+		sys.exit()
+	else:
+		chr_val = str(chr_list[0])
+
 	# First, create the barcode list
 	bc_list = df.columns.tolist()[5:]
 
@@ -73,11 +80,11 @@ def plot_hmw(outpre='out',**kwargs):
 	plotFunc = robj.r("""
 	 library(ggplot2)
  
-	function(df, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, y_brk, outpre)	{
+	function(df, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, label_x, y_brk, outpre)	{
 		theme_set(theme_bw(35))
 		p1 <- ggplot(df,aes(x=(window_start/1000000),y=value)) +
 			geom_point(size=0.6, colour="black") +
-			xlab("chr10 (Mb)") +
+			xlab(paste0(label_x," (Mb)")) +
 			ylab("SV-specific barcode") +
 			theme(plot.margin= unit(c(0.5, 1.5, 0.5, 0.1), "lines"),
 				panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -87,7 +94,7 @@ def plot_hmw(outpre='out',**kwargs):
 				axis.text.x = element_text(size=20),
 				axis.text.y = element_text(size=20),
 				axis.title.y = element_text(size=25),
-				axis.title.x=element_blank()) +
+				axis.title.x=element_text(size=25)) +
 			scale_x_continuous(limits = c(label_calc_low/1000000, label_calc_hi/1000000), breaks=seq(label_low,label_hi,break_calc)) +
 			scale_y_continuous(breaks=seq(0,label_y,y_brk))
 
@@ -95,6 +102,6 @@ def plot_hmw(outpre='out',**kwargs):
 		}
 	""")
 
-	plotFunc(m1_r, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, y_brk, outpre)
+	plotFunc(m1_r, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, chr_val, y_brk, outpre)
 
 
