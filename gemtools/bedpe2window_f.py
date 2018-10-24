@@ -44,7 +44,7 @@ def calc_window_size(w):
 	else:									# Otherwise				
 		test_size = int(w) - 50000			
 		if test_size>=10000:				# Try to make windows as large as possible (lower limit 10kb), while maintaining 50 kb distance between breakpoints
-			window_sz = test_sz
+			window_sz = test_size
 		elif str(w)<30000:					# If can't do the above, then if distance between breakpoints is very small (i.e. less than 30kb), make windows 5kb
 			window_sz = 5000
 		else:
