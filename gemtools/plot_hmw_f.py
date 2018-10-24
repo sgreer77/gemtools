@@ -23,19 +23,15 @@ def plot_hmw(outpre='out',**kwargs):
 	# sort the barcodes according to where their reads map
 	min_list=[]
 	for bc in bc_list:
-		df_tmp = df[['id','window_start',bc]]
+		df_tmp = df[['window_start',bc]]
 		df_tmp = df_tmp.loc[df_tmp[bc]>0]
 		min_val = df_tmp['window_start'].min()
 		max_val = df_tmp['window_start'].max()
-		id_list = list(set(df_tmp['id'].tolist()))
-		print id_list
-		for i in id_list:
-			min_list.append([i,bc,min_val,max_val])
+		min_list.append([bc,min_val,max_val])
 
-	min_df = pd.DataFrame(min_list, columns=['id','bc','min_val','max_val'])
-	min_df.sort_values(by=['id','min_val'], inplace=True)
+	min_df = pd.DataFrame(min_list, columns=['bc','min_val','max_val'])
+	min_df.sort_values(by='min_val', inplace=True)
 	bc_order = min_df['bc'].tolist()
-	print bc_order
 
 	bc_counter=1
 	melt_list = []
