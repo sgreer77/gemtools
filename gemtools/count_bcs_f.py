@@ -82,6 +82,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		for b in bc_tups:
 			c = list(ast.literal_eval(str(b)))
 			bc_list = bc_list + c
+			bc_list = list(set(bc_list))
 
 		if len(bc_list)<1:
 			print "No shared barcodes -- exiting"
