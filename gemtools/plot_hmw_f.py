@@ -23,14 +23,16 @@ def plot_hmw(outpre='out',**kwargs):
 	# sort the barcodes according to where their reads map
 	min_list=[]
 	for bc in bc_list:
-		df_tmp = df[['window_start',bc]]
+		df_tmp = df[['id','window_start',bc]]
 		df_tmp = df_tmp.loc[df_tmp[bc]>0]
 		min_val = df_tmp['window_start'].min()
 		max_val = df_tmp['window_start'].max()
-		min_list.append([bc,min_val,max_val])
+		id_list = df['id'].tolist()
+		for i in id_list:
+			min_list.append([i,bc,min_val,max_val])
 
-	min_df = pd.DataFrame(min_list, columns=['bc','min_val','max_val'])
-	min_df.sort_values(by='min_val', inplace=True)
+	min_df = pd.DataFrame(min_list, columns=['id','bc','min_val','max_val'])
+	min_df.sort_values(by=['id','min_val'], inplace=True)
 	bc_order = min_df['bc'].tolist()
 
 	bc_counter=1
@@ -47,6 +49,10 @@ def plot_hmw(outpre='out',**kwargs):
 		melt_list.append(df_bc)
 
 	m1 = pd.concat(melt_list)
+	
+	if m1.empty:
+		print "No mappings to plot -- exiting -- start by checking that you are used the correct bam file to generate the input file"
+		sys.exit()
 
 	label_calc_low = m1['window_start'].min()
 	label_calc_hi = m1['window_end'].max()
