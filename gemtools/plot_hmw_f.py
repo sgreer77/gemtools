@@ -27,7 +27,7 @@ def plot_hmw(outpre='out',**kwargs):
 		df_tmp = df_tmp.loc[df_tmp[bc]>0]
 		min_val = df_tmp['window_start'].min()
 		max_val = df_tmp['window_start'].max()
-		id_list = df_tmp['id'].tolist()
+		id_list = list(set(df_tmp['id'].tolist()))
 		print id_list
 		for i in id_list:
 			min_list.append([i,bc,min_val,max_val])
