@@ -28,12 +28,14 @@ def plot_hmw(outpre='out',**kwargs):
 		min_val = df_tmp['window_start'].min()
 		max_val = df_tmp['window_start'].max()
 		id_list = df_tmp['id'].tolist()
+		print id_list
 		for i in id_list:
 			min_list.append([i,bc,min_val,max_val])
 
 	min_df = pd.DataFrame(min_list, columns=['id','bc','min_val','max_val'])
 	min_df.sort_values(by=['id','min_val'], inplace=True)
 	bc_order = min_df['bc'].tolist()
+	print bc_order
 
 	bc_counter=1
 	melt_list = []
