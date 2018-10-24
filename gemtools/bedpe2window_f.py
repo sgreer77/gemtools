@@ -105,7 +105,7 @@ def bedpe2window(outpre='out',**kwargs):
 	df_sv['dist'] = df_sv.apply(lambda row: get_dist(row)[0], axis=1)
 	df_sv['status'] = df_sv.apply(lambda row: get_dist(row)[1], axis=1)
 
-	if 'window' in kwargs:
+	if str(window_size)!="None":
 		df_sv['window_size'] = window_size
 	else:
 		df_sv['window_size'] = df_sv['dist'].apply(lambda x: calc_window_size(x))
