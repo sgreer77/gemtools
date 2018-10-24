@@ -192,10 +192,10 @@ def main(cmdlineargs=None):
 			print "input file: " + str(options.infile)
 		else:
 			parser.error(str(options.infile) + " does not exist")
-		if str(options.window_size).isdigit() and int(options.window_size)>0:
-			print "window_size: " + str(options.window_size)
-		else:
-			parser.error(str(options.window_size) + " must be an integer >0")
+		#if str(options.window_size).isdigit() and int(options.window_size)>0:
+		#	print "window_size: " + str(options.window_size)
+		#else:
+		#	parser.error(str(options.window_size) + " must be an integer >0")
 	
 	if options.tool=="get_shared_bcs":
 		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
