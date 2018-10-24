@@ -53,7 +53,7 @@ def calc_window_size(w):
 	
 ## READ IN SV FILE + PARSE TO DESIRED FORMAT
 
-def bedpe2window(window_size=500000,outpre='out',**kwargs):
+def bedpe2window_auto(window_size=500000,outpre='out',**kwargs):
 	
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
@@ -82,7 +82,7 @@ def bedpe2window(window_size=500000,outpre='out',**kwargs):
 	return df_wndw
 
 
-def bedpe2window_auto(outpre='out',**kwargs):
+def bedpe2window(outpre='out',**kwargs):
 	
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
