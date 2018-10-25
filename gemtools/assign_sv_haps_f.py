@@ -85,13 +85,19 @@ def assign_sv_haps(outpre='out',**kwargs):
 	## Generate list of columns to loop through
 		sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
 	else:
-		df_sv = df_sv[['name','name1','chrom1','start1','stop1','name2','chrom2','start2','stop2']]
-		df_sv['window_size'] = window_size
-		wndw_out = df_sv.apply(lambda row: window_rows_haps(row), axis=1)
+		df_sv_sub = df_sv[['name','name1','chrom1','start1','stop1','name2','chrom2','start2','stop2']]
+		df_sv_sub['window_size'] = window_size
+		wndw_out = df_sv_sub.apply(lambda row: window_rows_haps(row), axis=1)
 		df_wndw = pd.DataFrame(list(wndw_out))
 		df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','window_size']
 		sv_wndw = df_wndw[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
 		df_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
+
+		df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bc_overlap_id']]
+		df_sv_sub2[['name']]=df_sv_sub2[['name']].astype(str)
+		df_wndw[['name']]=df_wndw[['name']].astype(str)
+
+		df_sv = pd.merge(df_wndw, df_sv_sub2, on="name")
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
