@@ -53,6 +53,35 @@ def calc_window_size(w):
 	
 ## READ IN SV FILE + PARSE TO DESIRED FORMAT
 
+def bedpe2window_auto(window_size=500000,outpre='out',**kwargs):
+	
+	if 'bedpe' in kwargs:
+		sv_input = kwargs['bedpe']
+	if 'window' in kwargs:
+		window_size = kwargs['window']
+	if 'out' in kwargs:
+		outpre = kwargs['out']
+
+	df_sv = pd.read_table(sv_input, sep="\t", comment="#", header=None)
+	df_sv.columns = ['chrom1','start1','stop1','chrom2','start2','stop2','name'] + list(df_sv.columns)[7:] 
+
+	df_sv['name1'] = df_sv['name'].apply(lambda x: str(x) + "_1")
+	df_sv['name2'] = df_sv['name'].apply(lambda x: str(x) + "_2")
+
+	df_sv = df_sv[['name','name1','chrom1','start1','stop1','name2','chrom2','start2','stop2']]
+
+	sv_wndw = df_sv.apply(lambda row: window_rows(row,window_size), axis=1)
+	df_wndw = pd.DataFrame(list(sv_wndw))
+	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']
+
+	# Check whether breakpoints are far from each other
+	df_wndw['dist'] = df_wndw.apply(lambda row: get_dist(row)[0], axis=1)
+	df_wndw['status'] = df_wndw.apply(lambda row: get_dist(row)[1], axis=1)
+
+	df_wndw.to_csv(str(outpre), sep="\t", index=False)
+	return df_wndw
+
+
 def bedpe2window(outpre='out',**kwargs):
 	
 	if 'bedpe' in kwargs:
@@ -84,6 +113,8 @@ def bedpe2window(outpre='out',**kwargs):
 	sv_wndw = df_sv.apply(lambda row: window_rows(row), axis=1)
 	df_wndw = pd.DataFrame(list(sv_wndw))
 	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','dist','status','window_size']
+
+
 
 	df_wndw.to_csv(str(outpre), sep="\t", index=False)
 	return df_wndw

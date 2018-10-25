@@ -149,7 +149,7 @@ def pipeline_from_parsed_args(options):
 	if options.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
 	if options.tool=="assign_sv_haps":
-		pipeline = assign_sv_haps(sv=options.infile, vcf_control=options.vcf_control, vcf_test=options.vcf_test, out=options.outfile)
+		pipeline = assign_sv_haps(sv=options.infile, window=options.window_size, vcf_control=options.vcf_control, vcf_test=options.vcf_test, out=options.outfile)
 	if options.tool=="count_bcs":
 		pipeline = count_bcs(bam=options.bam, sv=options.infile, in_window=options.in_window, out_window=options.out_window, sv_name=options.sv_name, bcs=options.bc_select, out=options.outfile)
 	if options.tool=="get_phased_basic":
