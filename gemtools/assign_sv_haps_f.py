@@ -55,7 +55,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 	if 'window' in kwargs:
-		window_size = kwags['window']
+		window_size = kwargs['window']
 		
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 	# GET INFO FROM VCF FILES                                                                #
