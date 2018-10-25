@@ -91,7 +91,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 		df_wndw = pd.DataFrame(list(wndw_out))
 		df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','window_size']
 		sv_wndw = df_wndw[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
-		sv_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
+		df_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
