@@ -39,11 +39,11 @@ def window_rows(r):
 
 # Below, try to automatically generate windows
 def calc_window_size(w):
-	if (str(w)=='na' or int(w)>=1050000):  	# If event breakpoints are very distant, make large windows around breakpoint (1000000bp)
-		window_sz = 1000000	
+	if (str(w)=='na' or int(w)>=300000):  	# If event breakpoints are distant, make large windows around breakpoint (200 kb)
+		window_sz = 200000	
 	else:									# Otherwise				
-		test_size = int(w) - 150000			
-		if test_size>=10000:				# Try to make windows as large as possible (lower limit 10kb), while maintaining 50 kb distance between breakpoints
+		test_size = int(w) - 110000			
+		if test_size>=10000:				# Try to make windows as large as possible (lower limit 10kb), while maintaining 100 kb distance between breakpoints
 			window_sz = test_size
 		elif str(w)<30000:					# If can't do the above, then if distance between breakpoints is very small (i.e. less than 30kb), make windows 5kb
 			window_sz = 5000
