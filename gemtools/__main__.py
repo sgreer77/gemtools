@@ -178,6 +178,9 @@ def main(cmdlineargs=None):
 		cmdlineargs = sys.argv[1:]
 	options, args = parser.parse_args(args=cmdlineargs)
 	
+	print options
+	print args
+	
 	if not options.tool:
 		parser.error("Must provide a tool to run with -T")
 		
