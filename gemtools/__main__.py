@@ -531,7 +531,7 @@ Output:
 		
 
 ##########################################################################################	
-	pipeline = pipeline_from_parsed_args(options)
+	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
 
 if __name__ == '__main__':
