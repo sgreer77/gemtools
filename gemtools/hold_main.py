@@ -11,8 +11,7 @@ Usage:
 
 import os
 import sys
-#from optparse import OptionParser, OptionGroup
-import argparse
+from optparse import OptionParser, OptionGroup
 
 from gemtools import __version__
 from gemtools.bedpe2window_f import bedpe2window
@@ -32,14 +31,14 @@ from gemtools.extract_reads_separate_f import extract_reads_separate
 from gemtools.get_hmw_summary_f import get_hmw_summary
 
 
-#class GemtoolsOptionParser(OptionParser):
-#	def get_usage(self):
-#		return self.usage.lstrip().replace('%version', __version__)
-#		print("test1")
-#	def error(self, msg):
-#		print('Run "gemtools --help" to see command-line options.')
-#		print("test2")
-#		self.exit(2, "%s: error: %s\n" % (self.get_prog_name(), msg))
+class GemtoolsOptionParser(OptionParser):
+	def get_usage(self):
+		return self.usage.lstrip().replace('%version', __version__)
+		print("test1")
+	def error(self, msg):
+		print('Run "gemtools --help" to see command-line options.')
+		print("test2")
+		self.exit(2, "%s: error: %s\n" % (self.get_prog_name(), msg))
 
 class CommandLineError(Exception):
 	pass
@@ -50,109 +49,106 @@ Hi, this is a really long help message for %prog.
 It's a pretty ace thing. (C)2010 Stuff etc.
 """
 
-#parser = argparse.ArgumentParser(description='Process some integers.')
-
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Process some integers.')
-	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
+	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	#parser = GemtoolsOptionParser(usage=help_text, version=__version__,add_help=False)
 	
-	parser.add_argument("-T", "--tool", default=None, dest="tool",
+	parser.add_option("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
-	parser.add_argument("-o", "--output", metavar="FILE",
+	parser.add_option("-o", "--output", metavar="FILE",
 		dest="outfile",
 		help="Name of output file")
 
-	#group = OptionGroup(parser, "Input files")
-	parser.add_argument("-i", "--input", metavar="FILE",
+	group = OptionGroup(parser, "Input files")
+	group.add_option("-i", "--input", metavar="FILE",
 		dest="infile",
 		help="Name of input file ")
-	parser.add_argument("-b","--bam", metavar="FILE",
+	group.add_option("-b","--bam", metavar="FILE",
 		dest="bam",
 		help="bam file")
-	parser.add_argument("-v","--vcf", metavar="FILE",
+	group.add_option("-v","--vcf", metavar="FILE",
 		dest="vcf",
 		help="vcf file")
-	parser.add_argument("-c","--vcf_control", metavar="FILE",
+	group.add_option("-c","--vcf_control", metavar="FILE",
 		dest="vcf_control",
 		help="Control vcf file")
-	parser.add_argument("-t","--vcf_test", metavar="FILE",
+	group.add_option("-t","--vcf_test", metavar="FILE",
 		dest="vcf_test",
 		help="Test vcf file")
-	#parser.add_argument_group(group)	
+	parser.add_option_group(group)	
 	
-	#group = OptionGroup(parser, "Windows")
-	parser.add_argument("-w", "--window", type=int,
+	group = OptionGroup(parser, "Windows")
+	group.add_option("-w", "--window", type=int,
 		dest="window_size", metavar="WINDOW",
 		help="Size of window to create around bkpts in bp      ")
-	parser.add_argument("-x","--in_window", type=int, default=1000,
+	group.add_option("-x","--in_window", type=int, default=1000,
 		dest="in_window",metavar="WINDOW",
 		help="Size of small windows in bp                       "
 			"default: 1000")
-	parser.add_argument("-y","--out_window", type=int, default=50000,
+	group.add_option("-y","--out_window", type=int, default=50000,
 		dest="out_window",metavar="WINDOW",
 		help="Size of large window in bp                       "
 			"default: 50000")
-	#parser.add_argument_group(group)
+	parser.add_option_group(group)
 
-	#group = OptionGroup(parser, "Regions")
-	parser.add_argument("-f","--region_in",
+	group = OptionGroup(parser, "Regions")
+	group.add_option("-f","--region_in",
 		dest="region_in", metavar='REGION',
 		help="In region(s) in format: "
 		"chr1,1000000,2000000 or "
 		"chr1,1000000,2000000;chr2:3000000,4000000")
-	parser.add_argument("-g","--region_out",
+	group.add_option("-g","--region_out",
 		dest="region_out", metavar='REGION',
 		help="Out region(s) in format: "
 		"chr1,1000000,2000000 or "
 		"chr1,1000000,2000000;chr2:3000000,4000000")
-	#parser.add_argument_group(group)
+	parser.add_option_group(group)
 
-	#group = OptionGroup(parser, "Barcodes")
-	parser.add_argument("-l","--bc_list", metavar="FILE",
+	group = OptionGroup(parser, "Barcodes")
+	group.add_option("-l","--bc_list", metavar="FILE",
 		dest="bcs",
 		help="File with list of barcodes")			
-	parser.add_argument("-q","--bc_select",metavar='(all|shared)',
+	group.add_option("-q","--bc_select",metavar='(all|shared)',
 		dest="bc_select",choices=('all', 'shared'), default="shared",
 		help="BCs to consider: all bcs or shared bcs               "
 			"default: shared")
-	#parser.add_argument_group(group)
+	parser.add_option_group(group)
 
-	#group = OptionGroup(parser, "Specifics")
-	parser.add_argument("-n","--chrom", metavar="CHR",
+	group = OptionGroup(parser, "Specifics")
+	group.add_option("-n","--chrom", metavar="CHR",
 		dest="chrom", default="None",
 		help="Chromosome number; ex: 'chr22','22'")
-	parser.add_argument("-p","--phase_block",
+	group.add_option("-p","--phase_block",
 		dest="phase_block", metavar="PHASE_ID",
 		help="Phase block id (from vcf)")
-	parser.add_argument("-s","--sv_name",
+	group.add_option("-s","--sv_name",
 		dest="sv_name", metavar="SV",
 		help="Name of SV; ex: 'call_144', '144'")
-	#parser.add_argument_group(group)
+	parser.add_option_group(group)
 
-	#group = OptionGroup(parser, "Fastq")
-	parser.add_argument("-d","--fqdir",
+	group = OptionGroup(parser, "Fastq")
+	group.add_option("-d","--fqdir",
 		dest="fqdir", metavar="FQ_DIR",
 		help="Long Rnager fastq directory")
-	parser.add_argument("-j","--sample_bcs",
+	group.add_option("-j","--sample_bcs",
 		dest="s_bcs", metavar="SAMPLE_BCS",
 		help="Sample barcodes")
-	parser.add_argument("-k","--lanes",
+	group.add_option("-k","--lanes",
 		dest="lanes", metavar="LANES",
 		help="Numbers of sequencing lanes; ex: '1,5'")
-	parser.add_argument("-z","--outdir",
+	group.add_option("-z","--outdir",
 		dest="outdir", metavar="OUT_DIR",
 		help="Name of output directory")
-	parser.add_argument("-m","--read1",
+	group.add_option("-m","--read1",
 		dest="read1", metavar="READ1",
 		help="read1 fastq file")
-	parser.add_argument("-u","--read2",
+	group.add_option("-u","--read2",
 		dest="read2", metavar="READ2",
 		help="read2 fastq file")
-	parser.add_argument("-r","--index1",
+	group.add_option("-r","--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
-	#parser.add_argument_group(group)
+	parser.add_option_group(group)
 
 	return parser
 
