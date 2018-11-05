@@ -41,35 +41,34 @@ from gemtools.get_hmw_summary_f import get_hmw_summary
 #		print("test2")
 #		self.exit(2, "%s: error: %s\n" % (self.get_prog_name(), msg))
 
-class CommandLineError(Exception):
-	pass
+#class CommandLineError(Exception):
+#	pass
 
 def gt_usage_msg(name=None):                                                            
     return '''\tgemtools -T <sub-tool> [options]
         '''
 
-
 gt_help_msg = """gemtools: flexible tools for linked read sequencing analysis.
 usage:	gemtools -T <sub-tool> [options]\n
 The gemtools sub-tools include:\n 
 [ Phase blocks ] 
-    get_phased_basic   Obtain phasing information for all SNVs in the vcf file 
+    get_phased_basic   Obtain phasing information for all SNVs in the vcf file. 
     get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.\n
 [ SV analysis tools ]
-    bedpe2window	Generate windows around SV breakpoints for SV analysis
-    get_shared_bcs	Determine barcodes shared between SV breakpoints
-    assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs)
-    count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints
-    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE) \n
+    bedpe2window	Generate windows around SV breakpoints for SV analysis.
+    get_shared_bcs	Determine barcodes shared between SV breakpoints.
+    assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs).
+    count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
+    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). \n
 [ Subset reads by barcode ]
-    extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1)
-    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2)\n
+    extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
+    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2). \n
 [ General tools ]
-    get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes
-    select_bcs		Get barcodes shared by ALL region_in's and present in NONE of the region_out's
-    get_bcs_in_region	Get all the barcodes that exist in a given region of the genome
-    count_bcs_list	Determine presence and quantity of given barcodes across a given region
-    plot_hmw		Generate a plot of the mapping locations of reads with each barcode
+    get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes.
+    select_bcs		Get barcodes shared by ALL region_in's and present in NONE of the region_out's.
+    get_bcs_in_region	Get all the barcodes that exist in a given region of the genome.
+    count_bcs_list	Determine presence and quantity of given barcodes across a given region.
+    plot_hmw		Generate a plot of the mapping locations of reads with each barcode.
         """
 
 def get_option_parser():
@@ -98,9 +97,6 @@ def get_option_parser():
 	parser.add_argument("-t","--vcf_test", metavar="FILE",
 		dest="vcf_test",
 		help="Test vcf file")
-	#parser.add_argument_group(group)	
-	
-	#group = OptionGroup(parser, "Windows")
 	parser.add_argument("-w", "--window", type=int,
 		dest="window_size", metavar="WINDOW",
 		help="Size of window to create around bkpts in bp      ")
@@ -112,9 +108,6 @@ def get_option_parser():
 		dest="out_window",metavar="WINDOW",
 		help="Size of large window in bp                       "
 			"default: 50000")
-	#parser.add_argument_group(group)
-
-	#group = OptionGroup(parser, "Regions")
 	parser.add_argument("-f","--region_in",
 		dest="region_in", metavar='REGION',
 		help="In region(s) in format: "
@@ -125,9 +118,6 @@ def get_option_parser():
 		help="Out region(s) in format: "
 		"chr1,1000000,2000000 or "
 		"chr1,1000000,2000000;chr2:3000000,4000000")
-	#parser.add_argument_group(group)
-
-	#group = OptionGroup(parser, "Barcodes")
 	parser.add_argument("-l","--bc_list", metavar="FILE",
 		dest="bcs",
 		help="File with list of barcodes")			
@@ -135,9 +125,6 @@ def get_option_parser():
 		dest="bc_select",choices=('all', 'shared'), default="shared",
 		help="BCs to consider: all bcs or shared bcs               "
 			"default: shared")
-	#parser.add_argument_group(group)
-
-	#group = OptionGroup(parser, "Specifics")
 	parser.add_argument("-n","--chrom", metavar="CHR",
 		dest="chrom", default="None",
 		help="Chromosome number; ex: 'chr22','22'")
@@ -147,9 +134,6 @@ def get_option_parser():
 	parser.add_argument("-s","--sv_name",
 		dest="sv_name", metavar="SV",
 		help="Name of SV; ex: 'call_144', '144'")
-	#parser.add_argument_group(group)
-
-	#group = OptionGroup(parser, "Fastq")
 	parser.add_argument("-d","--fqdir",
 		dest="fqdir", metavar="FQ_DIR",
 		help="Long Rnager fastq directory")
@@ -171,7 +155,6 @@ def get_option_parser():
 	parser.add_argument("-r","--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
-	#parser.add_argument_group(group)
 
 	return parser
 
@@ -530,7 +513,7 @@ Output:
 		
 
 ##########################################################################################	
-	pipeline = pipeline_from_parsed_args(options)
+	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
 
 if __name__ == '__main__':
