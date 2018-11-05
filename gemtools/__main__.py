@@ -42,8 +42,15 @@ class GemtoolsOptionParser(OptionParser):
 class CommandLineError(Exception):
 	pass
 
+help_text = """
+Hi, this is a really long help message for %prog. 
+
+It's a pretty ace thing. (C)2010 Stuff etc.
+"""
+
 def get_option_parser():
-	parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
+	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
+	parser = GemtoolsOptionParser(usage=help_text, version=__version__)
 	
 	parser.add_option("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
