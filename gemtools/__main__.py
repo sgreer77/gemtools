@@ -51,7 +51,7 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 
 def get_option_parser():
 	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
-	parser = GemtoolsOptionParser(usage=help_text, version=__version__)
+	parser = GemtoolsOptionParser(usage=help_text, version=__version__,add_help=False)
 	
 	parser.add_option("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
