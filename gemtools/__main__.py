@@ -44,16 +44,8 @@ from gemtools.get_hmw_summary_f import get_hmw_summary
 class CommandLineError(Exception):
 	pass
 
-help_text = """
-Hi, this is a really long help message for. 
-
-It's a pretty ace thing. (C)2010 Stuff etc.
-"""
-
-#parser = argparse.ArgumentParser(description='Process some integers.')
-
 def msg(name=None):                                                            
-    return '''\tgemtools -T <tool> [options]\n
+    return '''\tgemtools -T <tool> [options]
         '''
 
 def help_msg(name=None):                                                            
@@ -80,17 +72,17 @@ The gemtools sub-commands include:\n
         '''
 
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False, usage=msg()) #usage=help_text,
-	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
-	#parser = GemtoolsOptionParser(usage=help_text, version=__version__,add_help=False)
+	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False, usage=msg())
 	
 	parser.add_argument("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
 	parser.add_argument("-o", "--output", metavar="FILE",
 		dest="outfile",
 		help="Name of output file")
+	parser.add_argument("-h", "--help",
+		dest="help",
+		help="Print this help menu")
 
-	#group = OptionGroup(parser, "Input files")
 	parser.add_argument("-i", "--input", metavar="FILE",
 		dest="infile",
 		help="Name of input file ")
