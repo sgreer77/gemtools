@@ -80,7 +80,7 @@ def get_option_parser():
 		dest="outfile",
 		help="Name of output file")
 	parser.add_option("-h", "--help",
-		dest="help", help="Print this help menu")
+		dest="help", help="Print this help menu", action="store_true")
 
 	parser.add_argument("-i", "--input", metavar="FILE",
 		dest="infile",
