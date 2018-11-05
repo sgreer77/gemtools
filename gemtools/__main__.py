@@ -529,7 +529,7 @@ Output:
 		
 
 ##########################################################################################	
-	pipeline = pipeline_from_parsed_args(args)
+	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
 if __name__ == '__main__':
