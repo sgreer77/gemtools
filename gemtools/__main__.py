@@ -213,7 +213,7 @@ def main(cmdlineargs=None):
 	
 	if args.help:
 		print help_msg
-		
+		sys.exit()
 	
 	if not args.tool:
 		parser.error("Must provide a tool to run with -T")
