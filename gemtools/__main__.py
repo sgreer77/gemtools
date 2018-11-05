@@ -224,10 +224,10 @@ def main(cmdlineargs=None):
 		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if args.help:
 			print """Tool:	gemtools -T bedpe2window
-			Summary: Generate windows around SV breakpoints for SV analysis\n
-			Usage:   gemtools -T bedpe2window [OPTIONS] -i <bedpe> -o <out.txt>\n
-			Options:
-				-w	window size (bp)
+Summary: Generate windows around SV breakpoints for SV analysis\n
+Usage:   gemtools -T bedpe2window [OPTIONS] -i <bedpe> -o <out.txt>
+Options:
+	-w	window size (bp)
 			"""
 			sys.exit()
 		if not (args.infile or args.outfile):
