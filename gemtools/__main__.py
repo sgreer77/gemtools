@@ -226,6 +226,7 @@ def main(cmdlineargs=None):
 	if options.tool=="count_bcs":
 		print "gemtools -T count_bcs -i [out.shared] -b [LR.bam] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count]"
 		if not (options.infile or options.outfile or options.sv_name or options.bam):
+			parser.error('Missing required input')
 
 		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
