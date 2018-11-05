@@ -53,7 +53,7 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 #parser = argparse.ArgumentParser(description='Process some integers.')
 
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Process some integers.')
+	parser = argparse.ArgumentParser(description='Process some integers.',add_help=False)
 	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	#parser = GemtoolsOptionParser(usage=help_text, version=__version__,add_help=False)
 	
