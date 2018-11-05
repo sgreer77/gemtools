@@ -54,10 +54,10 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 
 def msg(name=None):                                                            
     return '''\tgemtools -T <tool> [options]
-    		The bedtools sub-commands include:
-    		[ Phase blocks ]
-    		\tget_phased_basic\t\tObtain phasing information for all SNVs in the vcf file
-    		\tget_phase_blocks\t\tSummarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
+    The bedtools sub-commands include:
+    [ Phase blocks ]
+    \tget_phased_basic\t\tObtain phasing information for all SNVs in the vcf file
+    \tget_phase_blocks\t\tSummarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
     
          [-a, Pass argument a]
          [-b, Pass argument b]
