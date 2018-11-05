@@ -52,8 +52,18 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 
 #parser = argparse.ArgumentParser(description='Process some integers.')
 
+def msg(name=None):                                                            
+    return '''program.py
+         [-a, Pass argument a]
+         [-b, Pass argument b]
+         [-c, Pass argument c]
+         [-d, Pass argument d]
+         comment
+         more comment
+        '''
+
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False) #usage=help_text,
+	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False, usage=msg()) #usage=help_text,
 	#parser = GemtoolsOptionParser(usage=__doc__, version=__version__)
 	#parser = GemtoolsOptionParser(usage=help_text, version=__version__,add_help=False)
 	
