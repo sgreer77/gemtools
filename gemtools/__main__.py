@@ -48,8 +48,8 @@ def msg(name=None):
     return '''\tgemtools -T <tool> [options]
         '''
 
-def help_msg(name=None):                                                            
-    return '''\tgemtools -T <tool> [options]\n
+help_msg =                                                            
+'''\tgemtools -T <tool> [options]\n
 The gemtools sub-commands include:\n
 [ Phase blocks ]
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file
@@ -211,6 +211,10 @@ def main(cmdlineargs=None):
 		
 	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
+	
+	if args.help:
+		print help_msg
+		
 	
 	if not args.tool:
 		parser.error("Must provide a tool to run with -T")
