@@ -53,7 +53,7 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 #parser = argparse.ArgumentParser(description='Process some integers.')
 
 def msg(name=None):                                                            
-    return '''program.py
+    return '''\tprogram.py
          [-a, Pass argument a]
          [-b, Pass argument b]
          [-c, Pass argument c]
