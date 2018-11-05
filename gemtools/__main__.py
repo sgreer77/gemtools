@@ -48,7 +48,8 @@ def msg(name=None):
     return '''\tgemtools -T <tool> [options]
         '''
 
-help_msg = """\tgemtools -T <tool> [options]\n 
+help_msg = """gemtools: flexible tools for linked read sequencing analysis.\n
+usage:	gemtools -T <tool> [options]\n
 The gemtools sub-commands include:\n 
 [ Phase blocks ] 
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file 
@@ -207,6 +208,8 @@ def main(cmdlineargs=None):
 	
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
+		print help_msg
+		sys.exit()
 		
 	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
