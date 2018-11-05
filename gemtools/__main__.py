@@ -44,15 +44,12 @@ from gemtools.get_hmw_summary_f import get_hmw_summary
 class CommandLineError(Exception):
 	pass
 
-#def msg(name=None):                                                            
-#    return '''\tgemtools -T <sub-tool> [options]
-#        '''
-
-def msg(name=None):                                                            
-    return '''
+def gt_usage_msg(name=None):                                                            
+    return '''\tgemtools -T <sub-tool> [options]
         '''
 
-help_msg = """gemtools: flexible tools for linked read sequencing analysis.
+
+gt_help_msg = """gemtools: flexible tools for linked read sequencing analysis.
 usage:	gemtools -T <sub-tool> [options]\n
 The gemtools sub-tools include:\n 
 [ Phase blocks ] 
@@ -76,7 +73,7 @@ The gemtools sub-tools include:\n
         """
 
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Gemtools.', add_help=False, usage=msg())
+	parser = argparse.ArgumentParser(description='Gemtools.', add_help=False, usage=gt_usage_msg())
 	
 	parser.add_argument("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
@@ -217,10 +214,10 @@ def main(cmdlineargs=None):
 	args = parser.parse_args()
 	
 	if not args.tool:
-		print help_msg
+		print gt_help_msg
 		sys.exit(1)
 		if args.help:
-			print help_msg
+			print gt_help_msg
 			sys.exit(1)
 
 ##########################################################################################		
