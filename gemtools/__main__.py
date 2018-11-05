@@ -245,13 +245,9 @@ Output:
 
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
-		if os.path.isfile(args.bam):
-			print "input file: " + str(args.bam)
-		else:
+		if not os.path.isfile(args.bam):
 			parser.error(str(args.bam) + " does not exist")
-		if str(args.bam).endswith(".bam"):
-			print "Bam file: " + str(args.bam)
-		else:
+		if not str(args.bam).endswith(".bam"):
 			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 ##########################################################################################
