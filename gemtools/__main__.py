@@ -6,7 +6,7 @@ gemtools version %version
 Copyright (C) 2018 Stephanie Greer <sgreer2@stanford.edu>
 gemtools is a suite of tools to work with linked read sequencing data.
 Usage:
-    gemtools -T TOOL [options]
+    gemtools -T TOOL [args.
 """
 
 import os
@@ -53,7 +53,7 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 #parser = argparse.ArgumentParser(description='Process some integers.')
 
 def msg(name=None):                                                            
-    return '''\tgemtools -T <tool> [options]\n
+    return '''\tgemtools -T <tool> [args.\n
 The gemtools sub-commands include:\n
 [ Phase blocks ]
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file
@@ -179,33 +179,33 @@ def get_option_parser():
 
 	return parser
 
-def pipeline_from_parsed_args(options):
+def pipeline_from_parsed_args(args.:
 	if args.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=options.infile, window=options.window_size, out=options.outfile)
+		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
-		pipeline = get_shared_bcs(sv=options.infile, bam=options.bam, out=options.outfile)
+		pipeline = get_shared_bcs(sv=args.infile, bam=args.bam, out=args.outfile)
 	if args.tool=="assign_sv_haps":
-		pipeline = assign_sv_haps(sv=options.infile, window=options.window_size, vcf_control=options.vcf_control, vcf_test=options.vcf_test, out=options.outfile)
+		pipeline = assign_sv_haps(sv=args.infile, window=args.window_size, vcf_control=args.vcf_control, vcf_test=args.vcf_test, out=args.outfile)
 	if args.tool=="count_bcs":
-		pipeline = count_bcs(bam=options.bam, sv=options.infile, in_window=options.in_window, out_window=options.out_window, sv_name=options.sv_name, bcs=options.bc_select, out=options.outfile)
+		pipeline = count_bcs(bam=args.bam, sv=args.infile, in_window=args.in_window, out_window=args.out_window, sv_name=args.sv_name, bcs=args.bc_select, out=args.outfile)
 	if args.tool=="get_phased_basic":
-		pipeline = get_phased_basic(vcf=options.vcf, out=options.outfile, chrom=options.chrom)
+		pipeline = get_phased_basic(vcf=args.vcf, out=args.outfile, chrom=args.chrom)
 	if args.tool=="get_phase_blocks":
-		pipeline = get_phase_blocks(infile_basic=options.infile, out=options.outfile)
+		pipeline = get_phase_blocks(infile_basic=args.infile, out=args.outfile)
 	if args.tool=="get_phased_bcs":
-		pipeline = get_phased_bcs(infile_basic=options.infile, ps=options.phase_block, out=options.outfile)
+		pipeline = get_phased_bcs(infile_basic=args.infile, ps=args.phase_block, out=args.outfile)
 	if args.tool=="select_bcs":
-		pipeline = select_bcs(region_in=options.region_in, region_out=options.region_out, bam=options.bam, out=options.outfile)
+		pipeline = select_bcs(region_in=args.region_in, region_out=args.region_out, bam=args.bam, out=args.outfile)
 	if args.tool=="count_bcs_list":
-		pipeline = count_bcs_list(region=options.region_in, in_window=options.in_window, bam=options.bam, bcs=options.bcs, out=options.outfile)
+		pipeline = count_bcs_list(region=args.region_in, in_window=args.in_window, bam=args.bam, bcs=args.bcs, out=args.outfile)
 	if args.tool=="get_bcs_in_region":
-		pipeline = get_bcs_in_region(region=options.region_in,bam=options.bam, out=options.outfile)
+		pipeline = get_bcs_in_region(region=args.region_in,bam=args.bam, out=args.outfile)
 	if args.tool=="plot_hmw":
-		pipeline = plot_hmw(in_windows=options.infile, out=options.outfile)
+		pipeline = plot_hmw(in_windows=args.infile, out=args.outfile)
 	if args.tool=="extract_reads_interleaved":
-		pipeline = extract_reads_interleaved(fqdir=options.fqdir, s_bcs=options.s_bcs, lanes=options.lanes, bcs=options.bcs, fq_outdir=options.outdir)
+		pipeline = extract_reads_interleaved(fqdir=args.fqdir, s_bcs=args.s_bcs, lanes=args.lanes, bcs=args.bcs, fq_outdir=args.outdir)
 	if args.tool=="extract_reads_separate":
-		pipeline = extract_reads_separate(bcs=options.bcs, fq_outdir=options.outdir, read1=options.read1, read2=options.read2, index1=options.index1)
+		pipeline = extract_reads_separate(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -214,7 +214,7 @@ def main(cmdlineargs=None):
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
 		
-	#options, args = parser.parse_args(args=cmdlineargs)
+	#args. args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
 	
 	if not args.tool:
@@ -222,137 +222,137 @@ def main(cmdlineargs=None):
 		
 	if args.tool=="bedpe2window":
 		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
-		if not (options.infile or args.outfile):
+		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
 		
-		#if str(options.window_size).isdigit() and int(options.window_size)>0:
-		#	print "window_size: " + str(options.window_size)
+		#if str(args.window_size).isdigit() and int(args.window_size)>0:
+		#	print "window_size: " + str(args.window_size)
 		#else:
-		#	parser.error(str(options.window_size) + " must be an integer >0")
+		#	parser.error(str(args.window_size) + " must be an integer >0")
 	
 	if args.tool=="get_shared_bcs":
 		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
-		if not (options.infile or args.outfile or args.bam):
+		if not (args.infile or args.outfile or args.bam):
 			parser.error('Missing required input')
 
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
-		if os.path.isfile(options.bam):
-			print "input file: " + str(options.bam)
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
+		if os.path.isfile(args.bam):
+			print "input file: " + str(args.bam)
 		else:
-			parser.error(str(options.bam) + " does not exist")
-		if str(options.bam).endswith(".bam"):
-			print "Bam file: " + str(options.bam)
+			parser.error(str(args.bam) + " does not exist")
+		if str(args.bam).endswith(".bam"):
+			print "Bam file: " + str(args.bam)
 		else:
-			parser.error(str(options.bam) + " does not appear to be a bam file")
+			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 	if args.tool=="assign_sv_haps":
 		print "gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]"
-		if not (options.infile or args.outfile or args.vcf_control or args.vcf_test):
+		if not (args.infile or args.outfile or args.vcf_control or args.vcf_test):
 			parser.error('Missing required input')
 
-		if not str(options.vcf_control).endswith(".vcf.gz"):
-			parser.error(str(options.vcf_control) + " does not appear to be a gzipped vcf file")		
-		if not str(options.vcf_test).endswith(".vcf.gz"):
-			parser.error(str(options.vcf_test) + " does not appear to be a gzipped vcf file")
+		if not str(args.vcf_control).endswith(".vcf.gz"):
+			parser.error(str(args.vcf_control) + " does not appear to be a gzipped vcf file")		
+		if not str(args.vcf_test).endswith(".vcf.gz"):
+			parser.error(str(args.vcf_test) + " does not appear to be a gzipped vcf file")
 
 	if args.tool=="count_bcs":
 		print "gemtools -T count_bcs -i [out.shared] -b [LR.bam] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count]"
-		if not (options.infile or args.outfile or args.sv_name or args.bam):
+		if not (args.infile or args.outfile or args.sv_name or args.bam):
 			parser.error('Missing required input')
 
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
-		if not(str(options.in_window).isdigit() and int(options.in_window)>0):
-			parser.error(str(options.in_window) + " must be an integer >0")
-		if not (str(options.out_window).isdigit() and int(options.out_window)>0):
-			parser.error(str(options.out_window) + " must be an integer >0")
-		if not str(options.bam).endswith(".bam"):
-			parser.error(str(options.bam) + " does not appear to be a bam file")
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
+		if not(str(args.in_window).isdigit() and int(args.in_window)>0):
+			parser.error(str(args.in_window) + " must be an integer >0")
+		if not (str(args.out_window).isdigit() and int(args.out_window)>0):
+			parser.error(str(args.out_window) + " must be an integer >0")
+		if not str(args.bam).endswith(".bam"):
+			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 	if args.tool=="get_phased_basic":
 		print "gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic] -n [chr_num]"
-		if not (options.outfile or args.vcf):
+		if not (args.outfile or args.vcf):
 			parser.error('Missing required input')
 
-		if not str(options.vcf).endswith(".vcf.gz"):
-			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
+		if not str(args.vcf).endswith(".vcf.gz"):
+			parser.error(str(args.vcf) + " does not appear to be a gzipped vcf file")
 	
 	if args.tool=="get_phase_blocks":
 		print "gemtools -T get_phase_blocks -i [out.phased_basic] -o [out.phase_blocks]"
-		if not (options.infile or args.outfile):
+		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
 
 	if args.tool=="get_bcs_in_region":
 		print "gemtools -T get_bcs_in_region -b [LR.bam] -f [region_in] -o [out.bcs]"
-		if not (options.outfile or args.bam or args.region_in):
+		if not (args.outfile or args.bam or args.region_in):
 			parser.error('Missing required input')
 		
-		if not str(options.bam).endswith(".bam"):
-			parser.error(str(options.bam) + " does not appear to be a bam file")
+		if not str(args.bam).endswith(".bam"):
+			parser.error(str(args.bam) + " does not appear to be a bam file")
 	
 	if args.tool=="get_phased_bcs":
 		print "gemtools -T get_phased_bcs -i [out.phased_basic] -p [phase_block_id] -o [out.phased_bcs]"
-		if not (options.infile or args.outfile or args.phase_block):
+		if not (args.infile or args.outfile or args.phase_block):
 			parser.error('Missing required input')
 
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
 
 	if args.tool=="select_bcs":
 		print "gemtools -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]"
-		if not (options.bam or args.outfile or args.region_in or args.region_out):
+		if not (args.bam or args.outfile or args.region_in or args.region_out):
 			parser.error('Missing required input')
 			
-		if not str(options.bam).endswith(".bam"):
-			parser.error(str(options.bam) + " does not appear to be a bam file")
+		if not str(args.bam).endswith(".bam"):
+			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 	if args.tool=="count_bcs_list":
 		print "gemtools -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -l [bc_list] -o [out.bc_count]"
-		if not (options.bam or args.region_in or args.outfile or args.bcs):
+		if not (args.bam or args.region_in or args.outfile or args.bcs):
 			parser.error('Missing required input')
 
-		if not str(options.bam).endswith(".bam"):
-			parser.error(str(options.bam) + " does not appear to be a bam file")
-		if not (str(options.in_window).isdigit() and int(options.in_window)>0):
-			parser.error(str(options.in_window) + " must be an integer >0")
-		if not os.path.isfile(options.bcs):
-			parser.error(str(options.bcs) + " does not exist")
+		if not str(args.bam).endswith(".bam"):
+			parser.error(str(args.bam) + " does not appear to be a bam file")
+		if not (str(args.in_window).isdigit() and int(args.in_window)>0):
+			parser.error(str(args.in_window) + " must be an integer >0")
+		if not os.path.isfile(args.bcs):
+			parser.error(str(args.bcs) + " does not exist")
 
 	if args.tool=="plot_hmw":
 		print "gemtools -T plot_hmw -i [out.bc_count] -o [out.pdf]"
-		if not (options.infile or args.outfile):
+		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
-		if not os.path.isfile(options.infile):
-			parser.error(str(options.infile) + " does not exist")
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
 
 	if args.tool=="extract_reads_interleaved":
 		print "gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]"
-		if not (options.fqdir or args.s_bcs or args.lanes or args.bcs or args.outdir):
+		if not (args.fqdir or args.s_bcs or args.lanes or args.bcs or args.outdir):
 			parser.error('Missing required input')
 		
-		if not os.path.isfile(options.bcs):
-			parser.error(str(options.bcs) + " does not exist")
-		if os.path.isdir(options.outdir):
-			parser.error(str(options.outdir) + " already exists")
+		if not os.path.isfile(args.bcs):
+			parser.error(str(args.bcs) + " does not exist")
+		if os.path.isdir(args.outdir):
+			parser.error(str(args.outdir) + " already exists")
 	
 	if args.tool=="extract_reads_separate":
 		print "gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]"
-		if not (options.bcs or args.read1 or args.read2 or args.index1 or args.outdir):
+		if not (args.bcs or args.read1 or args.read2 or args.index1 or args.outdir):
 			parser.error('Missing required input')
 			
-		if not os.path.isfile(options.bcs):
-			parser.error(str(options.bcs) + " does not exist")
+		if not os.path.isfile(args.bcs):
+			parser.error(str(args.bcs) + " does not exist")
 		
 	
-	pipeline = pipeline_from_parsed_args(options)
+	pipeline = pipeline_from_parsed_args(args.
 	runner = pipeline
 
 if __name__ == '__main__':
