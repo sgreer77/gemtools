@@ -158,7 +158,7 @@ def get_option_parser():
 
 	return parser
 
-def pipeline_from_parsed_args(options):
+def pipeline_from_parsed_args(args):
 	if args.tool=="bedpe2window":
 		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
