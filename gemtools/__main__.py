@@ -426,12 +426,13 @@ Input:
 Output:
 	-o  output file: list of barcodes
 			"""
-			#sys.exit()		
-		if not (args.bam or args.outfile or args.region_in or args.region_out):
-			parser.error('Missing required input')
+			#sys.exit()
+		else:			
+			if not (args.bam or args.outfile or args.region_in or args.region_out):
+				parser.error('Missing required input')
 			
-		if not str(args.bam).endswith(".bam"):
-			parser.error(str(args.bam) + " does not appear to be a bam file")
+			if not str(args.bam).endswith(".bam"):
+				parser.error(str(args.bam) + " does not appear to be a bam file")
 
 ##########################################################################################
 	if args.tool=="count_bcs_list":
