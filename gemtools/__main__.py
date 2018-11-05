@@ -44,8 +44,12 @@ from gemtools.get_hmw_summary_f import get_hmw_summary
 class CommandLineError(Exception):
 	pass
 
+#def msg(name=None):                                                            
+#    return '''\tgemtools -T <sub-tool> [options]
+#        '''
+
 def msg(name=None):                                                            
-    return '''\tgemtools -T <sub-tool> [options]
+    return '''
         '''
 
 help_msg = """gemtools: flexible tools for linked read sequencing analysis.
@@ -72,7 +76,7 @@ The gemtools sub-tools include:\n
         """
 
 def get_option_parser():
-	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False, usage=msg())
+	parser = argparse.ArgumentParser(description='Gemtools.', add_help=False, usage=msg())
 	
 	parser.add_argument("-T", "--tool", default=None, dest="tool",
 		help="Name of tool to use ")
