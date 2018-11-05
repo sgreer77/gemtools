@@ -6,7 +6,7 @@ gemtools version %version
 Copyright (C) 2018 Stephanie Greer <sgreer2@stanford.edu>
 gemtools is a suite of tools to work with linked read sequencing data.
 Usage:
-    gemtools -T TOOL [args.
+    gemtools -T TOOL [options]
 """
 
 import os
@@ -53,7 +53,7 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 #parser = argparse.ArgumentParser(description='Process some integers.')
 
 def msg(name=None):                                                            
-    return '''\tgemtools -T <tool> [args.\n
+    return '''\tgemtools -T <tool> [options]\n
 The gemtools sub-commands include:\n
 [ Phase blocks ]
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file
@@ -179,7 +179,7 @@ def get_option_parser():
 
 	return parser
 
-def pipeline_from_parsed_args(args.:
+def pipeline_from_parsed_args(options):
 	if args.tool=="bedpe2window":
 		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
@@ -214,7 +214,7 @@ def main(cmdlineargs=None):
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
 		
-	#args. args = parser.parse_args(args=cmdlineargs)
+	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
 	
 	if not args.tool:
@@ -352,7 +352,7 @@ def main(cmdlineargs=None):
 			parser.error(str(args.bcs) + " does not exist")
 		
 	
-	pipeline = pipeline_from_parsed_args(args.
+	pipeline = pipeline_from_parsed_args(options)
 	runner = pipeline
 
 if __name__ == '__main__':
