@@ -190,7 +190,6 @@ def main(cmdlineargs=None):
 	
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
-		print cmdlineargs
 		
 	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
