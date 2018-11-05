@@ -99,8 +99,8 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		print "bcs -- must be either 'shared' or 'all'"
 		sys.exit()
 	
-	print bc_list
-	print len(bc_list)
+	#print bc_list
+	#print len(bc_list)
 	
 	bam_open = pysam.Samfile(bam_input)
 
@@ -119,7 +119,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sv_df_full['w_start'] = w_start_list
 		sv_df_full['w_stop'] = w_stop_list
 
-	print sv_df_full
+	#print sv_df_full
 
 	df_list = []
 	for index,row in sv_df_full.iterrows():

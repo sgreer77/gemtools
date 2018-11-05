@@ -100,8 +100,8 @@ def get_shared_bcs(outpre='out',**kwargs):
 	## CONVERT TO DF + WRITE TO OUTPUT
 
 	df_inter = pd.DataFrame(sv_inter_matrix, columns=sv_names)
-	print df_inter
-	print sv_names
+	#print df_inter
+	#print sv_names
 	df_inter['name'] = sv_names
 
 	df_isect = pd.merge(df_bc, df_inter, on='name')
