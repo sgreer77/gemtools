@@ -425,14 +425,12 @@ Input:
 	-g  region(s) where barcode must NOT be located
 Output:
 	-o  output file: list of barcodes
-			"""
-			#sys.exit()
-		else:			
-			if not (args.bam or args.outfile or args.region_in or args.region_out):
-				parser.error('Missing required input')
-			
-			if not str(args.bam).endswith(".bam"):
-				parser.error(str(args.bam) + " does not appear to be a bam file")
+			"""		
+		if not (args.bam or args.outfile or args.region_in or args.region_out or args.help):
+			parser.error('Missing required input')
+		
+		if not str(args.bam).endswith(".bam"):
+			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 ##########################################################################################
 	if args.tool=="count_bcs_list":
