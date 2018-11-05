@@ -56,8 +56,8 @@ def msg(name=None):
     return '''\tgemtools -T <tool> [options]\n
 The bedtools sub-commands include:\n
 [ Phase blocks ]
-\tget_phased_basic\t\tObtain phasing information for all SNVs in the vcf file
-\tget_phase_blocks\t\tSummarize phase blocks -- coordinates, size, number of phased heterozygous SNVs per phase block etc.
+  get_phased_basic   Obtain phasing information for all SNVs in the vcf file
+  get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.
     
          [-a, Pass argument a]
          [-b, Pass argument b]
