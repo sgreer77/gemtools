@@ -426,7 +426,7 @@ Input:
 Output:
 	-o  output file: list of barcodes
 			"""
-			sys.exit()		
+			#sys.exit()		
 		if not (args.bam or args.outfile or args.region_in or args.region_out):
 			parser.error('Missing required input')
 			
