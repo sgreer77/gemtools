@@ -221,12 +221,16 @@ def main(cmdlineargs=None):
 			parser.error("Must provide a tool to run with -T")
 		
 	if args.tool=="bedpe2window":
-		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
+		#print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if args.help:
 			print """
 Tool:	gemtools -T bedpe2window
 Summary: Generate windows around SV breakpoints for SV analysis\n
-Usage:   gemtools -T bedpe2window [OPTIONS] -i <bedpe> -o <out.txt>
+Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe>
+Input:
+	-i  bedpe file of SVs (ex: sv_call.bedpe from Long Ranger)
+Output:
+	-o  File of windowed SV breakpoints
 Options:
 	-w	Window size (bp)
 			"""
@@ -238,7 +242,19 @@ Options:
 			parser.error(str(args.infile) + " does not exist")
 	
 	if args.tool=="get_shared_bcs":
-		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
+		#print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
+		if args.help:
+			print """
+Tool:	gemtools -T get_shared_bcs
+Summary: Determine barcodes shared between SV breakpoints\n
+Usage:   gemtools -T get_shared_bcs -i <out.bedpe> -b <LR_bam_file> -o <out.shared.txt>
+Input:
+	-i  Output of 'bedpe2window'
+	-b  Long Ranger bam file
+Output:
+	-o  File with shared barcodes for each SV
+			"""
+			sys.exit()
 		if not (args.infile or args.outfile or args.bam):
 			parser.error('Missing required input')
 
