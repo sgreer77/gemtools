@@ -34,7 +34,7 @@ from gemtools.get_hmw_summary_f import get_hmw_summary
 class GemtoolsOptionParser(OptionParser):
 	def get_usage(self):
 		return self.usage.lstrip().replace('%version', __version__)
-		print "test"
+		print("test")
 	def error(self, msg):
 		print('Run "gemtools --help" to see command-line options.')
 		self.exit(2, "%s: error: %s\n" % (self.get_prog_name(), msg))
