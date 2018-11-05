@@ -54,17 +54,25 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 
 def msg(name=None):                                                            
     return '''\tgemtools -T <tool> [options]\n
-The bedtools sub-commands include:\n
+The gemtools sub-commands include:\n
 [ Phase blocks ]
-  get_phased_basic   Obtain phasing information for all SNVs in the vcf file
-  get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.
-    
-         [-a, Pass argument a]
-         [-b, Pass argument b]
-         [-c, Pass argument c]
-         [-d, Pass argument d]
-         comment
-         more comment
+    get_phased_basic   Obtain phasing information for all SNVs in the vcf file
+    get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.\n
+[ SV analysis tools ]
+    bedpe2window	Generate windows around SV breakpoints for SV analysis
+    get_shared_bcs	Determine barcodes shared between SV breakpoints
+    assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs)
+    count_bcs	Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints
+    plot_hmw	Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE) \n
+[ Subset reads by barcode ]
+    extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1)
+    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2)\n
+[ General tools ]
+    get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes
+    select_bcs	Get barcodes shared by ALL region_in's and present in NONE of the region_out's
+    get_bcs_in_region	Get all the barcodes that exist in a given region of the genome
+    count_bcs_list	Determine presence and quantity of given barcodes across a given region
+    plot_hmw	Generate a plot of the mapping locations of reads with each barcode
         '''
 
 def get_option_parser():
