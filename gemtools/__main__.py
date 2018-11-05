@@ -215,7 +215,7 @@ def main(cmdlineargs=None):
 	if not args.tool:
 		if args.help:
 			print help_msg
-			sys.exit()
+			sys.exit(1)
 		else:			
 			print help_msg
 			parser.error("Must provide a tool to run with -T")
@@ -235,7 +235,7 @@ Output:
 Options:
 	-w	size of window to generate around the breakpoints
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
@@ -256,7 +256,7 @@ Input:
 Output:
 	-o  output file: List and count of SV-specific barcodes for each SV event
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile or args.bam):
 			parser.error('Missing required input')
 
@@ -286,7 +286,7 @@ Input:
 Output:
 	-o  output file: List of breakpoints with phase id and number of barcodes supporting assignment to each haplotype
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile or args.vcf_control or args.vcf_test):
 			parser.error('Missing required input')
 
@@ -314,7 +314,7 @@ Options:
 	-x	size of small windows to check for barcodes
 	-y  size of large windows around breakpoints to check for barcodes
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile or args.sv_name or args.bam):
 			parser.error('Missing required input')
 
@@ -342,7 +342,7 @@ Output:
 Options:
 	-n	chromosome number (ex: 22 or chr22)
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.outfile or args.vcf):
 			parser.error('Missing required input')
 
@@ -362,7 +362,7 @@ Input:
 Output:
 	-o  output file: each row is a phase block, columns summarize information for each phase block (size etc.)
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 
@@ -383,7 +383,7 @@ Input:
 Output:
 	-o  output file: list of barcodes
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.outfile or args.bam or args.region_in):
 			parser.error('Missing required input')
 		
@@ -404,7 +404,7 @@ Input:
 Output:
 	-o  output file: a table with the haplotype 1 and haplotype 2 barcodes indicated
 			"""
-			sys.exit()
+			sys.exit(1)
 		if not (args.infile or args.outfile or args.phase_block):
 			parser.error('Missing required input')
 
@@ -425,8 +425,9 @@ Input:
 	-g  region(s) where barcode must NOT be located
 Output:
 	-o  output file: list of barcodes
-			"""		
-		if not (args.bam or args.outfile or args.region_in or args.region_out or args.help):
+			"""
+			sys.exit(1)
+		if not (args.bam or args.outfile or args.region_in or args.region_out):
 			parser.error('Missing required input')
 		
 		if not str(args.bam).endswith(".bam"):
@@ -448,7 +449,7 @@ Input:
 Output:
 	-o  output file: barcode counts in windows 
 			"""
-			sys.exit()		
+			sys.exit(1)		
 		if not (args.bam or args.region_in or args.outfile or args.bcs):
 			parser.error('Missing required input')
 
@@ -472,7 +473,7 @@ Input:
 Output:
 	-o  output file: plot of barcode mapping locations in a given region
 			"""
-			sys.exit()		
+			sys.exit(1)		
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
@@ -495,7 +496,7 @@ Input:
 Output:
 	-z  Output directory for output fastq files; subsetted RA and I1 files will be generated here
 			"""
-			sys.exit()		
+			sys.exit(1)		
 		if not (args.fqdir or args.s_bcs or args.lanes or args.bcs or args.outdir):
 			parser.error('Missing required input')
 		
@@ -520,7 +521,7 @@ Input:
 Output:
 	-z  Output directory for output fastq files; subsetted R1, R2 and I1 files will be generated here
 			"""
-			sys.exit()		
+			sys.exit(1)		
 		if not (args.bcs or args.read1 or args.read2 or args.index1 or args.outdir):
 			parser.error('Missing required input')
 			
