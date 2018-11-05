@@ -54,6 +54,10 @@ It's a pretty ace thing. (C)2010 Stuff etc.
 
 def msg(name=None):                                                            
     return '''\tgemtools -T <tool> [options]\n
+        '''
+
+def help_msg(name=None):                                                            
+    return '''\tgemtools -T <tool> [options]\n
 The gemtools sub-commands include:\n
 [ Phase blocks ]
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file
