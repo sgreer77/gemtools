@@ -270,7 +270,20 @@ Output:
 			parser.error(str(args.bam) + " does not appear to be a bam file")
 
 	if args.tool=="assign_sv_haps":
-		print "gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]"
+		#print "gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]"
+		if args.help:
+			print """
+Tool:	gemtools -T assign_sv_haps
+Summary: Assign SV barcodes to existing haplotypes (SNVs)\n
+Usage:   gemtools -T assign_sv_haps -i <out.shared.txt> -c <LR_control.vcf.gz> -t <LR_test.vcf.gz> -o <out.haps.txt>
+Input:
+	-i  Output of 'get_shared_bcs'
+	-c  Long Ranger vcf file (control; ex: Normal sample)
+	-t  Long Ranger vcf file (test; ex: Tumor sample)
+Output:
+	-o  File with SV breakpoints assigned to haplotypes
+			"""
+			sys.exit()
 		if not (args.infile or args.outfile or args.vcf_control or args.vcf_test):
 			parser.error('Missing required input')
 
