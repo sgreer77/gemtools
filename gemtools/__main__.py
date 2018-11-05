@@ -48,11 +48,10 @@ def msg(name=None):
     return '''\tgemtools -T <tool> [options]
         '''
 
-help_msg =                                                            
-'''\tgemtools -T <tool> [options]\n
-The gemtools sub-commands include:\n
-[ Phase blocks ]
-    get_phased_basic   Obtain phasing information for all SNVs in the vcf file
+help_msg = """\tgemtools -T <tool> [options]\n 
+The gemtools sub-commands include:\n 
+[ Phase blocks ] 
+    get_phased_basic   Obtain phasing information for all SNVs in the vcf file 
     get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.\n
 [ SV analysis tools ]
     bedpe2window	Generate windows around SV breakpoints for SV analysis
@@ -69,7 +68,7 @@ The gemtools sub-commands include:\n
     get_bcs_in_region	Get all the barcodes that exist in a given region of the genome
     count_bcs_list	Determine presence and quantity of given barcodes across a given region
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode
-        '''
+        """
 
 def get_option_parser():
 	parser = argparse.ArgumentParser(description='Process some integers.', add_help=False, usage=msg())
