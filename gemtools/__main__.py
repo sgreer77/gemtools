@@ -223,6 +223,7 @@ def main(cmdlineargs=None):
 	if args.tool=="bedpe2window":
 		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if args.help:
+			print "help"
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
