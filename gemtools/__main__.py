@@ -174,8 +174,11 @@ def pipeline_from_parsed_args(options):
 
 def main(cmdlineargs=None):
 	parser = get_option_parser()
+	
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
+		print cmdlineargs
+		
 	options, args = parser.parse_args(args=cmdlineargs)
 	
 	if not options.tool:
@@ -185,15 +188,10 @@ def main(cmdlineargs=None):
 		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if not (options.infile or options.outfile):
 			parser.error('Missing required input')
-		#if not options.infile:
-		#	parser.error('Missing required input')
-		#if not options.outfile:
-		#	parser.error('Missing required input')
 		
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
+		
 		#if str(options.window_size).isdigit() and int(options.window_size)>0:
 		#	print "window_size: " + str(options.window_size)
 		#else:
@@ -201,16 +199,10 @@ def main(cmdlineargs=None):
 	
 	if options.tool=="get_shared_bcs":
 		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.bam:
+		if not (options.infile or options.outfile or options.bam):
 			parser.error('Missing required input')
 
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
 		if os.path.isfile(options.bam):
 			print "input file: " + str(options.bam)
@@ -223,192 +215,103 @@ def main(cmdlineargs=None):
 
 	if options.tool=="assign_sv_haps":
 		print "gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.vcf_control:
-			parser.error('Missing required input')
-		if not options.vcf_test:
+		if not (options.infile or options.outfile or options.vcf_control or options.vcf_test):
 			parser.error('Missing required input')
 
-		if str(options.vcf_control).endswith(".vcf.gz"):
-			print "Control vcf file: " + str(options.vcf_control)
-		else:
+		if not str(options.vcf_control).endswith(".vcf.gz"):
 			parser.error(str(options.vcf_control) + " does not appear to be a gzipped vcf file")		
-		if str(options.vcf_test).endswith(".vcf.gz"):
-			print "Test vcf file: " + str(options.vcf_test)
-		else:
+		if not str(options.vcf_test).endswith(".vcf.gz"):
 			parser.error(str(options.vcf_test) + " does not appear to be a gzipped vcf file")
 
 	if options.tool=="count_bcs":
 		print "gemtools -T count_bcs -i [out.shared] -b [LR.bam] -x [in_window] -y [out_window] -s [sv_name] -q [all|shared] -o [out.bc_count]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.sv_name:
-			parser.error('Missing required input')
-		if not options.bam:
-			parser.error('Missing required input')
+		if not (options.infile or options.outfile or options.sv_name or options.bam):
 
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
-		if str(options.in_window).isdigit() and int(options.in_window)>0:
-			print "In window size: " + str(options.in_window)
-		else:
+		if not(str(options.in_window).isdigit() and int(options.in_window)>0):
 			parser.error(str(options.in_window) + " must be an integer >0")
-		if str(options.out_window).isdigit() and int(options.out_window)>0:
-			print "Out window size: " + str(options.out_window)
-		else:
+		if not (str(options.out_window).isdigit() and int(options.out_window)>0):
 			parser.error(str(options.out_window) + " must be an integer >0")
-		if str(options.bam).endswith(".bam"):
-			print "Bam file: " + str(options.bam)
-		else:
+		if not str(options.bam).endswith(".bam"):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="get_phased_basic":
 		print "gemtools -T get_phased_basic -v [LR.vcf.gz] -o [output.phased_basic] -n [chr_num]"
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.vcf:
+		if not (options.outfile or options.vcf):
 			parser.error('Missing required input')
 
-		if str(options.vcf).endswith(".vcf.gz"):
-			print "vcf file: " + str(options.vcf)
-		else:
+		if not str(options.vcf).endswith(".vcf.gz"):
 			parser.error(str(options.vcf) + " does not appear to be a gzipped vcf file")
 	
 	if options.tool=="get_phase_blocks":
 		print "gemtools -T get_phase_blocks -i [out.phased_basic] -o [out.phase_blocks]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
+		if not (options.infile or options.outfile):
 			parser.error('Missing required input')
 
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="get_bcs_in_region":
 		print "gemtools -T get_bcs_in_region -b [LR.bam] -f [region_in] -o [out.bcs]"
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.bam:
-			parser.error('Missing required input')
-		if not options.region_in:
+		if not (options.outfile or options.bam or options.region_in):
 			parser.error('Missing required input')
 		
-		if str(options.bam).endswith(".bam"):
-			print "Bam file: " + str(options.bam)
-		else:
+		if not str(options.bam).endswith(".bam"):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 	
 	if options.tool=="get_phased_bcs":
 		print "gemtools -T get_phased_bcs -i [out.phased_basic] -p [phase_block_id] -o [out.phased_bcs]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.phase_block:
+		if not (options.infile or options.outfile or options.phase_block):
 			parser.error('Missing required input')
 
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="select_bcs":
 		print "gemtools -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]"
-		if not options.bam:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.region_in:
-			parser.error('Missing required input')
-		if not options.region_out:
+		if not (options.bam or options.outfile or options.region_in or options.region_out):
 			parser.error('Missing required input')
 			
-		if str(options.bam).endswith(".bam"):
-			print "Bam file: " + str(options.bam)
-		else:
+		if not str(options.bam).endswith(".bam"):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
 
 	if options.tool=="count_bcs_list":
 		print "gemtools -T count_bcs_list -b [LR.bam] -f [region_in] -x [in_window] -l [bc_list] -o [out.bc_count]"
-		if not options.bam:
-			parser.error('Missing required input')
-		if not options.region_in:
-			parser.error('Missing required input')
-		if not options.outfile:
-			parser.error('Missing required input')
-		if not options.bcs:
+		if not (options.bam or options.region_in or options.outfile or options.bcs):
 			parser.error('Missing required input')
 
-		if str(options.bam).endswith(".bam"):
-			print "Bam file: " + str(options.bam)
-		else:
+		if not str(options.bam).endswith(".bam"):
 			parser.error(str(options.bam) + " does not appear to be a bam file")
-		if str(options.in_window).isdigit() and int(options.in_window)>0:
-			print "In window size: " + str(options.in_window)
-		else:
+		if not (str(options.in_window).isdigit() and int(options.in_window)>0):
 			parser.error(str(options.in_window) + " must be an integer >0")
-		if os.path.isfile(options.bcs):
-			print "bcs file: " + str(options.bcs)
-		else:
+		if not os.path.isfile(options.bcs):
 			parser.error(str(options.bcs) + " does not exist")
 
 	if options.tool=="plot_hmw":
 		print "gemtools -T plot_hmw -i [out.bc_count] -o [out.pdf]"
-		if not options.infile:
-			parser.error('Missing required input')
-		if not options.outfile:
+		if not (options.infile or options.outfile):
 			parser.error('Missing required input')
 		
-		if os.path.isfile(options.infile):
-			print "input file: " + str(options.infile)
-		else:
+		if not os.path.isfile(options.infile):
 			parser.error(str(options.infile) + " does not exist")
 
 	if options.tool=="extract_reads_interleaved":
 		print "gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]"
-		if not options.fqdir:
-			parser.error('Missing required input')
-		if not options.s_bcs:
-			parser.error('Missing required input')
-		if not options.lanes:
-			parser.error('Missing required input')
-		if not options.bcs:
-			parser.error('Missing required input')
-		if not options.outdir:
+		if not (options.fqdir or options.s_bcs or options.lanes or options.bcs or options.outdir):
 			parser.error('Missing required input')
 		
-		if os.path.isfile(options.bcs):
-			print "bcs file: " + str(options.bcs)
-		else:
+		if not os.path.isfile(options.bcs):
 			parser.error(str(options.bcs) + " does not exist")
 		if os.path.isdir(options.outdir):
 			parser.error(str(options.outdir) + " already exists")
 	
 	if options.tool=="extract_reads_separate":
 		print "gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]"
-		if not options.bcs:
-			parser.error('Missing required input')
-		if not options.read1:
-			parser.error('Missing required input')
-		if not options.read2:
-			parser.error('Missing required input')
-		if not options.index1:
-			parser.error('Missing required input')
-		if not options.outdir:
+		if not (options.bcs or options.read1 or options.read2 or options.index1 or options.outdir):
 			parser.error('Missing required input')
 			
-		if os.path.isfile(options.bcs):
-			print "bcs file: " + str(options.bcs)
-		else:
+		if not os.path.isfile(options.bcs):
 			parser.error(str(options.bcs) + " does not exist")
 		
 	
