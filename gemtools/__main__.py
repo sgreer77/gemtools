@@ -48,7 +48,7 @@ def msg(name=None):
     return '''\tgemtools -T <tool> [options]
         '''
 
-help_msg = """gemtools: flexible tools for linked read sequencing analysis.\n
+help_msg = """gemtools: flexible tools for linked read sequencing analysis.
 usage:	gemtools -T <tool> [options]\n
 The gemtools sub-commands include:\n 
 [ Phase blocks ] 
@@ -208,31 +208,26 @@ def main(cmdlineargs=None):
 	
 	if cmdlineargs is None:
 		cmdlineargs = sys.argv[1:]
-		print help_msg
-		sys.exit()
 		
 	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
 	
-	if args.help:
-		print help_msg
-		sys.exit()
-	
 	if not args.tool:
-		parser.error("Must provide a tool to run with -T")
+		if args.help:
+			print help_msg
+			sys.exit()
+		else:			
+			print help_msg
+			parser.error("Must provide a tool to run with -T")
 		
 	if args.tool=="bedpe2window":
 		print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
+		if args.help:
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
 		
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
-		
-		#if str(args.window_size).isdigit() and int(args.window_size)>0:
-		#	print "window_size: " + str(args.window_size)
-		#else:
-		#	parser.error(str(args.window_size) + " must be an integer >0")
 	
 	if args.tool=="get_shared_bcs":
 		print "gemtools -T get_shared_bcs -i [out.bedpe] -b [LR_bam_file] -o [out.shared]"
