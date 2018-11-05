@@ -45,12 +45,12 @@ class CommandLineError(Exception):
 	pass
 
 def msg(name=None):                                                            
-    return '''\tgemtools -T <tool> [options]
+    return '''\tgemtools -T <sub-tool> [options]
         '''
 
 help_msg = """gemtools: flexible tools for linked read sequencing analysis.
-usage:	gemtools -T <tool> [options]\n
-The gemtools sub-commands include:\n 
+usage:	gemtools -T <sub-tool> [options]\n
+The gemtools sub-tools include:\n 
 [ Phase blocks ] 
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file 
     get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.\n
@@ -216,9 +216,9 @@ def main(cmdlineargs=None):
 		if args.help:
 			print help_msg
 			sys.exit(1)
-		else:			
-			print help_msg
-			parser.error("Must provide a tool to run with -T")
+		#else:			
+		#	print help_msg
+		#	parser.error("Must provide a tool to run with -T")
 
 ##########################################################################################		
 	if args.tool=="bedpe2window":
