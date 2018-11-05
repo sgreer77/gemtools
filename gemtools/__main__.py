@@ -212,10 +212,13 @@ def main(cmdlineargs=None):
 	#options, args = parser.parse_args(args=cmdlineargs)
 	args = parser.parse_args()
 	
-	if not args.tool:
-		if args.help:
+	if (not args.tool or args.help):
 			print help_msg
 			sys.exit(1)
+	
+		#if args.help:
+		#	print help_msg
+		#	sys.exit(1)
 		#else:			
 		#	print help_msg
 		#	parser.error("Must provide a tool to run with -T")
