@@ -38,24 +38,27 @@ def refine_bcs(**kwargs):
 	print bed_df
 	
 	bed_grouped = bed_df.groupby('name')
-	
+
+	out_data = []
+
 	for name, group in bed_grouped:
+	
 		print name
-		print group
-	
-	sys.exit()
-	
-	for name, group in bed_grouped:
-	
 		group_in = bed_grouped.loc[bed_grouped['status']=="in"]
+		print group_in
+		print len(group_in.index)
 		if len(group_in.index)>0:
 			bc_list_in = group_in['bcs'].tolist()
+			print len(bc_list_in)
 			if len(bc_list_in)==1:
 				common_bcs = bc_list_in[0]
 			elif len(bc_list_in)>1:
 				common_bcs = set(bc_list_in[0])
 				for s in bc_list_in[1:]:
 					common_bcs.intersection_update(s)
+		
+		print common_bcs
+		sys.exit()
 
 		group_out = bed_grouped.loc[bed_grouped['status']=="out"]
 		if len(group_out.index)==0:
