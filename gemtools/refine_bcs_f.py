@@ -81,5 +81,5 @@ def refine_bcs(**kwargs):
 		out_df.to_csv(outpre, sep="\t", index=False)
 	else:
 		shared_df = pd.read_table(shared_in, sep="\t")
-		merged = pd.merge(shared_in, out_df, on="name", how="left")
+		merged = pd.merge(shared_df, out_df, on="name", how="left")
 		merged.to_csv(outpre, sep="\t", index=False)
