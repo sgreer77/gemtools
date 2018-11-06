@@ -155,7 +155,7 @@ def get_option_parser():
 	parser.add_argument("--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
-	parser.add_argument("-m","--mol_size"
+	parser.add_argument("-m","--mol_size",
 		dest="mol_size", metavar="MOL_SIZE",
 		help="Mean size of HMW molecules")	
 
