@@ -226,7 +226,7 @@ Options:
 			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
-		if not (args.window_size and args.mol_size):
+		if (not args.window_size and not args.mol_size):
 			parser.error('Missing required input')
 		
 		if not os.path.isfile(args.infile):
