@@ -11,7 +11,6 @@ Usage:
 
 import os
 import sys
-#from optparse import OptionParser, OptionGroup
 import argparse
 
 from gemtools import __version__
@@ -19,30 +18,20 @@ from gemtools.bedpe2window_f import bedpe2window
 from gemtools.get_shared_bcs_f import get_shared_bcs
 from gemtools.assign_sv_haps_f import assign_sv_haps
 from gemtools.count_bcs_f import count_bcs
+from gemtools.plot_hmw_f import plot_hmw
 from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
+
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
 from gemtools.select_bcs_f import select_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
-from gemtools.plot_hmw_f import plot_hmw
+
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
 from gemtools.extract_reads_separate_f import extract_reads_separate
 
 from gemtools.get_hmw_summary_f import get_hmw_summary
 
-
-#class GemtoolsOptionParser(OptionParser):
-#	def get_usage(self):
-#		return self.usage.lstrip().replace('%version', __version__)
-#		print("test1")
-#	def error(self, msg):
-#		print('Run "gemtools --help" to see command-line args.')
-#		print("test2")
-#		self.exit(2, "%s: error: %s\n" % (self.get_prog_name(), msg))
-
-#class CommandLineError(Exception):
-#	pass
 
 def gt_usage_msg(name=None):                                                            
     return '''\tgemtools -T <sub-tool> [options]
@@ -195,11 +184,7 @@ def pipeline_from_parsed_args(args):
 
 def main(cmdlineargs=None):
 	parser = get_option_parser()
-	
-	#if cmdlineargs is None:
-	#	cmdlineargs = sys.argv[1:]
-		
-	#options, args = parser.parse_args(args=cmdlineargs)
+
 	args = parser.parse_args()
 	
 	if not args.tool:
