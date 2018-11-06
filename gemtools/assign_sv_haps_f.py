@@ -50,8 +50,8 @@ def assign_sv_haps(outpre='out',**kwargs):
 		sv_input = kwargs['sv']
 	if 'vcf_control' in kwargs:
 		vcf_norm_input = kwargs['vcf_control']
-	if 'vcf' in kwargs:
-		vcf_tum_input = kwargs['vcf']
+	if 'vcf_test' in kwargs:
+		vcf_tum_input = kwargs['vcf_test']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 	if 'window' in kwargs:
