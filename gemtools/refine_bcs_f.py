@@ -17,7 +17,7 @@ def get_barcode_ids(bam_in, chrom, start, end, min_mapq):
 		  if r.has_tag("BX"):
 			  bc_id=r.get_tag("BX")
 			  bcs.append(bc_id)
-	return list(set(list(bcs)))
+	return tuple(list(set(list(bcs))))
 
 def refine_bcs(**kwargs):
 
@@ -41,7 +41,7 @@ def refine_bcs(**kwargs):
 	
 	for name, group in bed_grouped:
 		print name
-		print grouped
+		print group
 	
 	sys.exit()
 	
