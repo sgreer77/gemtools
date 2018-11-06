@@ -25,7 +25,7 @@ from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.refine_bcs_f import refine_bcs
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
-from gemtools.select_bcs_f import select_bcs
+#from gemtools.select_bcs_f import select_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
 
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
