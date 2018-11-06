@@ -274,7 +274,7 @@ Options:
 		if not (args.infile or args.outfile or args.vcf_test or args.bcs):
 			parser.error('Missing required input')
 
-		if str(args.vcf_control):
+		if str(args.vcf_control)!="None":
 			if not str(args.vcf_control).endswith(".vcf.gz"):
 				parser.error(str(args.vcf_control) + " does not appear to be a gzipped vcf file")
 		if not str(args.vcf_test).endswith(".vcf.gz"):
