@@ -394,12 +394,12 @@ Output:
 
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
-"""
+
 ##########################################################################################
-	if args.tool=="select_bcs":
-		#print "gemtools -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]"
-		if args.help:
-			print """
+#	if args.tool=="select_bcs":
+#		#print "gemtools -T select_bcs -b [LR.bam] -f [region_in] -g [region_out] -o [out.bcs]"
+#		if args.help:
+#			print """
 #Tool:	gemtools -T select_bcs
 #Summary: Get barcodes shared by ALL region_in's and present in NONE of the region_out's\n
 #Usage:   gemtools -T select_bcs -b <LR.bam> -f <region_in> -g <region_out> -o <output.bcs.txt>
