@@ -113,7 +113,7 @@ def get_shared_bcs(outpre='out',**kwargs):
 	
 	if str(out_sub)!="None":
 		df_sub = df_isect[["name","chrom1","start1","stop1","chrom2","start2","stop2","name1","chrom1_w","start1_w","stop1_w","name2","chrom2_w","start2_w","stop2_w","dist","status","window_size"]]
-		df_sub['bc_overlap_id'] = ''
+		df_sub['bc_overlap_id','bc_2_id','bc_3_id'] = ''
 		df_sub.to_csv(str(out_sub), index=False, sep="\t")
 	
 	return df_isect
