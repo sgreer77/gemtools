@@ -86,7 +86,19 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 
 		if len(bc_list)<1:
 			print "No shared barcodes -- exiting"
-			sys.exit()
+			sys.exit(1)
+	
+	elif bc_subset=="select":
+		bc_list=[]
+		bc_tups = sv_df['select_bcs'].tolist()
+		for b in bc_tups:
+			c = list(ast.literal_eval(str(b)))
+			bc_list = bc_list + c
+			bc_list = list(set(bc_list))
+
+		if len(bc_list)<1:
+			print "No select barcodes -- exiting"
+			sys.exit(1)
 		
 	elif bc_subset=="all":
 		sv_df['all_bcs'] = sv_df.apply(lambda row: tuple(set(row['bc_1_id'] + row['bc_2_id'])), axis=1)
@@ -94,10 +106,10 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		#bc_list = list(set(ast.literal_eval(row['bc_1_id']) + ast.literal_eval(row['bc_2_id'])))
 		if len(bc_list)<1:
 			print "No barcodes -- exiting"
-			sys.exit()
+			sys.exit(1)
 	else:
 		print "bcs -- must be either 'shared' or 'all'"
-		sys.exit()
+		sys.exit(1)
 	
 	#print bc_list
 	#print len(bc_list)
@@ -107,9 +119,14 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	for s in sv_list:
 		#sv_df_cur = sv_df.loc[sv_df['name']==str(s)]
 
-		sv_df1 = sv_df[['name','name1','chrom1','start1','stop1','bc_1_id','bc_2_id','bc_overlap_id']]
-		sv_df2 = sv_df[['name','name2','chrom2','start2','stop2','bc_1_id','bc_2_id','bc_overlap_id']]
-		full_names = ['id','name','chrom','start','stop','bc_1_id','bc_2_id','bc_overlap_id']
+		#sv_df1 = sv_df[['name','name1','chrom1','start1','stop1','bc_1_id','bc_2_id','bc_overlap_id']]
+		#sv_df2 = sv_df[['name','name2','chrom2','start2','stop2','bc_1_id','bc_2_id','bc_overlap_id']]
+		#full_names = ['id','name','chrom','start','stop','bc_1_id','bc_2_id','bc_overlap_id']
+		
+		sv_df1 = sv_df[['name','name1','chrom1','start1','stop1']]
+		sv_df2 = sv_df[['name','name2','chrom2','start2','stop2']]
+		full_names = ['id','name','chrom','start','stop']
+		
 		sv_df1.columns = full_names
 		sv_df2.columns = full_names
 		sv_df_full = pd.concat([sv_df1,sv_df2])
