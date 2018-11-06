@@ -44,7 +44,7 @@ def window_rows_haps(r):
     return wndw_row
 
 	
-def assign_sv_haps(outpre='out',**kwargs):
+def assign_sv_haps(**kwargs):
 
 	if 'sv' in kwargs:
 		sv_input = kwargs['sv']
@@ -68,15 +68,15 @@ def assign_sv_haps(outpre='out',**kwargs):
 	if str(vcf_norm_input)=="None":
 		vcf_norm_input = vcf_tum_input
 
-	global vcf_reader_norm 
+	#global vcf_reader_norm 
 	vcf_reader_norm = vcf.Reader(filename=vcf_norm_input)
-	global norm_smpl 
+	#global norm_smpl 
 	norm_smpl = vcf_reader_norm.samples[0]
 	vcf_data_norm = []
 
-	global vcf_reader_tum
+	#global vcf_reader_tum
 	vcf_reader_tum = vcf.Reader(filename=vcf_tum_input)
-	global tum_smpl 
+	#global tum_smpl 
 	tum_smpl = vcf_reader_tum.samples[0]
 	vcf_data_tum = []
 
@@ -211,7 +211,6 @@ def assign_sv_haps(outpre='out',**kwargs):
 	df_bp_list = []
 
 	for sv in sv_list:
-	    #print sv
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
@@ -248,7 +247,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 	summ_df = pd.concat(df_sub_list)
 	#summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp', 'hap1_overlap_bcs_sv', 'hap2_overlap_bcs_sv', 'hap1_overlap_count_sv', 'hap2_overlap_count_sv','both_overlap_count_bp']]
-	#summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
+	summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
 	summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp']]
 
 	summ_df.to_csv(outpre, sep="\t", index=False)
