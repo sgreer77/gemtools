@@ -528,7 +528,7 @@ Output:
 	-o  output file: barcode info summary for each event (specified by 'name')
 			"""
 			sys.exit(1)
-		if not (args.bam or args.outfile or args.out):
+		if not (args.bam or args.outfile or args.infile):
 			parser.error('Missing required input')
 		
 		if not str(args.bam).endswith(".bam"):
