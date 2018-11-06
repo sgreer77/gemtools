@@ -57,7 +57,7 @@ def refine_bcs(**kwargs):
 				for s in bc_list_in[1:]:
 					common_bcs.intersection_update(s)
 		
-		print common_bcs
+		print list(common_bcs)
 		sys.exit()
 
 		group_out = bed_grouped.loc[bed_grouped['status']=="out"]
