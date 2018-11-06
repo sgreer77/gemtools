@@ -56,6 +56,8 @@ def assign_sv_haps(outpre='out',**kwargs):
 		outpre = kwargs['out']
 	if 'window' in kwargs:
 		window_size = kwargs['window']
+	if 'bcs' in kwargs:
+		bc_subset = kwargs['bcs']
 		
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 	# GET INFO FROM VCF FILES                                                                #
@@ -91,15 +93,22 @@ def assign_sv_haps(outpre='out',**kwargs):
 		df_wndw = pd.DataFrame(list(wndw_out))
 		df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','window_size']
 		sv_wndw = df_wndw[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
-		df_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
+		#df_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
 
-		df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bc_overlap_id']]
+		if bc_subset=="shared":
+			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bc_overlap_id']]
+		elif bc_subset=="select":
+			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bcs_subset']]
+		else:
+			print "bcs -- must be either 'shared' or 'select'"
+			sys.exit(1)
+		
 		df_sv_sub2[['name']]=df_sv_sub2[['name']].astype(str)
 		df_wndw[['name']]=df_wndw[['name']].astype(str)
 
 		df_sv = pd.merge(df_wndw, df_sv_sub2, on="name")
 
-		df_sv.to_csv("testing_df_sv.txt", sep="\t", index=False)
+		#df_sv.to_csv("testing_df_sv.txt", sep="\t", index=False)
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
@@ -153,8 +162,16 @@ def assign_sv_haps(outpre='out',**kwargs):
 	for index, row in df_sv.iterrows():    
 
 	    #print row['bc_overlap_id']
-	    print type(row['bc_overlap_id'])
-	    sv_bcs = literal_eval(row['bc_overlap_id'])
+	    #print type(row['bc_overlap_id'])
+	    
+	    if bc_subset=="shared":
+	    	sv_bcs = literal_eval(row['bc_overlap_id'])
+	    elif bc_subset=="select":
+	    	sv_bcs = literal_eval(row['bcs_subset'])
+	    else:
+	    	print "bcs -- must be either 'shared' or 'select'"
+	    	sys.exit(1)
+	    
 	    #sv_bcs = row['bc_overlap_id']
 	    sv_id = row['name']
 
@@ -183,7 +200,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 	## ADD COUNTS OF UNIQUE BARCODES FOR EACH BREAKPOINT
 
-	vcf_merge.to_csv("testing.txt", sep="\t", index=False) #debug
+	#vcf_merge.to_csv("testing.txt", sep="\t", index=False) #debug
 	
 	bp_list = list(set(vcf_merge['bp_name']))
 	sv_list = list(set(vcf_merge['name']))
@@ -203,7 +220,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 
 	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
-	df_bp_counts.to_csv("testing_2.txt", sep="\t", index=False) #debug
+	#df_bp_counts.to_csv("testing_2.txt", sep="\t", index=False) #debug
 	
 	## CREATE FINAL SUMMARY OUTPUT
 
