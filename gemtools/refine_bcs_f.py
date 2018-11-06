@@ -44,7 +44,7 @@ def refine_bcs(**kwargs):
 	for name, group in bed_grouped:
 	
 		print name
-		group_in = bed_grouped.loc[bed_grouped['status']=="in"]
+		group_in = group.loc[group['status']=="in"]
 		print group_in
 		print len(group_in.index)
 		if len(group_in.index)>0:
