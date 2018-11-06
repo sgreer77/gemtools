@@ -22,6 +22,8 @@ def get_shared_bcs(outpre='out',**kwargs):
 		bam_input = kwargs['bam']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
+	if 'out_sub' in kwargs:
+		out_sub = kwargs['out_sub']
 
 	df_sv = pd.read_table(sv_input, sep="\t")
 	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
@@ -108,4 +110,10 @@ def get_shared_bcs(outpre='out',**kwargs):
 	#print df_merge
 
 	df_isect.to_csv(outpre, sep="\t", index=False)
+	
+	if str(out_sub)!="None":
+		df_sub = df_isect[["name","chrom1","start1","stop1","chrom2","start2","stop2","name1","chrom1_w","start1_w","stop1_w","name2","chrom2_w","start2_w","stop2_w","dist","status","window_size"]]
+		df_sub['bc_overlap_id'] = ''
+		df_sub.to_csv(str(out_sub), index=False)
+	
 	return df_isect

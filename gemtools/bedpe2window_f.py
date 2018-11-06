@@ -21,30 +21,30 @@ def get_dist(r):
 	return dist
 
 def make_window(s,e,w):
-    cur_size = int(e)-int(s)
-    adj_val = (int(w)-cur_size)/2
-    adj_val = int(round(adj_val,0))
-    new_start = max(0,s - adj_val)
-    new_end = e + adj_val
-    return [new_start,new_end]
+	cur_size = int(e)-int(s)
+	adj_val = (int(w)-cur_size)/2
+	adj_val = int(round(adj_val,0))
+	new_start = max(0,s - adj_val)
+	new_end = e + adj_val
+	return [new_start,new_end]
 
 def window_rows(r):
-    wndw_row = [ r['name'],r['chrom1'],r['start1'],r['stop1'],r['chrom2'],r['start2'],r['stop2'],r['name1'],r['chrom1']] + make_window(r['start1'],r['stop1'],r['window_size']) + [r['name2'],r['chrom2']] + make_window(r['start2'],r['stop2'],r['window_size']) + [r['dist'],r['status'],r['window_size']]
-    return wndw_row
+	wndw_row = [ r['name'],r['chrom1'],r['start1'],r['stop1'],r['chrom2'],r['start2'],r['stop2'],r['name1'],r['chrom1']] + make_window(r['start1'],r['stop1'],r['window_size']) + [r['name2'],r['chrom2']] + make_window(r['start2'],r['stop2'],r['window_size']) + [r['dist'],r['status'],r['window_size']]
+	return wndw_row
 
 # Below, try to automatically generate windows
 def calc_window_size(d, m):
-	if (str(d)=='na' or int(d)>=(2*int(m))):  	# If event breakpoints are distant, make large windows around breakpoint (200 kb)
+	if (str(d)=='na' or int(d)>=(2*int(m))):
 		window_sz = int(m)
 		status = "pass"	
-	else:									# Otherwise				
-		test_size = int(d) - int(m)			
-		if test_size>=10000:				# Try to make windows as large as possible (lower limit 10kb), while maintaining 100 kb distance between breakpoints
+	else:
+		test_size = int(d) - int(m)
+		if test_size>=10000:
 			window_sz = test_size
 			status="pass"
-		else: # If can't do the above, then if distance between breakpoints is very small (i.e. less than 30kb), make windows 5kb
+		else:
 			window_sz = 10000
-			status="fail"			# Otherwise, make windows 10kb
+			status="fail"
 	return [window_sz,status]
 	
 ## READ IN SV FILE + PARSE TO DESIRED FORMAT
@@ -74,11 +74,14 @@ def bedpe2window(**kwargs):
 	if str(window_size)!="None":
 		df_sv['window_size'] = window_size
 		df_sv['status'] = df_sv.apply(lambda row: "pass" if row['window_size']>row['dist'] else "fail", axis=1)
+	
 	elif str(mol_size)!="None":
 		df_sv['window_size'] = df_sv['dist'].apply(lambda x: calc_window_size(x, mol_size)[0])
 		df_sv['status'] = df_sv['dist'].apply(lambda x: calc_window_size(x, mol_size)[1])
+	
 	else:
 		"Must specify either a window size or a molecule size"
+		sys.exit(1)
 
 	sv_wndw = df_sv.apply(lambda row: window_rows(row), axis=1)
 	df_wndw = pd.DataFrame(list(sv_wndw))
