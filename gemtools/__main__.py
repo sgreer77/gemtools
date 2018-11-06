@@ -37,7 +37,7 @@ def gt_usage_msg(name=None):
     return '''\tgemtools -T <sub-tool> [options]
         '''
 
-gt_help_msg = """gemtools: flexible tools for linked read sequencing analysis.
+gt_help_msg = """gemtools: flexible tools for linked read sequencing (10X Genomics) analysis.
 usage:	gemtools -T <sub-tool> [options]\n
 The gemtools sub-tools include:\n 
 [ Phase blocks ] 
@@ -316,11 +316,11 @@ Tool:	gemtools -T get_phased_basic
 Summary: Obtain phasing information for all SNVs in the vcf file\n
 Usage:   gemtools -T get_phased_basic [OPTIONS] -v <LR.vcf.gz> -o <output.phased_basic.txt>
 Input:
-	-v  gzipped vcf file output from LR
+	-v  gzipped vcf file output from Long Ranger
 Output:
 	-o  output file: each row is an SNV; columns are phasing information for each SNV
 Options:
-	-n	chromosome number (ex: 22 or chr22)
+	-n  chromosome number (ex: 22 or chr22)
 			"""
 			sys.exit(1)
 		if not (args.outfile or args.vcf):
@@ -380,7 +380,7 @@ Summary: For a particular phase block, return the haplotype 1 and haplotype 2 ba
 Usage:   gemtools -T get_phased_bcs -i <output.phased_basic.txt> -p <phase_block_id> -o <output.phased_bcs.txt>
 Input:
 	-i  output from 'get_phased_basic' tool
-	-p 	id number for phase block of interest
+	-p  id number for phase block of interest
 Output:
 	-o  output file: a table with the haplotype 1 and haplotype 2 barcodes indicated
 			"""
