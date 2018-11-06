@@ -51,7 +51,7 @@ def select_bcs(outpre='out',region_in_subset='None',region_out_subset='None',**k
 		for s in bc_list_in[1:]:
 			common_bcs.intersection_update(s)
 
-	if str(region_in_subset)=='None':
+	if str(region_out_subset)=='None':
 		return common_bcs
 		f = open(outpre + ".bc_list_in.txt", 'w')
 		for b in common_bcs:
