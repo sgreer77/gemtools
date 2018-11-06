@@ -45,11 +45,10 @@ def refine_bcs(**kwargs):
 	
 		print name
 		group_in = group.loc[group['status']=="in"]
-		print group_in
-		print len(group_in.index)
+
 		if len(group_in.index)>0:
 			bc_list_in = group_in['bcs'].tolist()
-			print len(bc_list_in)
+
 			if len(bc_list_in)==1:
 				common_bcs = bc_list_in[0]
 			elif len(bc_list_in)>1:
@@ -57,28 +56,22 @@ def refine_bcs(**kwargs):
 				for s in bc_list_in[1:]:
 					common_bcs.intersection_update(s)
 		
-		print list(common_bcs)
-		sys.exit()
+		common_bcs = list(common_bcs)
 
-		group_out = bed_grouped.loc[bed_grouped['status']=="out"]
+		group_out = group.loc[group['status']=="out"]
 		if len(group_out.index)==0:
-			f = open(outpre + ".bc_list_in.txt", 'w')
-			for b in common_bcs:
-				f.write(str(b)+"\n")
+			out_data.append([name,tuple(common_bcs),"na","na"])
 		
 		else:
 			bc_list_out=group_out['bcs'].tolist()
-			bc_list_out = []	
 			bc_list_out_flat = [item for sublist in bc_list_out for item in sublist]
 			bc_list_out_flat_uq = list(set(bc_list_out_flat))
 			
 			bc_final = [x for x in common_bcs if x not in bc_list_out_flat_uq]
 			
-			f = open(outpre, 'w')
-			for b in bc_final:
-				f.write(str(b)+"\n")
+			out_data.append([name,tuple(common_bcs),tuple(bc_list_out_flat_uq),tuple(bc_final)])
 	
-		bam_open.close()
-		f.close()
-			
-		return bc_final
+	bam_open.close()
+	out_df = pd.DataFrame(out_data, columns = ['name','in_bcs','out_bcs','select_bcs'])
+	out_df.to_csv(outpre, sep="\t", index=False)
+	return bc_final
