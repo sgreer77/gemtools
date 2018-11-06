@@ -228,6 +228,8 @@ Options:
 			parser.error('Missing required input')
 		if (not args.window_size and not args.mol_size):
 			parser.error('Missing required input')
+		if (args.window_size and args.mol_size):
+			parser.error('Please only supply one of -m or -w (-m is recommended)')
 		
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
