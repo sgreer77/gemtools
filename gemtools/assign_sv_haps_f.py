@@ -65,6 +65,9 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 	## OPEN VCF FILES
 
+	if str(vcf_norm_input)=="None":
+		vcf_norm_input = vcf_tum_input
+
 	global vcf_reader_norm 
 	vcf_reader_norm = vcf.Reader(filename=vcf_norm_input)
 	global norm_smpl 
@@ -208,7 +211,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 	df_bp_list = []
 
 	for sv in sv_list:
-	    print sv
+	    #print sv
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
