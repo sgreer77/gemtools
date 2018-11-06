@@ -146,21 +146,24 @@ def get_option_parser():
 	parser.add_argument("-z","--outdir",
 		dest="outdir", metavar="OUT_DIR",
 		help="Name of output directory")
-	parser.add_argument("-m","--read1",
+	parser.add_argument("--read1",
 		dest="read1", metavar="READ1",
 		help="read1 fastq file")
-	parser.add_argument("-u","--read2",
+	parser.add_argument("--read2",
 		dest="read2", metavar="READ2",
 		help="read2 fastq file")
-	parser.add_argument("-r","--index1",
+	parser.add_argument("--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
+	parser.add_argument("-m","--mol_size"
+		dest="mol_size", metavar="MOL_SIZE",
+		help="Mean size of HMW molecules")	
 
 	return parser
 
 def pipeline_from_parsed_args(args):
 	if args.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
+		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile, mol_size=args.mol_size)
 	if args.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=args.infile, bam=args.bam, out=args.outfile)
 	if args.tool=="assign_sv_haps":
@@ -210,16 +213,20 @@ def main(cmdlineargs=None):
 			print """
 Tool:	gemtools -T bedpe2window
 Summary: Generate windows around SV breakpoints for SV analysis\n
-Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe>
+Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -m <mol_size>
 Input:
 	-i  bedpe file of SV breakpoints (ex: sv_call.bedpe from Long Ranger)
+	NOTE: must also supply either -m or -w (see Options below)
 Output:
 	-o  output file: bedpe file with windows around breakpoints
 Options:
+	-m  mean HMW size (Long Ranger estimates this)
 	-w  size of window to generate around the breakpoints
 			"""
 			sys.exit(1)
 		if not (args.infile or args.outfile):
+			parser.error('Missing required input')
+		if not (args.window_size and args.mol_size):
 			parser.error('Missing required input')
 		
 		if not os.path.isfile(args.infile):
