@@ -98,7 +98,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 		if bc_subset=="shared":
 			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bc_overlap_id']]
 		elif bc_subset=="select":
-			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bcs_subset']]
+			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','select_bcs']]
 		else:
 			print "bcs -- must be either 'shared' or 'select'"
 			sys.exit(1)
@@ -167,7 +167,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 	    if bc_subset=="shared":
 	    	sv_bcs = literal_eval(row['bc_overlap_id'])
 	    elif bc_subset=="select":
-	    	sv_bcs = literal_eval(row['bcs_subset'])
+	    	sv_bcs = literal_eval(row['select_bcs'])
 	    else:
 	    	print "bcs -- must be either 'shared' or 'select'"
 	    	sys.exit(1)
