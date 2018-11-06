@@ -23,8 +23,8 @@ def refine_bcs(**kwargs):
 
 	if 'bed_in' in kwargs:
 		bed_in = kwargs['bed_in']
-	#if 'shared_in' in kwargs:
-	#	shared_in = kwargs['shared_in']
+	if 'shrd_file' in kwargs:
+		shared_in = kwargs['shrd_file']
 	if 'bam' in kwargs:
 		bam_input = kwargs['bam']
 	if 'out' in kwargs:
@@ -76,5 +76,10 @@ def refine_bcs(**kwargs):
 	
 	bam_open.close()
 	out_df = pd.DataFrame(out_data, columns = ['name','num_in_bcs','num_out_bcs','num_select_bcs','in_bcs','out_bcs','select_bcs'])
-	out_df.to_csv(outpre, sep="\t", index=False)
-	return bc_final
+	
+	if str(shared_in)=="None":
+		out_df.to_csv(outpre, sep="\t", index=False)
+	else:
+		shared_df = pd.read_table(shared_in, sep="\t")
+		merged = pd.merge(shared_in, out_df, on="name", how="left")
+		merged.to_csv(outpre, sep="\t", index=False)
