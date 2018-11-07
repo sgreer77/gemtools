@@ -208,7 +208,7 @@ def assign_sv_haps(**kwargs):
 
 	## ADD COUNTS OF UNIQUE BARCODES FOR EACH BREAKPOINT
 
-	vcf_merge.to_csv("vcf_merge_testing.txt", sep="\t", index=False) #debug
+	#vcf_merge.to_csv("vcf_merge_testing.txt", sep="\t", index=False) #debug
 	
 	bp_list = list(set(vcf_merge['bp_name']))
 	sv_list = list(set(vcf_merge['name']))
@@ -216,7 +216,6 @@ def assign_sv_haps(**kwargs):
 	df_bp_list = []
 
 	for sv in sv_list:
-	    print sv
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
@@ -225,12 +224,11 @@ def assign_sv_haps(**kwargs):
 	    df_bp_name[sv + "_hap1_overlap_count_bp"] = df_bp_name[hap1_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name[sv + "_hap2_overlap_count_bp"] = df_bp_name[hap2_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: sv + "_num_bcs_checked"}, inplace=True)
-	    print df_bp_name
 	    df_bp_list.append(df_bp_name)
-	    df_bp_name.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
+	    #df_bp_name.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
 
 	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
-	df_bp_counts.to_csv("testing_counts.txt", sep="\t", index=False) #debug
+	#df_bp_counts.to_csv("testing_counts.txt", sep="\t", index=False) #debug
 	
 	## CREATE FINAL SUMMARY OUTPUT
 
