@@ -216,7 +216,7 @@ def assign_sv_haps(**kwargs):
 	df_bp_list = []
 
 	for sv in sv_list:
-		print sv
+	    print sv
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
@@ -225,7 +225,7 @@ def assign_sv_haps(**kwargs):
 	    df_bp_name[sv + "_hap1_overlap_count_bp"] = df_bp_name[hap1_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name[sv + "_hap2_overlap_count_bp"] = df_bp_name[hap2_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: "num_bcs_checked"}, inplace=True)
-		print df_bp_name
+	    print df_bp_name
 	    df_bp_list.append(df_bp_name)
 
 
