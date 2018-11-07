@@ -10,8 +10,6 @@ import time
 
 def extract_reads_interleaved(**kwargs):
 
-	print out_dir
-
 	if 'fqdir' in kwargs:
 		fq_path = kwargs['fqdir']
 	if 's_bcs' in kwargs:
