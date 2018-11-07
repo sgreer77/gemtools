@@ -219,21 +219,22 @@ def assign_sv_haps(**kwargs):
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
-	    df_bp_name = vcf_merge.groupby(['name','bp_name','phase_id_norm']).agg({hap1_bc_col:'sum', hap2_bc_col: 'sum'}).reset_index()
+	    sv_num_bcs = sv + "_num_bcs_checked"
+	    df_bp_name = vcf_merge.groupby(['name','bp_name','phase_id_norm',sv_num_bcs]).agg({hap1_bc_col:'sum', hap2_bc_col: 'sum'}).reset_index()
 	    df_bp_name[sv + "_hap1_overlap_count_bp"] = df_bp_name[hap1_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name[sv + "_hap2_overlap_count_bp"] = df_bp_name[hap2_bc_col].apply(lambda x: len(set(x)))
-	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp"}, inplace=True)
+	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: "num_bcs_checked"}, inplace=True)
 	    df_bp_list.append(df_bp_name)
 
 
-	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
+	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm','num_bcs_checked']), df_bp_list)
 	#df_bp_counts.to_csv("testing_2.txt", sep="\t", index=False) #debug
 	
 	## CREATE FINAL SUMMARY OUTPUT
 
 	sv_list = list(set(df_bp_counts['name']))
 
-	general_cols = ['name','bp_name','phase_id_norm']
+	general_cols = ['name','bp_name','phase_id_norm','num_bcs_checked']
 	all_cols = df_bp_counts.columns
 
 	df_sub_list = []
@@ -253,7 +254,7 @@ def assign_sv_haps(**kwargs):
 	summ_df = pd.concat(df_sub_list)
 	#summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp', 'hap1_overlap_bcs_sv', 'hap2_overlap_bcs_sv', 'hap1_overlap_count_sv', 'hap2_overlap_count_sv','both_overlap_count_bp']]
 	#summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
-	summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp']]
+	summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'num_bcs_checked', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp']]
 
 	summ_df.to_csv(outpre, sep="\t", index=False)
 	return summ_df
