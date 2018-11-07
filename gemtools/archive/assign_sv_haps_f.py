@@ -30,8 +30,21 @@ def vcf_info_tum(n,bn,c,s,e,olist):
 				bc_2 = record.genotype(tum_smpl)['BX'][1]
 				fields = "n, bn,record.genotype(tum_smpl)['PS'], record.CHROM, record.POS, record.REF, record.ALT, record.genotype(tum_smpl)['GT'], bc_1, bc_2"
 				olist.append(eval(fields))     
-		
-def assign_sv_haps(outpre='out',**kwargs):
+
+def make_window_haps(s,e,w):
+    cur_size = int(e)-int(s)
+    adj_val = (int(w)-cur_size)/2
+    adj_val = int(round(adj_val,0))
+    new_start = max(0,s - adj_val)
+    new_end = e + adj_val
+    return [new_start,new_end]
+
+def window_rows_haps(r):
+    wndw_row = [ r['name'],r['chrom1'],r['start1'],r['stop1'],r['chrom2'],r['start2'],r['stop2'],r['name1'],r['chrom1']] + make_window_haps(r['start1'],r['stop1'],r['window_size']) + [r['name2'],r['chrom2']] + make_window_haps(r['start2'],r['stop2'],r['window_size']) + [r['window_size']]
+    return wndw_row
+
+	
+def assign_sv_haps(**kwargs):
 
 	if 'sv' in kwargs:
 		sv_input = kwargs['sv']
@@ -41,12 +54,19 @@ def assign_sv_haps(outpre='out',**kwargs):
 		vcf_tum_input = kwargs['vcf_test']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
+	if 'window' in kwargs:
+		window_size = kwargs['window']
+	if 'bcs' in kwargs:
+		bc_subset = kwargs['bcs']
 		
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 	# GET INFO FROM VCF FILES                                                                #
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 
 	## OPEN VCF FILES
+
+	if str(vcf_norm_input)=="None":
+		vcf_norm_input = vcf_tum_input
 
 	global vcf_reader_norm 
 	vcf_reader_norm = vcf.Reader(filename=vcf_norm_input)
@@ -66,8 +86,32 @@ def assign_sv_haps(outpre='out',**kwargs):
 	df_sv = pd.read_table(sv_input, sep="\t")
 	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
 
+	if str(window_size)=='None':
 	## Generate list of columns to loop through
-	sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
+		sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
+	else:
+		df_sv_sub = df_sv[['name','name1','chrom1','start1','stop1','name2','chrom2','start2','stop2']]
+		df_sv_sub['window_size'] = window_size
+		wndw_out = df_sv_sub.apply(lambda row: window_rows_haps(row), axis=1)
+		df_wndw = pd.DataFrame(list(wndw_out))
+		df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','window_size']
+		sv_wndw = df_wndw[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
+		#df_wndw.to_csv("hap_wndws.txt", sep="\t", index=False)
+
+		if bc_subset=="shared":
+			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','bc_overlap_id']]
+		elif bc_subset=="select":
+			df_sv_sub2 = df_sv[['name','bc_1_id','bc_2_id','select_bcs']]
+		else:
+			print "bcs -- must be either 'shared' or 'select'"
+			sys.exit(1)
+		
+		df_sv_sub2[['name']]=df_sv_sub2[['name']].astype(str)
+		df_wndw[['name']]=df_wndw[['name']].astype(str)
+
+		df_sv = pd.merge(df_wndw, df_sv_sub2, on="name")
+
+		#df_sv.to_csv("testing_df_sv.txt", sep="\t", index=False)
 
 	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
 		name,name_1,chrom_1,name_2,chrom_2 = str(name),str(name_1),str(chrom_1),str(name_2),str(chrom_2)
@@ -121,8 +165,16 @@ def assign_sv_haps(outpre='out',**kwargs):
 	for index, row in df_sv.iterrows():    
 
 	    #print row['bc_overlap_id']
-	    print type(row['bc_overlap_id'])
-	    sv_bcs = literal_eval(row['bc_overlap_id'])
+	    #print type(row['bc_overlap_id'])
+	    
+	    if bc_subset=="shared":
+	    	sv_bcs = literal_eval(row['bc_overlap_id'])
+	    elif bc_subset=="select":
+	    	sv_bcs = literal_eval(row['select_bcs'])
+	    else:
+	    	print "bcs -- must be either 'shared' or 'select'"
+	    	sys.exit(1)
+	    
 	    #sv_bcs = row['bc_overlap_id']
 	    sv_id = row['name']
 
@@ -151,7 +203,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 	## ADD COUNTS OF UNIQUE BARCODES FOR EACH BREAKPOINT
 
-	vcf_merge.to_csv("testing.txt", sep="\t", index=False) #debug
+	#vcf_merge.to_csv("testing.txt", sep="\t", index=False) #debug
 	
 	bp_list = list(set(vcf_merge['bp_name']))
 	sv_list = list(set(vcf_merge['name']))
@@ -159,7 +211,6 @@ def assign_sv_haps(outpre='out',**kwargs):
 	df_bp_list = []
 
 	for sv in sv_list:
-	    print sv
 	    df_bp_name = sv + "_bc_counts_bp"
 	    hap1_bc_col = sv + "_hap1_overlap_bcs"
 	    hap2_bc_col = sv + "_hap2_overlap_bcs"
@@ -171,7 +222,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 
 	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
-	df_bp_counts.to_csv("testing_2.txt", sep="\t", index=False) #debug
+	#df_bp_counts.to_csv("testing_2.txt", sep="\t", index=False) #debug
 	
 	## CREATE FINAL SUMMARY OUTPUT
 
@@ -196,7 +247,7 @@ def assign_sv_haps(outpre='out',**kwargs):
 
 	summ_df = pd.concat(df_sub_list)
 	#summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp', 'hap1_overlap_bcs_sv', 'hap2_overlap_bcs_sv', 'hap1_overlap_count_sv', 'hap2_overlap_count_sv','both_overlap_count_bp']]
-	#summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
+	summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
 	summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp']]
 
 	summ_df.to_csv(outpre, sep="\t", index=False)
