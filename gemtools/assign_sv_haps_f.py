@@ -227,7 +227,7 @@ def assign_sv_haps(**kwargs):
 	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: "num_bcs_checked"}, inplace=True)
 	    print df_bp_name
 	    df_bp_list.append(df_bp_name)
-		df_bp_list.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
+	    df_bp_list.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
 
 	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm','num_bcs_checked']), df_bp_list)
 	df_bp_counts.to_csv("testing_counts.txt", sep="\t", index=False) #debug
