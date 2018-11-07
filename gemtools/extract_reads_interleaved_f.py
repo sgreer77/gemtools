@@ -1,4 +1,7 @@
-import os, sys, argparse, __main__ as main
+import os
+import sys
+import argparse
+import __main__ as main
 import csv
 from itertools import izip_longest, islice
 import gzip

@@ -1,5 +1,8 @@
-import os, sys, __main__ as main
-import pandas as pd, numpy as np
+import os
+import sys
+import __main__ as main
+import pandas as pd
+import numpy as np
 import math
 import rpy2.robjects as robj
 import rpy2.robjects.pandas2ri # for dataframe conversion

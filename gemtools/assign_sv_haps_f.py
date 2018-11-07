@@ -1,6 +1,11 @@
-import os, sys, argparse, __main__ as main
-import pandas as pd, numpy as np
-import pysam, vcf
+import os
+import sys
+import argparse
+import __main__ as main
+import pandas as pd
+import numpy as np
+import pysam
+import vcf
 from ast import literal_eval
 
 pd.options.mode.chained_assignment = None
