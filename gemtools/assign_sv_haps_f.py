@@ -236,7 +236,7 @@ def assign_sv_haps(**kwargs):
 
 	sv_list = list(set(df_bp_counts['name']))
 
-	general_cols = ['name','bp_name','phase_id_norm','num_bcs_checked']
+	general_cols = ['name','bp_name','phase_id_norm']
 	all_cols = df_bp_counts.columns
 
 	df_sub_list = []
