@@ -224,12 +224,12 @@ def assign_sv_haps(**kwargs):
 	    df_bp_name = vcf_merge.groupby(['name','bp_name','phase_id_norm',sv_num_bcs]).agg({hap1_bc_col:'sum', hap2_bc_col: 'sum'}).reset_index()
 	    df_bp_name[sv + "_hap1_overlap_count_bp"] = df_bp_name[hap1_bc_col].apply(lambda x: len(set(x)))
 	    df_bp_name[sv + "_hap2_overlap_count_bp"] = df_bp_name[hap2_bc_col].apply(lambda x: len(set(x)))
-	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: "num_bcs_checked"}, inplace=True)
+	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: sv + "_num_bcs_checked_bp"}, inplace=True)
 	    print df_bp_name
 	    df_bp_list.append(df_bp_name)
 	    df_bp_name.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
 
-	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm','num_bcs_checked']), df_bp_list)
+	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
 	df_bp_counts.to_csv("testing_counts.txt", sep="\t", index=False) #debug
 	
 	## CREATE FINAL SUMMARY OUTPUT
