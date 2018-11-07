@@ -177,6 +177,7 @@ def assign_sv_haps(**kwargs):
 	    
 	    num_bcs = len(sv_bcs) ## new_add
 	    
+	    
 	    #sv_bcs = row['bc_overlap_id']
 	    sv_id = row['name']
 
@@ -196,13 +197,14 @@ def assign_sv_haps(**kwargs):
 			overlap_bcs_2.append(tuple(bc_overlap_2))
 			overlap_counts_2.append(num_overlaps)
 
+	    vcf_merge[str(sv_id) + "_num_bcs_checked"] = num_bcs
+		
 	    vcf_merge[str(sv_id) + "_hap1_overlap_count"] = overlap_counts_1
 	    vcf_merge[str(sv_id) + "_hap2_overlap_count"] = overlap_counts_2
 	   
 	    vcf_merge[str(sv_id) + "_hap1_overlap_bcs"] = overlap_bcs_1
 	    vcf_merge[str(sv_id) + "_hap2_overlap_bcs"] = overlap_bcs_2
-
-	    vcf_merge['num_bcs_checked'] = num_bcs
+		
 
 	## ADD COUNTS OF UNIQUE BARCODES FOR EACH BREAKPOINT
 
