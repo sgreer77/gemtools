@@ -75,7 +75,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 			total=len(bcs_all)
 			unique=len(set(bcs_all))	
 
-			phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique, list(set(bc1_all_zip)), list(set(bc2_all_zip))])
+			phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique, tuple(list(set(bc1_all_zip))), tuple(list(set(bc2_all_zip)))])
 
 	df=pd.DataFrame(phase_data)
 	df.columns=["chr", "beg_pos", "end_pos", "dist", "PS", "all_SNVs", "phased_het", "total", "unique", "hap1_total", "hap1_unique", "hap2_total", "hap2_unique","hap1_uq_bcs","hap2_uq_bcs"]
