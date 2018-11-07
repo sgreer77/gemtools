@@ -6,7 +6,7 @@ Installation
 
 **Dependencies:**
 """""""""""""""""
-**Python packages:** pandas, numpy, pysam, pyvcf, rpy2
+**Python packages:** pandas, numpy, pysam, pyvcf, pybedtools, pyvcf, rpy2
 
 **R package:** ggplot2
 
