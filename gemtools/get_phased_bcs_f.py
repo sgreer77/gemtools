@@ -30,7 +30,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 		phase_block = kwargs['ps']
 	
 	if str(phased_basic_file)!='None':
-		df=pd.read_table(phased_basic_file, sep="\t", dtype={'#chrom':str,'gt':str,'block_id':str})
+		df=pd.read_table(phased_basic_file, sep="\t", dtype={'#chrom':str,'gt':str,'block_id':str,'bc1':str,'bc2':str})
 
 	else:
 		print "Must specify input"
