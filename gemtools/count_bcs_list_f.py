@@ -45,7 +45,7 @@ def count_bcs_list(outpre='out',region_subset='None',small_w_size=1000,bc_subset
 	if os.path.isfile(str(bc_subset)):
 		with open(bc_subset) as f:
 			bc_list = f.read().splitlines()
-			print bc_list
+			#print bc_list
 	else:
 		sys.exit()
 		

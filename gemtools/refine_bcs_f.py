@@ -35,7 +35,7 @@ def refine_bcs(**kwargs):
 	bed_df = pd.read_table(bed_in, sep="\t", comment="#", header=None, names=['chrom','start','stop','name','status'])
 	
 	bed_df['bcs'] = bed_df.apply(lambda row: get_barcode_ids(bam_open,str(row['chrom']),int(row['start']),int(row['stop']),MIN_MAPQ),axis=1)
-	print bed_df
+	#print bed_df
 	
 	bed_grouped = bed_df.groupby('name')
 
@@ -43,7 +43,7 @@ def refine_bcs(**kwargs):
 
 	for name, group in bed_grouped:
 	
-		print name
+		#print name
 		group_in = group.loc[group['status']=="in"]
 
 		if len(group_in.index)>0:

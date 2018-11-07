@@ -99,7 +99,7 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 
 	vcf_data=[]
 
-	print c
+	#print c
 	
 	if c=='None':
 		for record in vcf_reader:
