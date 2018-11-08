@@ -21,7 +21,7 @@ def extract_reads_interleaved(**kwargs):
 	if 'fq_outdir' in kwargs:
 		out_dir = kwargs['fq_outdir']
 
-	print out_dir
+	#print out_dir
 
 	if os.path.isdir(out_dir):
 		print str(out_dir) + " already exists -- exiting"
