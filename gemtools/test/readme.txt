@@ -28,9 +28,12 @@ gemtools -T get_phased_basic -v $VCF_FILE -o phased_basic.txt
 gemtools -T get_phase_blocks -i phased_basic.txt -o phase_blocks.txt
 
 # General tools
-gemtools -T get_phased_bcs -i phase_blocks.txt -p 123859090 -o phased_bcs.txt
+gemtools -T get_phased_bcs -i phased_basic.txt -p 123859090 -o phased_bcs.txt
 gemtools -T get_bcs_in_region -b $BAM_FILE -f chr9,128200000,128300000 -o bcs_in_region.txt
 gemtools -T get_bcs_in_region -b $BAM_FILE -f 'chr9,128200000,128300000;chr9,128700000,128800000' -o bcs_in_regions.txt
 
 gemtools -T count_bcs_list -b $BAM_FILE -f chr9,128200000,128300000 -x 1000 -l bcs_in_region.txt -o bc_count_from_list.txt
 gemtools -T plot_hmw -i bc_count_from_list.txt -o list.pdf
+
+# Subset fastq's
+gemtools -T extract_reads_interleaved -l call_189_bcs.txt -d fastq_subset -j ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC -k 1,2,3,4,5,6,7,8 -z fastq_call_189
