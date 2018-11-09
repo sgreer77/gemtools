@@ -12,8 +12,8 @@ Installation
 
 **To install gemtools:**
 """""""""""""""""""""""""
-**If you already have the dependencies:**
-.. run:
+.. **If you already have the dependencies:**::
+
 	git clone https://github.com/sgreer77/gemtools.git
 	cd gemtools
 	pip install .
