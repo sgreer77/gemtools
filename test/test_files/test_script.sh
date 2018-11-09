@@ -5,6 +5,8 @@ BAM_FILE="test_files/HCC1954_subset.bam"
 VCF_FILE="test_files/HCC1954_subset.vcf.gz"
 REFINED_FILE="test_files/refined_regions.txt" # user must generate this if they want to refine barcode selection
 
+echo "Testing package functions -- this should take about a minute"
+
 # Get shared bcs
 echo "Testing bedpe2window..."
 gemtools -T bedpe2window -i $SV_FILE -o svs.wndw.bedpe -m 85000
