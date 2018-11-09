@@ -3,7 +3,7 @@
 SV_FILE="test_files/HCC1954_chr9_svs.bedpe"
 BAM_FILE="test_files/HCC1954_subset.bam"
 VCF_FILE="test_files/HCC1954_subset.vcf.gz"
-REFINED_FILE="test_files/in_n_out.txt" # user must generate this if they want to refine barcode selection
+REFINED_FILE="test_files/refined_regions.txt" # user must generate this if they want to refine barcode selection
 
 # Get shared bcs
 echo "Testing bedpe2window..."
@@ -26,13 +26,13 @@ echo "Testing refine_bcs..."
 gemtools -T refine_bcs -i $REFINED_FILE -b $BAM_FILE -o svs.shared_refined.txt -e svs.shared.txt
 echo "Testing count_bcs..."
 #gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 500000 -s 'call_2080,call_440,call_189' -q select -o svs.bc_count_refined.txt
-gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 300000 -s 'call_2080' -q select -o svs.bc_count_refined.txt
+gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 10000 -y 300000 -s 'call_2080' -q select -o svs.bc_count_refined.txt
 echo "Testing plot_hmw..."
 gemtools -T plot_hmw -i svs.bc_count_refined.txt -o call_2080.pdf
 
 # Assign haps with select_barcodes -- better than before, with shared barcodes!
 echo "Testing assign_sv_haps..."
-gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 100000 -q select
+gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 10000 -q select
 #gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 1000000 -q select
 
 # Get phase block information
@@ -56,4 +56,4 @@ gemtools -T count_bcs_list -b $BAM_FILE -f chr9,128200000,128300000 -x 1000 -l b
 
 # Subset fastq's
 echo "Testing extract_reads_interleaved..."
-gemtools -T extract_reads_interleaved -l test_files/call_189_bcs.txt -d test_files/fastq_subset -j ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC -k 1,2,3,4,5,6,7,8 -z fastq_call_189
+gemtools -T extract_reads_interleaved -l test_files/call_189_bcs.txt -d test_files/fastq_subset -j ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC -k 1,2 -z fastq_call_189
