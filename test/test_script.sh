@@ -5,7 +5,7 @@ BAM_FILE="test_files/HCC1954_subset.bam"
 VCF_FILE="test_files/HCC1954_subset.vcf.gz"
 REFINED_FILE="test_files/refined_regions.txt" # user must generate this if they want to refine barcode selection
 
-echo "Testing package functions -- this should take about a minute"
+echo "Testing package functions -- this should take about a minute."
 
 # Get shared bcs
 echo "Testing bedpe2window..."
@@ -59,3 +59,5 @@ gemtools -T count_bcs_list -b $BAM_FILE -f chr9,128200000,128300000 -x 1000 -l b
 # Subset fastq's
 echo "Testing extract_reads_interleaved..."
 gemtools -T extract_reads_interleaved -l test_files/call_189_bcs.txt -d test_files/fastq_subset -j ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC -k 1,2 -z fastq_call_189
+
+echo "Testing complete!"
