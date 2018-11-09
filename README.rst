@@ -28,6 +28,7 @@ Installation
 
 **Test the gemtools installation:**
 """""""""""""""""""""""""
+
 ::
 	cd test
 	./test_script.sh
