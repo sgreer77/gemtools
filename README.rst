@@ -19,6 +19,7 @@ Installation
 	pip install .
 
 **If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
+::
 	git clone https://github.com/sgreer77/gemtools.git
 	cd gemtools
 	conda env create -f gemtools_env.yml
@@ -27,8 +28,8 @@ Installation
 
 **Test the gemtools installation:**
 """""""""""""""""""""""""
+::
 	cd test
-	
 	./test_script.sh
 
 
