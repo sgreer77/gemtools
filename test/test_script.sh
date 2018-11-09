@@ -25,13 +25,15 @@ gemtools -T get_shared_bcs -i svs.wndw.bedpe -b $BAM_FILE -o svs.shared.txt
 echo "Testing refine_bcs..."
 gemtools -T refine_bcs -i $REFINED_FILE -b $BAM_FILE -o svs.shared_refined.txt -e svs.shared.txt
 echo "Testing count_bcs..."
-gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 500000 -s 'call_2080,call_440,call_189' -q select -o svs.bc_count_refined.txt
+#gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 500000 -s 'call_2080,call_440,call_189' -q select -o svs.bc_count_refined.txt
+gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 300000 -s 'call_2080' -q select -o svs.bc_count_refined.txt
 echo "Testing plot_hmw..."
-gemtools -T plot_hmw -i svs.bc_count_refined.txt -o svs_refined.pdf
+gemtools -T plot_hmw -i svs.bc_count_refined.txt -o call_2080.pdf
 
 # Assign haps with select_barcodes -- better than before, with shared barcodes!
 echo "Testing assign_sv_haps..."
-gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 1000000 -q select
+gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 100000 -q select
+#gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 1000000 -q select
 
 # Get phase block information
 echo "Testing get_phased_basic..."
