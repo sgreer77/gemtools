@@ -1,10 +1,10 @@
 # gemtools
----------
+
 
 ## Installation
-============
 
-**Dependencies:**
+
+### **Dependencies:**
 """""""""""""""""
 **Python packages:** pandas, numpy, pysam, pyvcf, pybedtools, rpy2
 
