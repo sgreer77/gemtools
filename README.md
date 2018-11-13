@@ -21,14 +21,14 @@
 
 **If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
                                 
-1) Check your anaconda installation:
+**1) Check your anaconda installation:**
 
 		conda
 
-If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
-<https://conda.io/docs/user-guide/install/download.html>
+	If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
+	<https://conda.io/docs/user-guide/install/download.html>
 
-2) If/when you have anaconda installed:
+**2) If/when you have anaconda installed:**
 
 		git clone https://github.com/sgreer77/gemtools.git
 		cd gemtools
