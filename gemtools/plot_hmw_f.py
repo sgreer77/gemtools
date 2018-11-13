@@ -88,7 +88,7 @@ def plot_hmw(outpre='out',**kwargs):
 		p1 <- ggplot(df,aes(x=(window_start/1000000),y=value)) +
 			geom_point(size=0.6, colour="black") +
 			xlab(paste0(label_x," (Mb)")) +
-			ylab("SV-specific barcode") +
+			ylab("SV-spanning barcode") +
 			theme(plot.margin= unit(c(0.5, 1.5, 0.5, 0.1), "lines"),
 				panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 				legend.position="none",
