@@ -10,6 +10,7 @@
 
 **R package:** ggplot2
 
+
 ### **To install gemtools:**
 
 **If you already have the dependencies:**
@@ -34,6 +35,7 @@ If you do not receive the usage information then you can install anaconda/minico
 	conda env create -f gemtools_env.yml
 	source activate gemtools_env
 	pip install .
+
 
 ### **Test the gemtools installation:**
 
