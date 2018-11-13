@@ -49,7 +49,7 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 **General usage: gemtools -T [tool] [-options]**
 
 
-#### Tools for getting basic information about the phase blocks:
+### Tools for getting basic information about the phase blocks:
 
 
 **get_phased_basic**: Obtain phasing information for all SNVs in the vcf file
@@ -79,8 +79,8 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 		-o output file: each row is a phase block, columns summarize information for each phase block (size etc.)
 
 
-Generally useful tools:
-""""""""""""""""""""""""""
+### Generally useful tools:
+
 
 **get_phased_bcs:** For a particular phase block, return the haplotype 1 and haplotype 2 barcodes
 
@@ -158,8 +158,8 @@ Generally useful tools:
 	Output:
 		-o output file: barcode info summary for each event (specified by 'name')
 
-SV analysis tools:
-"""""""""""""""""""""
+### SV analysis tools:
+
 
 **bedpe2window:** Generate windows around SV breakpoints for SV analysis
 
@@ -244,8 +244,8 @@ SV analysis tools:
 		-o output file: plot of barcode mapping locations in a given region
 
 
-Tools for extracting subset barcoded reads from fastq files:
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Tools for extracting subset barcoded reads from fastq files:
+
 
 **extract_reads_separate**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is R1,R2,I1)
 
