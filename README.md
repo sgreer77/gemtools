@@ -5,13 +5,13 @@
 
 
 ### **Dependencies:**
-"""""""""""""""""
+
 **Python packages:** pandas, numpy, pysam, pyvcf, pybedtools, rpy2
 
 **R package:** ggplot2
 
 **To install gemtools:**
-"""""""""""""""""""""""""
+
 **If you already have the dependencies:**
 ::
 	git clone https://github.com/sgreer77/gemtools.git
@@ -42,15 +42,15 @@ If you do not receive the usage information then you can install anaconda/minico
 
 
 ## Running gemtools
-=================
+
 
 gemtools is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses      (Long Ranger output files are indicated in the instructions below with an **LR** prefix)
 
 **General usage: gemtools -T [tool] [-options]**
 
 
-Tools for getting basic information about the phase blocks:
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+#### Tools for getting basic information about the phase blocks:
+
 
 **get_phased_basic**: Obtain phasing information for all SNVs in the vcf file
 
