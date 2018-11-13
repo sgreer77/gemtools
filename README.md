@@ -23,18 +23,18 @@
                                 
 1) Check your anaconda installation:
 
-	conda
+		conda
 
 If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
 <https://conda.io/docs/user-guide/install/download.html>
 
 2) If/when you have anaconda installed:
 
-	git clone https://github.com/sgreer77/gemtools.git
-	cd gemtools
-	conda env create -f gemtools_env.yml
-	source activate gemtools_env
-	pip install .
+		git clone https://github.com/sgreer77/gemtools.git
+		cd gemtools
+		conda env create -f gemtools_env.yml
+		source activate gemtools_env
+		pip install .
 
 
 ### **Test the gemtools installation:**
