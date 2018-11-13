@@ -20,9 +20,10 @@ Installation
 
 **If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
                                 
-**For this, you must have conda installed. To check if you have conda installed, run:** 
+For this, you must have conda installed. To check if you have conda installed, run:
 ::
 conda
+::
 
 If you do not receive the usage information then you can install anaconda (https://conda.io/docs/user-guide/install/download.html)
 
