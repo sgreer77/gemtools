@@ -1,7 +1,7 @@
-#gemtools
+# gemtools
 ---------
 
-##Installation
+## Installation
 ============
 
 **Dependencies:**
@@ -41,7 +41,7 @@ If you do not receive the usage information then you can install anaconda/minico
 	./test_script.sh
 
 
-##Running gemtools
+## Running gemtools
 =================
 
 gemtools is a collection of tools that use the **output of Long Ranger** (10X Genomics) to perform additional analyses      (Long Ranger output files are indicated in the instructions below with an **LR** prefix)
