@@ -22,10 +22,12 @@
                                 
 For this, you must have anaconda installed. To check if you have anaconda installed, run:
 
-conda
+	conda
 
 If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
 <https://conda.io/docs/user-guide/install/download.html>
+
+**Once you have conda installed:**
 
 	git clone https://github.com/sgreer77/gemtools.git
 	cd gemtools
@@ -33,7 +35,7 @@ If you do not receive the usage information then you can install anaconda/minico
 	source activate gemtools_env
 	pip install .
 
-**Test the gemtools installation:**
+### **Test the gemtools installation:**
 
 	cd test
 	./test_script.sh
