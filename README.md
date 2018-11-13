@@ -10,10 +10,10 @@
 
 **R package:** ggplot2
 
-**To install gemtools:**
+### **To install gemtools:**
 
 **If you already have the dependencies:**
-::
+
 	git clone https://github.com/sgreer77/gemtools.git
 	cd gemtools
 	pip install .
@@ -22,11 +22,10 @@
                                 
 For this, you must have anaconda installed. To check if you have anaconda installed, run:
 
-::
 conda
 
 If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
-<https://conda.io/docs/user-guide/install/download.html>`_
+<https://conda.io/docs/user-guide/install/download.html>
 
 ::
 	git clone https://github.com/sgreer77/gemtools.git
