@@ -18,8 +18,8 @@ Installation
 	cd gemtools
 	pip install .
 
-**If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**  <br />
-For this, you must have conda installed. To check if you have conda installed, run:  <br />
+**If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
+                                For this, you must have conda installed. To check if you have conda installed, run: 
 
 ::
 conda
