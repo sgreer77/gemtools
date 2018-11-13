@@ -42,7 +42,7 @@
 	cd test
 	./test_script.sh
 
-If the test is successful, it will generate:
+**If the test is successful, it will generate:**
 - 1 bedpe file
 - 10 txt files
 - 1 pdf file
