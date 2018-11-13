@@ -21,7 +21,7 @@
 
 **If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
                                 
-1) Check your anaconda installation:
+1) **Check your anaconda installation:**
 
 		conda
 
