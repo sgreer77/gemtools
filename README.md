@@ -46,6 +46,7 @@
 - 1 bedpe file
 - 10 txt files
 - 1 pdf file
+- A directory containing 16 gzipped fastq files
 
 ## Running gemtools
 
