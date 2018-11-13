@@ -42,6 +42,8 @@
 	cd test
 	./test_script.sh
 
+If the test is successful, it will generate:
+- 
 
 ## Running gemtools
 
