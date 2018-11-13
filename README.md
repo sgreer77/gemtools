@@ -27,7 +27,6 @@ conda
 If you do not receive the usage information then you can install anaconda/miniconda, following the instructions at: 
 <https://conda.io/docs/user-guide/install/download.html>
 
-::
 	git clone https://github.com/sgreer77/gemtools.git
 	cd gemtools
 	conda env create -f gemtools_env.yml
@@ -35,7 +34,7 @@ If you do not receive the usage information then you can install anaconda/minico
 	pip install .
 
 **Test the gemtools installation:**
-::
+
 	cd test
 	./test_script.sh
 
