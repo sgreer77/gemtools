@@ -19,7 +19,7 @@
 	cd gemtools
 	pip install .
 
-**If you do not already have the dependencies, the recommended installation is to create a conda virtual environment and install the dependencies with conda:**
+**If you do not already have the dependencies, a yaml file is provided in the package to generate a conda virtual env with all of the dependencies:**
                                 
 1. **Check your anaconda installation:**
 
@@ -30,15 +30,11 @@
 
 2. **If/when you have anaconda installed:**
 
-		conda create -n gemtools_env python=2.7
-		source activate /venvs/anaconda/envs/groupenvs/gemtools_env
-		conda install pandas pysam rpy2
-		conda install -c bioconda pyvcf pybedtools
-		conda install -c r r-ggplot2
-
 		git clone https://github.com/sgreer77/gemtools.git
 		cd gemtools
-		pip install .	
+		conda env create -f gemtools_env.yml
+		source activate gemtools_env
+		pip install .
 
 
 ### **Test the gemtools installation:**
