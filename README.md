@@ -10,6 +10,7 @@
 
 **R package:** ggplot2
 
+**NOTE: gemtools was built under python version 2.7**
 
 ### **To install gemtools:**
 
@@ -33,7 +34,7 @@
       **Create a conda virtual environment:**
 
 		conda create -n gemtools_env python=2.7
-		source activate /venvs/anaconda/envs/groupenvs/gemtools_env
+		source activate gemtools_env
 		
       **Install the dependencies with conda:**
 		
