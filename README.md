@@ -30,18 +30,18 @@
 
 2. **If/when you have anaconda installed:**
 
-      **Create a conda virtual environment:**
+       **Create a conda virtual environment:**
 
 		conda create -n gemtools_env python=2.7
 		source activate /venvs/anaconda/envs/groupenvs/gemtools_env
 		
-      **Install the dependencies with conda:**
+       **Install the dependencies with conda:**
 		
 		conda install pandas pysam rpy2
 		conda install -c bioconda pyvcf pybedtools
 		conda install -c r r-ggplot2
 
-      **Finally, install gemtools:**
+       **Finally, install gemtools:**
 
 		git clone https://github.com/sgreer77/gemtools.git
 		cd gemtools
