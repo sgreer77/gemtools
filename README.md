@@ -30,7 +30,7 @@
 
 2. **If/when you have anaconda installed:**
 
-    Create a conda virtual environment:
+      **Create a conda virtual environment:**
 
 		conda create -n gemtools_env python=2.7
 		source activate /venvs/anaconda/envs/groupenvs/gemtools_env
