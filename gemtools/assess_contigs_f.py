@@ -23,8 +23,8 @@ def assess_contigs(**kwargs):
 				r_st_list.append(row[1]['r_st'])
 				r_en_list.append(row[1]['r_st'])
 				i += 1
-        print name
-        print i
+		print name
+		print i
 		if i == 2: #should generally have 2 rows
 			if r_st_list[1] > r_en_list[0] or r_st_list[0] > r_en_list[1]: #interesting
 				df.loc[name, 'interesting'] = True
