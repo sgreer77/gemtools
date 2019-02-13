@@ -15,11 +15,11 @@ def align_contigs(**kwargs):
 
 	outfile = open(outfile, 'w')
 
-	outfile.write("read\tchr\tpos\tr_st\tr_en\tq_st\tq_en\tcigstr\tcigtup\n")
+	outfile.write("read\tchr\tpos\tr_st\tr_en\tq_st\tq_en\tstrand\tcigstr\tcigtup\n")
 
 	for name, seq, qual in mp.fastx_read(infile):
 		print name
 		for hit in a.map(seq):
-			outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.q_st, hit.q_en, hit.cigar_str, hit.cigar))
+			outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.q_st, hit.q_en, hit.strand, hit.cigar_str, hit.cigar))
 
 	outfile.close()
