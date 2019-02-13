@@ -1,6 +1,6 @@
 import pandas as pd
 
-def interesting_contigs_mappy(**kwargs):
+def assess_contigs(**kwargs):
 
 	if 'infile_aln' in kwargs:
 		infile = kwargs['infile_aln']
