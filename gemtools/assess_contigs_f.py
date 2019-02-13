@@ -21,7 +21,8 @@ def assess_contigs(**kwargs):
 		i = 0
         	print name
 		for row in group.iterrows():
-			print row[1] 
+			print row[1]
+			print row 
 			if abs(row[1]['r_en'] - row[1]['r_st']) > 500: 
 				r_st_list.append(row[1]['r_st'])
 				r_en_list.append(row[1]['r_st'])
