@@ -7,11 +7,9 @@ def assess_contigs(**kwargs):
 	if 'out' in kwargs:
 		outfile = kwargs['out']
 
-	df = pd.read_table(infile, sep="\t", index_col = 0)
+	df = pd.read_table(infile, sep="\t")
 	print df
-	df = df.reset_index() #otherwise 'read' column is index
 	df['interesting'] = False 
-	#grouped = df.groupby('read').filter(lambda x: len(x)>=2) #only reads that appear 2+ times
 	grouped = df.groupby('read')
 
 	for name, group in grouped:
