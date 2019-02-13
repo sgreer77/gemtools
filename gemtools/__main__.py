@@ -22,7 +22,7 @@ from gemtools.plot_hmw_f import plot_hmw
 from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.refine_bcs_f import refine_bcs
-from gemtools.align_contigs_f.py import align_contigs
+from gemtools.align_contigs_f import align_contigs
 
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
