@@ -23,6 +23,7 @@ from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.refine_bcs_f import refine_bcs
 from gemtools.align_contigs_f import align_contigs
+from gemtools.assess_contigs_f import assess_contigs
 
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -52,7 +53,8 @@ The gemtools sub-tools include:\n
     assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs).
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). 
-    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2). \n
+    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2).
+    assess_contigs	Determine which contigs may contain rearranged structures. \n
 [ Subset reads by barcode ]
     extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
     extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2). \n
@@ -193,6 +195,8 @@ def pipeline_from_parsed_args(args):
 		pipeline = refine_bcs(bed_in=args.infile, out=args.outfile, bam=args.bam, shrd_file = args.shrd_file)
 	if args.tool=="align_contigs":
 		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
+	if args.tool=="assess_contigs":
+		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -567,7 +571,25 @@ Output:
 			parser.error(str(args.ref_file) + " does not exist")
 	
 ##########################################################################################
-
+	if args.tool=="assess_contigs":
+		if args.help:
+			print """
+Tool:	gemtools -T assess_contigs
+Summary: Assess whether contigs have rearranged structures\n
+Usage:   gemtools -T assess_contigs [OPTIONS] -i <aligned_contigs.txt> -o <out.txt>
+Input:
+	-i  aligned contigs file (output of align_contigs)
+Output:
+	-o  output file: alignment info marked with assessment
+			"""
+			sys.exit(1)
+		if not (args.infile or args.outfile):
+			parser.error('Missing required input')
+		
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
+	
+##########################################################################################
 
 	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
