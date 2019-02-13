@@ -8,6 +8,7 @@ def assess_contigs(**kwargs):
 		outfile = kwargs['out']
 
 	df = pd.read_csv(infile, sep="\t", index_col = False)
+	df.sort_values(by=['read','pos'], inplace=True)
 	print df
 	#df['interesting'] = False 
 	#grouped = df.groupby('read').filter(lambda x: len(x)>=2) #only reads that appear 2+ times
@@ -17,9 +18,9 @@ def assess_contigs(**kwargs):
 
 	i=0
 	for name, group in grouped:
-		group_dedup = group.drop_duplicates(subset=['q_st','q_en'])
+		group_dedup = group.drop_duplicates(subset=['q_st','q_en']) #only interested if multiple parts of contig map
 		
-		if len(group_dedup.index)>1:
+		if len(group_dedup.index)>1: #interesting
 			i += 1
 			assess_list.append([name,i])
 		else:
