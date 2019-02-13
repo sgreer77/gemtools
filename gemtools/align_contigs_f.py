@@ -1,4 +1,3 @@
-### inputs: fasta infile, outfile name, path to reference genome
 import mappy as mp
 
 def align_contigs(**kwargs):
@@ -18,10 +17,9 @@ def align_contigs(**kwargs):
 
 	outfile.write("read\tchr\tpos\tr_st\tr_en\tq_st\tq_en\tcigstr\tcigtup\n")
 
-	for name, seq, qual in mp.fastx_read(infile): # read a fasta/q sequence
-
-		for hit in a.map(seq): # traverse alignments ##CORE DUMPED### on aji, but fine on tamago
-			if ((hit.ctg).isdigit()):
-				outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.q_st, hit.q_en, hit.cigar_str, hit.cigar))
+	for name, seq, qual in mp.fastx_read(infile):
+		print name
+		for hit in a.map(seq):
+			outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.q_st, hit.q_en, hit.cigar_str, hit.cigar))
 
 	outfile.close()
