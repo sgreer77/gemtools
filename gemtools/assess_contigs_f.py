@@ -27,7 +27,9 @@ def assess_contigs(**kwargs):
 		print i
 		if i>1 : #should generally have 2 rows
 			if r_st_list[1] > r_en_list[0] or r_st_list[0] > r_en_list[1]: #interesting
-				df.loc[name, 'interesting'] = True
+				row['interesting'] = "True"
+			else:
+				row['interesting'] = "False"
 
 	#df_interesting = df.query('interesting == True')
 	df.to_csv(outfile, sep="\t", index=False)
