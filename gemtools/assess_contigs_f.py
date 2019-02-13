@@ -30,4 +30,4 @@ def assess_contigs(**kwargs):
 				df.loc[name, 'interesting'] = True
 
 	#df_interesting = df.query('interesting == True')
-	df.to_csv(outfile, sep="\t")
+	df.to_csv(outfile, sep="\t", index=False)
