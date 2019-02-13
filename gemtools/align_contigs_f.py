@@ -10,7 +10,7 @@ def align_contigs(**kwargs):
 	if 'genome' in kwargs:
 		genome = kwargs['genome']
 
-	a = mp.Aligner(str(genome))
+	a = mp.Aligner(str(genome), preset=asm5)
 
 	if not a: raise Exception("ERROR: failed to load/build index")
 

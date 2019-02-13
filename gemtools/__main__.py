@@ -553,7 +553,7 @@ Summary: Aligns contigs to the genome\n
 Usage:   gemtools -T align_contigs [OPTIONS] -i <de_novo.fasta.gz> -o <out.txt> -r <genome_reference_fasta>
 Input:
 	-i  fasta file of de novo contigs (ex: output of supernova)
-	-g  genome reference fasta file
+	-r  genome reference fasta file
 Output:
 	-o  output file: alignment info
 			"""
