@@ -8,7 +8,7 @@ def assess_contigs(**kwargs):
 		outfile = kwargs['out']
 
 	df = pd.read_csv(infile, sep="\t", index_col = False)
-	df = df.reset_index() #otherwise 'read' column is index
+	#df = df.reset_index() #otherwise 'read' column is index
 	print df
 	#df['interesting'] = False 
 	#grouped = df.groupby('read').filter(lambda x: len(x)>=2) #only reads that appear 2+ times
