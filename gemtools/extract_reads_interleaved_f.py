@@ -60,8 +60,11 @@ def extract_reads_interleaved(**kwargs):
 def extract_reads(args_fq):
 
         bcs = [] 
-        out_file = gzip.open(args_fq[3],'w')  
-        out_si_file = gzip.open(args_fq[4],'w')  
+        #out_file = gzip.open(args_fq[3],'w')  
+        #out_si_file = gzip.open(args_fq[4],'w')  
+
+        out_file = io.BufferedWriter(gzip.open(args_fq[3],'w')) 
+        out_si_file = io.BufferedWriter(gzip.open(args_fq[4],'w'))
 
         with open(args_fq[2],'r') as f:
                 for line in csv.reader(f,delimiter='\t'): 
@@ -73,7 +76,8 @@ def extract_reads(args_fq):
         n = 0
         i = 0
 
-        with gzip.open(args_fq[0], 'r') as f, gzip.open(args_fq[1],'r') as ind:   
+        #with gzip.open(args_fq[0], 'r') as f, gzip.open(args_fq[1],'r') as ind:
+        with io.BufferedReader(gzip.open(args_fq[0], 'r')) as f, io.BufferedReader(gzip.open(args_fq[1],'r')) as ind:
                 cur_time = time.time()
 
                 while True:

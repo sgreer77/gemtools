@@ -56,7 +56,8 @@ def extract_reads_separate(**kwargs):
 	n = 0
 	i = 0
 
-	with gzip.open(r1, 'r') as f1, gzip.open(r2, 'r') as f2, gzip.open(i1,'r') as ind:
+	#with gzip.open(r1, 'r') as f1, gzip.open(r2, 'r') as f2, gzip.open(i1,'r') as ind:
+	with io.BufferedReader(gzip.open(r1, 'r')) as f1, io.BufferedReader(gzip.open(r2, 'r')) as f2, io.BufferedReader(gzip.open(i1,'r')) as ind:
 		cur_time = time.time()
 		while True:
 			lines_r1 = list(islice(f1,4))
