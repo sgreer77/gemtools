@@ -15,6 +15,7 @@ def assess_contigs(**kwargs):
 
 	assess_list=[]
 
+	j=0
 	for name, group in grouped:
 		r_st_list = []
 		r_en_list = []
@@ -29,7 +30,8 @@ def assess_contigs(**kwargs):
 		print i
 		if i>1:
 			if r_st_list[1] > r_en_list[0] or r_st_list[0] > r_en_list[1]: #interesting
-				assess_list.append([name,"True"])
+				j += 1
+				assess_list.append([name,j])
 		else:
 			assess_list.append([name,"False"])
 		
