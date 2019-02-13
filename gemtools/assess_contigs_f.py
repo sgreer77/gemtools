@@ -9,9 +9,11 @@ def assess_contigs(**kwargs):
 
 	df = pd.read_csv(infile, sep="\t", index_col = False)
 	print df
-	df['interesting'] = False 
+	#df['interesting'] = False 
 	#grouped = df.groupby('read').filter(lambda x: len(x)>=2) #only reads that appear 2+ times
 	grouped = df.groupby('read')
+
+	assess_list=[]
 
 	for name, group in grouped:
 		r_st_list = []
@@ -25,11 +27,18 @@ def assess_contigs(**kwargs):
 				i += 1
 		print name
 		print i
-		if i>1 : #should generally have 2 rows
+		if i>1:
 			if r_st_list[1] > r_en_list[0] or r_st_list[0] > r_en_list[1]: #interesting
-				row['interesting'] = "True"
-			else:
-				row['interesting'] = "False"
+				assess_list.append([name,"True"])
+		else:
+			assess_list.append([name,"False"])
+		
+	print assess_list
+
+	df_assess = pd.DataFrame(assess_list, columns=['read','interesting'])
+	print df_assess
+
+	df_comb = pd.merge(df, df_assess, on="read", how="left")
 
 	#df_interesting = df.query('interesting == True')
-	df.to_csv(outfile, sep="\t", index=False)
+	df_comb.to_csv(outfile, sep="\t", index=False)
