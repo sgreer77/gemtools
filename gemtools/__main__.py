@@ -22,6 +22,7 @@ from gemtools.plot_hmw_f import plot_hmw
 from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.refine_bcs_f import refine_bcs
+from gemtools.align_contigs_f.py import align_contigs
 
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -50,7 +51,8 @@ The gemtools sub-tools include:\n
     refine_bcs		Select barcodes that are shared between regions and not in other regions.
     assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs).
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
-    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). \n
+    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). 
+    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2). \n
 [ Subset reads by barcode ]
     extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
     extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2). \n
@@ -154,6 +156,9 @@ def get_option_parser():
 	parser.add_argument("-e", "--shared_bc_file", metavar="FILE",
 		dest="shrd_file",
 		help="File of shared bcs")
+	parser.add_argument("-r", "--ref", metavar="FILE",
+		dest="ref_file",
+		help="File of genome reference")
 
 	return parser
 
@@ -186,6 +191,8 @@ def pipeline_from_parsed_args(args):
 		pipeline = extract_reads_separate(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
 	if args.tool=="refine_bcs":
 		pipeline = refine_bcs(bed_in=args.infile, out=args.outfile, bam=args.bam, shrd_file = args.shrd_file)
+	if args.tool=="align_contigs":
+		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -537,7 +544,31 @@ Options:
 		if not str(args.bam).endswith(".bam"):
 			parser.error(str(args.bam) + " does not appear to be a bam file")
 
+##########################################################################################	
+	if args.tool=="align_contigs":
+		if args.help:
+			print """
+Tool:	gemtools -T align_contigs
+Summary: Aligns contigs to the genome\n
+Usage:   gemtools -T align_contigs [OPTIONS] -i <de_novo.fasta.gz> -o <out.txt> -r <genome_reference_fasta>
+Input:
+	-i  fasta file of de novo contigs (ex: output of supernova)
+	-g  genome reference fasta file
+Output:
+	-o  output file: alignment info
+			"""
+			sys.exit(1)
+		if not (args.infile or args.outfile or args.ref_file):
+			parser.error('Missing required input')
+		
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
+		if not os.path.isfile(args.ref_file):
+			parser.error(str(args.ref_file) + " does not exist")
+	
 ##########################################################################################
+
+
 	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
 
