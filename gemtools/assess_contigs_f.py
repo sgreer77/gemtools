@@ -15,23 +15,13 @@ def assess_contigs(**kwargs):
 
 	assess_list=[]
 
-	j=0
+	i=0
 	for name, group in grouped:
-		r_st_list = []
-		r_en_list = []
-		i = 0
+		group_dedup = group.drop_duplicates(subset=['q_st','q_en'])
 		
-		for row in group.iterrows():
-			if abs(row[1]['r_en'] - row[1]['r_st']) > 500: # only consider mappings of at least 500
-				r_st_list.append(row[1]['r_st'])
-				r_en_list.append(row[1]['r_st'])
-				i += 1
-		print name
-		print i
-		if i>1:
-			if r_st_list[1] > r_en_list[0] or r_st_list[0] > r_en_list[1]: #interesting
-				j += 1
-				assess_list.append([name,j])
+		if len(group_dedup.index)>1:
+			i += 1
+			assess_list.append([name,i])
 		else:
 			assess_list.append([name,"False"])
 		
