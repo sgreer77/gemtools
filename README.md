@@ -214,7 +214,7 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 
 **assign_sv_haps:** Assign SV barcodes to existing haplotypes (SNVs)
 
-	gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -t [LR_test.vcf.gz] -o [out.haps] -q [shared|select]
+	gemtools -T assign_sv_haps -i [out.shared] -c [LR_control.vcf.gz] -v [LR_test.vcf.gz] -o [out.haps] -q [shared|select]
 	
 	Ex: gemtools -T assign_sv_haps -i out.shared.txt -v phased_variants.vcf.gz -c phased_variants.vcf.gz -o out.haps.txt -q shared
 	
