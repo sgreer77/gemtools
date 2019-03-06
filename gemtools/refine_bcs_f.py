@@ -43,7 +43,7 @@ def refine_bcs(**kwargs):
 
 	for name, group in bed_grouped:
 	
-		sv_name = group['name'][0]
+		sv_name = list(group['name'])[0]
 		print sv_name
 	
 		#print name
