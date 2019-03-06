@@ -105,10 +105,8 @@ def assign_sv_haps(**kwargs):
 
 		if bc_subset=="shared":
 			df_sv_sub2 = df_sv[['name','bc_overlap_num','bc_overlap_id']]
-			df_sv_sub2 = df_sv.loc[df_sv['bc_overlap_id']!="na"]
 		elif bc_subset=="select":
 			df_sv_sub2 = df_sv[['name','num_select_bcs','select_bcs']]
-			df_sv_sub2 = df_sv.loc[df_sv['select_bcs']!="na"]
 		else:
 			print "bcs -- must be either 'shared' or 'select'"
 			sys.exit(1)

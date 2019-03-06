@@ -64,7 +64,7 @@ def refine_bcs(**kwargs):
 
 		group_out = group.loc[group['status']=="out"]
 		if len(group_out.index)==0:
-			out_data.append([sv_name,common_bcs_len,"na","na",tuple(common_bcs),"na","na"])
+			out_data.append([sv_name,name,common_bcs_len,"na","na",tuple(common_bcs),"na","na"])
 		
 		else:
 			bc_list_out=group_out['bcs'].tolist()
@@ -75,10 +75,10 @@ def refine_bcs(**kwargs):
 			bc_final = [x for x in common_bcs if x not in bc_list_out_flat_uq]
 			bc_final_len = len(bc_final)
 			
-			out_data.append([sv_name,common_bcs_len,bc_list_out_flat_uq_len,bc_final_len,tuple(common_bcs),tuple(bc_list_out_flat_uq),tuple(bc_final)])
+			out_data.append([sv_name,name,common_bcs_len,bc_list_out_flat_uq_len,bc_final_len,tuple(common_bcs),tuple(bc_list_out_flat_uq),tuple(bc_final)])
 	
 	bam_open.close()
-	out_df = pd.DataFrame(out_data, columns = ['name','num_in_bcs','num_out_bcs','num_select_bcs','in_bcs','out_bcs','select_bcs'])
+	out_df = pd.DataFrame(out_data, columns = ['name','sub_name','num_in_bcs','num_out_bcs','num_select_bcs','in_bcs','out_bcs','select_bcs'])
 	
 	if str(shared_in)=="None":
 		out_df.to_csv(outpre, sep="\t", index=False)
