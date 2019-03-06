@@ -32,12 +32,12 @@ def refine_bcs(**kwargs):
 
 	bam_open = pysam.Samfile(bam_input)
 
-	bed_df = pd.read_table(bed_in, sep="\t", comment="#", header=None, names=['chrom','start','stop','name','sub_name','status'])
+	bed_df = pd.read_table(bed_in, sep="\t", comment="#", header=None, names=['chrom','start','stop','name','status'])
 	
 	bed_df['bcs'] = bed_df.apply(lambda row: get_barcode_ids(bam_open,str(row['chrom']),int(row['start']),int(row['stop']),MIN_MAPQ),axis=1)
 	#print bed_df
 	
-	bed_grouped = bed_df.groupby('sub_name')
+	bed_grouped = bed_df.groupby('name')
 
 	out_data = []
 
