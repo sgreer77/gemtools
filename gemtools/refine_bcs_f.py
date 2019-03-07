@@ -83,6 +83,7 @@ def refine_bcs(**kwargs):
 	out_df = out_df[['name','select_bcs']]
 	out_df = out_df.loc[out_df['select_bcs']!="na"]
 	out_df2 = out_df.groupby('name')['select_bcs'].sum().reset_index()
+	out_df2['num_select_bcs'] = out_df2['select_bcs'].apply(lambda x: len(x))
 	
 	if str(shared_in)=="None":
 		out_df2.to_csv(outpre, sep="\t", index=False)

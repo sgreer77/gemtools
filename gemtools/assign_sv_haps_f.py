@@ -178,8 +178,10 @@ def assign_sv_haps(**kwargs):
 	    	if str(row['bc_overlap_id'])!="None":
 	    		sv_bcs = literal_eval(row['bc_overlap_id'])
 	    elif bc_subset=="select":
-	    	if str(row['select_bcs'])!="None":
+	    	if int(row['num_select_bcs'])!=0:
 	    		sv_bcs = literal_eval(row['select_bcs'])
+	    	else:
+	    		print "No shared barcodes for: " + str(row["name"])
 	    else:
 	    	print "bcs -- must be either 'shared' or 'select'"
 	    	sys.exit(1)
