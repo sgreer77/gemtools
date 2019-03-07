@@ -175,10 +175,10 @@ def assign_sv_haps(**kwargs):
 	    #print type(row['bc_overlap_id'])
 	    
 	    if bc_subset=="shared":
-	    	if str(row['bc_overlap_id'])!="na"
+	    	if str(row['bc_overlap_id'])!="na":
 	    		sv_bcs = literal_eval(row['bc_overlap_id'])
 	    elif bc_subset=="select":
-	    	if str(row['select_bcs'])!="na"
+	    	if str(row['select_bcs'])!="na":
 	    		sv_bcs = literal_eval(row['select_bcs'])
 	    else:
 	    	print "bcs -- must be either 'shared' or 'select'"
