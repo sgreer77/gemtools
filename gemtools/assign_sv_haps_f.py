@@ -161,127 +161,33 @@ def assign_sv_haps(**kwargs):
 	# Overlap SV-specific barcodes with barcodes of phased SNVs                   #
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 
-
-	#df.groupby('A').agg({'B': ['min', 'max'], 'C': 'sum'})
 	vcf_merge_grp = vcf_merge.groupby(['name','bp_name','phase_id_norm']).agg({'bc_1_phased' : 'sum', 'bc_2_phased' : 'sum'}).reset_index()
 
 	vcf_merge_grp.to_csv("test2.txt", sep="\t", index=False)
 
-	## CREATE A LIST OF HAPLOTYPE-SPECIFIC BARCODES FOR EACH PHASED VARIANT 
-
-	bc_1_list = vcf_merge['bc_1_phased'].tolist()
-	bc_1_list_mod = []
-	for bc_ls in bc_1_list:
-	    new_bc_ls = bc_ls.split(';')
-	    new_bc_ls_mod = [b.split('_')[0] for b in new_bc_ls]
-	    bc_1_list_mod.append(new_bc_ls_mod)
-
-	bc_2_list = vcf_merge['bc_2_phased'].tolist()
-	bc_2_list_mod = []
-	for bc_ls in bc_2_list:
-	    new_bc_ls = bc_ls.split(';')
-	    new_bc_ls_mod = [b.split('_')[0] for b in new_bc_ls]
-	    bc_2_list_mod.append(new_bc_ls_mod)
-
 	## INTERSECT "SV-SPECIFIC" BARCODES WITH LIST OF BCS FOR EACH PHASED VARIANT (GENERATED ABOVE) -- COUNT NUMBER OF OVERLAPPING BARCODES
 
-	for index, row in df_sv.iterrows():    
-
-	    #print row['bc_overlap_id']
-	    #print type(row['bc_overlap_id'])
-	    
-	    if bc_subset=="shared":
-	    	if str(row['bc_overlap_id'])!="None":
-	    		sv_bcs = literal_eval(row['bc_overlap_id'])
-	    elif bc_subset=="select":
-	    	if int(row['num_select_bcs'])!=0:
-	    		sv_bcs = literal_eval(row['select_bcs'])
-	    	else:
-	    		print "No shared barcodes for: " + str(row["name"])
-	    else:
-	    	print "bcs -- must be either 'shared' or 'select'"
-	    	sys.exit(1)
-	    
-	    num_bcs = len(sv_bcs) ## new_add
-	    
-	    
-	    #sv_bcs = row['bc_overlap_id']
-	    sv_id = row['name']
-
-	    overlap_bcs_1 = []
-	    overlap_counts_1 = []
-	    for b in bc_1_list_mod:
-			bc_overlap_1 = list(set(sv_bcs) & set(b))
-			num_overlaps = len(bc_overlap_1)
-			overlap_bcs_1.append(tuple(bc_overlap_1))
-			overlap_counts_1.append(num_overlaps)
-
-	    overlap_bcs_2 = []
-	    overlap_counts_2 = []
-	    for b in bc_2_list_mod:
-			bc_overlap_2 = list(set(sv_bcs) & set(b))
-			num_overlaps = len(bc_overlap_2)
-			overlap_bcs_2.append(tuple(bc_overlap_2))
-			overlap_counts_2.append(num_overlaps)
-
-	    vcf_merge[str(sv_id) + "_num_bcs_checked"] = num_bcs
-		
-	    vcf_merge[str(sv_id) + "_hap1_overlap_count"] = overlap_counts_1
-	    vcf_merge[str(sv_id) + "_hap2_overlap_count"] = overlap_counts_2
-	   
-	    vcf_merge[str(sv_id) + "_hap1_overlap_bcs"] = overlap_bcs_1
-	    vcf_merge[str(sv_id) + "_hap2_overlap_bcs"] = overlap_bcs_2
-		
-
-	## ADD COUNTS OF UNIQUE BARCODES FOR EACH BREAKPOINT
-
-	#vcf_merge.to_csv("vcf_merge_testing.txt", sep="\t", index=False) #debug
+	# Start by merging
 	
-	bp_list = list(set(vcf_merge['bp_name']))
-	sv_list = list(set(vcf_merge['name']))
-
-	df_bp_list = []
-
-	for sv in sv_list:
-	    df_bp_name = sv + "_bc_counts_bp"
-	    hap1_bc_col = sv + "_hap1_overlap_bcs"
-	    hap2_bc_col = sv + "_hap2_overlap_bcs"
-	    sv_num_bcs = sv + "_num_bcs_checked"
-	    df_bp_name = vcf_merge.groupby(['name','bp_name','phase_id_norm',sv_num_bcs]).agg({hap1_bc_col:'sum', hap2_bc_col: 'sum'}).reset_index()
-	    df_bp_name[sv + "_hap1_overlap_count_bp"] = df_bp_name[hap1_bc_col].apply(lambda x: len(set(x)))
-	    df_bp_name[sv + "_hap2_overlap_count_bp"] = df_bp_name[hap2_bc_col].apply(lambda x: len(set(x)))
-	    df_bp_name.rename(columns = {hap1_bc_col: sv + "_hap1_overlap_bcs_bp", hap2_bc_col: sv + "_hap2_overlap_bcs_bp", sv_num_bcs: sv + "_num_bcs_checked"}, inplace=True)
-	    df_bp_list.append(df_bp_name)
-	    #df_bp_name.to_csv(sv + "_bp_list.txt", sep="\t", index=False)
-
-	df_bp_counts = reduce(lambda x, y: pd.merge(x, y, on = ['name','bp_name','phase_id_norm']), df_bp_list)
-	#df_bp_counts.to_csv("testing_counts.txt", sep="\t", index=False) #debug
+	merged_df = pd.merge(df_sv, vcf_merge_grp, on="name", how="left")
 	
-	## CREATE FINAL SUMMARY OUTPUT
+	if bc_subset=="shared":
+		merged_df['hap1_overlap'] = merged_df.apply(lambda row: tuple(list(set(row['bc_1_phased']) & set(row['bc_overlap_id']))), axis=1)
+		merged_df['hap2_overlap'] = merged_df.apply(lambda row: tuple(list(set(row['bc_2_phased']) & set(row['bc_overlap_id']))), axis=1)
+		merged_df['num_bcs_checked'] = merged_df['bc_overlap_id'].apply(lambda x: len(x))
+		
+	elif bc_subset=="select":
+		merged_df['hap1_overlap'] = merged_df.apply(lambda row: tuple(list(set(row['bc_1_phased']) & set(row['select_bcs']))), axis=1)
+		merged_df['hap2_overlap'] = merged_df.apply(lambda row: tuple(list(set(row['bc_2_phased']) & set(row['select_bcs']))), axis=1)
+		merged_df['num_bcs_checked'] = merged_df['select_bcs'].apply(lambda x: len(x))
+		
+	else:
+		print "bcs -- must be either 'shared' or 'select'"
+		sys.exit(1)
 
-	sv_list = list(set(df_bp_counts['name']))
+	merged_df['hap1_overlap_num'] = merged_df['hap1_overlap'].apply(lambda x: len(x))
+	merged_df['hap2_overlap_num'] = merged_df['hap2_overlap'].apply(lambda x: len(x))
 
-	general_cols = ['name','bp_name','phase_id_norm']
-	all_cols = df_bp_counts.columns
 
-	df_sub_list = []
-
-	for sv in sv_list:
-	    df_sub_name = sv + "_bc_counts_sub"
-	    df_sub = df_bp_counts.loc[df_bp_counts['name']==sv]
-	    sv_cols = [c for c in all_cols if c.startswith(str(sv) + "_")]
-	    sub_cols = general_cols + sv_cols
-	    df_sub = df_sub[sub_cols]
-	    #df_sub_cols = general_cols + ['_'.join(n.split("_")[2:]) for n in sv_cols]
-	    df_sub_cols = general_cols + [str(n).partition(str(sv) + "_")[2] for n in sv_cols]
-	    df_sub.columns = df_sub_cols
-
-	    df_sub_list.append(df_sub)
-
-	summ_df = pd.concat(df_sub_list)
-	#summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp', 'hap1_overlap_bcs_sv', 'hap2_overlap_bcs_sv', 'hap1_overlap_count_sv', 'hap2_overlap_count_sv','both_overlap_count_bp']]
-	#summ_df.to_csv("testing_2.txt", sep="\t", index=False) #debug
-	summ_df = summ_df[['name', 'bp_name', 'phase_id_norm', 'num_bcs_checked', 'hap1_overlap_bcs_bp', 'hap2_overlap_bcs_bp', 'hap1_overlap_count_bp', 'hap2_overlap_count_bp']]
-
-	summ_df.to_csv(outpre, sep="\t", index=False)
-	return summ_df
+	merged_df.to_csv(outpre, sep="\t", index=False)
+	return merged_df
