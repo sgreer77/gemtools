@@ -152,6 +152,7 @@ def assign_sv_haps(**kwargs):
 	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: row['bc_1'] if row['gt_norm']=='0|1' else row['bc_2'], axis=1)
 	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: row['bc_1'] if row['gt_norm']=='1|0' else row['bc_2'], axis=1)
 
+	vcf_merge.to_csv("test.txt", sep="\t", index=False)
 
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 	# Overlap SV-specific barcodes with barcodes of phased SNVs                   #
