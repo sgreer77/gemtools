@@ -137,14 +137,17 @@ def assign_sv_haps(**kwargs):
 
 	df_norm = pd.DataFrame(vcf_data_norm)
 	df_norm.columns = ['name','bp_name','phase_id_norm','chr','pos','ref_norm','alt_norm','gt_norm']
-	df_norm.drop_duplicates(inplace=True)
+	print df_norm.head()
+	#df_norm.drop_duplicates(inplace=True)
 
 	df_tum = pd.DataFrame(vcf_data_tum)
 	df_tum.columns = ['name','bp_name','phase_id_tum','chr','pos','ref_tum','alt_tum','gt_tum', 'bc_1', 'bc_2']
-	df_tum.drop_duplicates(inplace=True)
+	print df_tum.head()
+	#df_tum.drop_duplicates(inplace=True)
 
 	vcf_merge = pd.merge(df_norm, df_tum, on=['name','bp_name','chr','pos'], how="inner")
-	vcf_merge.drop_duplicates(inplace=True)
+	print vcf_merge.head()
+	#vcf_merge.drop_duplicates(inplace=True)
 
 	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: row['bc_1'] if row['gt_norm']=='0|1' else row['bc_2'], axis=1)
 	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: row['bc_1'] if row['gt_norm']=='1|0' else row['bc_2'], axis=1)
