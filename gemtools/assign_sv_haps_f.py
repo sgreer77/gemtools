@@ -149,8 +149,11 @@ def assign_sv_haps(**kwargs):
 	print vcf_merge.head()
 	vcf_merge.drop_duplicates(inplace=True)
 
-	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1'].split(";")) if row['gt_norm']=='0|1' else tuple(row['bc_2'].split(";")), axis=1)
-	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1'].split(";")) if row['gt_norm']=='1|0' else tuple(row['bc_2'].split(";")), axis=1)
+	vcf_merge['bc_1_mod'] = vcf_merge['bc_1'].apply(lambda x: tuple(set([b.split('_')[0] for b in x.split(';')])))
+	vcf_merge['bc_2_mod'] = vcf_merge['bc_2'].apply(lambda x: tuple(set([b.split('_')[0] for b in x.split(';')])))
+
+	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: row['bc_1_mod'] if row['gt_norm']=='0|1' else row['bc_2_mod'], axis=1)
+	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: row['bc_1_mod'] if row['gt_norm']=='1|0' else row['bc_2_mod'], axis=1)
 
 	vcf_merge.to_csv("test1.txt", sep="\t", index=False)
 
