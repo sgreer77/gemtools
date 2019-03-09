@@ -158,10 +158,10 @@ def assign_sv_haps(**kwargs):
 	# Overlap SV-specific barcodes with barcodes of phased SNVs                   #
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 
-	vcf_merge['bc_1_grp'] = vcf_merge.groupby(['name','bp_name','phase_id_norm'])['bc_1_phased'].sum().reset_index()
-	vcf_merge['bc_2_grp'] = vcf_merge.groupby(['name','bp_name','phase_id_norm'])['bc_2_phased'].sum().reset_index()
+	#df.groupby('A').agg({'B': ['min', 'max'], 'C': 'sum'})
+	vcf_merge_grp = vcf_merge.groupby(['name','bp_name','phase_id_norm']).agg({'bc_1_phased' : 'sum', 'bc_2_phased' : 'sum'}).reset_index()
 
-	vcf_merge.to_csv("test2.txt", sep="\t", index=False)
+	vcf_merge_grp.to_csv("test2.txt", sep="\t", index=False)
 
 	## CREATE A LIST OF HAPLOTYPE-SPECIFIC BARCODES FOR EACH PHASED VARIANT 
 
