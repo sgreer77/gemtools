@@ -88,6 +88,6 @@ def refine_bcs(**kwargs):
 	if str(shared_in)=="None":
 		out_df2.to_csv(outpre, sep="\t", index=False)
 	else:
-		shared_df = pd.read_table(shared_in, sep="\t")
+		shared_df = pd.read_table(shared_in, sep="\t", skiprows=1)
 		merged = pd.merge(shared_df, out_df2, on="name", how="left")
 		merged.to_csv(outpre, sep="\t", index=False)
