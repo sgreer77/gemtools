@@ -149,14 +149,15 @@ def assign_sv_haps(**kwargs):
 	print vcf_merge.head()
 	vcf_merge.drop_duplicates(inplace=True)
 
-	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1']) if row['gt_norm']=='0|1' else tuple(row['bc_2']), axis=1)
-	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1']) if row['gt_norm']=='1|0' else tuple(row['bc_2']), axis=1)
+	vcf_merge['bc_1_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1'].split(";")) if row['gt_norm']=='0|1' else tuple(row['bc_2'].split(";")), axis=1)
+	vcf_merge['bc_2_phased'] = vcf_merge.apply(lambda row: tuple(row['bc_1'].split(";")) if row['gt_norm']=='1|0' else tuple(row['bc_2'].split(";")), axis=1)
 
 	vcf_merge.to_csv("test1.txt", sep="\t", index=False)
 
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
 	# Overlap SV-specific barcodes with barcodes of phased SNVs                   #
 	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
+
 
 	#df.groupby('A').agg({'B': ['min', 'max'], 'C': 'sum'})
 	vcf_merge_grp = vcf_merge.groupby(['name','bp_name','phase_id_norm']).agg({'bc_1_phased' : 'sum', 'bc_2_phased' : 'sum'}).reset_index()
