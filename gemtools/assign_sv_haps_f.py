@@ -177,7 +177,7 @@ def assign_sv_haps(**kwargs):
 		merged_df['num_bcs_checked'] = merged_df['bc_overlap_id'].apply(lambda x: len(x))
 		
 	elif bc_subset=="select":
-		merged_df['hap1_overlap'] = merged_df.apply(lambda row: tuple(list(set(list(literal_eval(row['bc_1_phased']))) & set(list(literal_eval(row['select_bcs']))))), axis=1)
+		merged_df['hap1_overlap'] = merged_df.apply(lambda row: tuple(list(set(list(literal_eval(str(row['bc_1_phased'])))) & set(list(literal_eval(str(row['select_bcs'])))))), axis=1)
 		merged_df['hap2_overlap'] = merged_df.apply(lambda row: tuple(list(set(list(row['bc_2_phased'])) & set(list(row['select_bcs'])))), axis=1)
 		merged_df['num_bcs_checked'] = merged_df['select_bcs'].apply(lambda x: len(x))
 		
