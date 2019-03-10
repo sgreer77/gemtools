@@ -23,7 +23,7 @@ from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.align_contigs_f import align_contigs
 from gemtools.assess_contigs_f import assess_contigs
-from gemtools.set_bc_regions_f import set_bc_regions
+from gemtools.set_hap_window_f import set_hap_window
 
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -166,8 +166,8 @@ def get_option_parser():
 	return parser
 
 def pipeline_from_parsed_args(args):
-	if args.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
+	if args.tool=="set_hap_window":
+		pipeline = set_hap_window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(bed_in=args.infile, bam=args.bam, out=args.outfile)
 	if args.tool=="assign_sv_haps":
@@ -196,8 +196,8 @@ def pipeline_from_parsed_args(args):
 		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
 	if args.tool=="assess_contigs":
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
-	if args.tool=="set_bc_regions":
-		pipeline = set_bc_regions(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
+	if args.tool=="bedpe2window":
+		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -213,13 +213,13 @@ def main(cmdlineargs=None):
 			sys.exit(1)
 
 ##########################################################################################		
-	if args.tool=="bedpe2window":
+	if args.tool=="set_hap_window":
 		#print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if args.help:
 			print """
-Tool:	gemtools -T bedpe2window
+Tool:	gemtools -T set_hap_window
 Summary: Generate windows around SV breakpoints for SV analysis\n
-Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -w <window_size>
+Usage:   gemtools -T set_hap_window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -w <window_size>
 Input:
 	-i  bedpe file of SV breakpoints (ex: sv_call.bedpe from Long Ranger)
 Output:
@@ -563,7 +563,7 @@ Output:
 			parser.error(str(args.infile) + " does not exist")
 	
 ##########################################################################################
-	if args.tool=="set_bc_regions":
+	if args.tool=="bedpe2window":
 		#print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
 		if args.help:
 			print """

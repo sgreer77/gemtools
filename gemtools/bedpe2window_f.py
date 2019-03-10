@@ -1,66 +1,101 @@
-import os
 import sys
-import __main__ as main
 import pandas as pd
-import numpy as np
-import pysam
-import vcf
 
-
-## DEFINE FUNCTIONS TO CREATE WINDOWS AROUND BREAKPOINTS
-
-#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-# Parse SV input file to desired format                                       #
-#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-
-def get_dist(r):
-	if r['chrom1']!=r['chrom2']:
-		dist="na"
-	else:
-		dist = r['start2'] - r['stop1']
-	return dist
-
-def make_window(s,e,w):
-	cur_size = int(e)-int(s)
-	adj_val = (int(w)-cur_size)/2
-	adj_val = int(round(adj_val,0))
-	new_start = max(0,s - adj_val)
-	new_end = e + adj_val
-	return [new_start,new_end]
-
-def window_rows(r):
-	wndw_row = [ r['name'],r['chrom1'],r['start1'],r['stop1'],r['chrom2'],r['start2'],r['stop2'],r['name1'],r['chrom1']] + make_window(r['start1'],r['stop1'],r['window_size']) + [r['name2'],r['chrom2']] + make_window(r['start2'],r['stop2'],r['window_size']) + [r['dist'],r['status'],r['window_size']]
-	return wndw_row
-
-	
-## READ IN SV FILE + PARSE TO DESIRED FORMAT
+def get_types(y):
+	y_list = y.split(";")
+	y_dict = dict(s.split('=') for s in y_list)
+	type = y_dict.get("TYPE")
+	return type
 
 def bedpe2window(**kwargs):
-	
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
 	if 'window' in kwargs:
-		window_size = kwargs['window']
+		wsize = kwargs['window']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
-
-	df_sv = pd.read_table(sv_input, sep="\t", comment="#", header=None)
-	df_sv.columns = ['chrom1','start1','stop1','chrom2','start2','stop2','name'] + list(df_sv.columns)[7:] 
-
-	df_sv['name1'] = df_sv['name'].apply(lambda x: str(x) + "_1")
-	df_sv['name2'] = df_sv['name'].apply(lambda x: str(x) + "_2")
-
-	df_sv = df_sv[['name','name1','chrom1','start1','stop1','name2','chrom2','start2','stop2']]
-
-	# Get distance between breakpoints -- return "na" if on different chromosomes
-	df_sv['dist'] = df_sv.apply(lambda row: get_dist(row), axis=1)
-
-	df_sv['window_size'] = window_size
-	df_sv['status'] = df_sv.apply(lambda row: "pass" if row['window_size']>row['dist'] else "fail", axis=1)
+	if 'mode' in kwargs:
+		mode = kwargs['mode']
+		
+	mini_padder=200 #should be a little bigger than read length
 	
-	sv_wndw = df_sv.apply(lambda row: window_rows(row), axis=1)
-	df_wndw = pd.DataFrame(list(sv_wndw))
-	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','dist','status','window_size']
+	with open(sv_input) as f:
+		for line in f:
+			if line.startswith("#chr"):
+				header_list = line.rstrip().split("\t")
+			elif line.startswith('#'):
+				pass
+			else:
+				break
 
-	df_wndw.to_csv(str(outpre), sep="\t", index=False)
-	return df_wndw
+	df = pd.read_table(sv_input, sep="\t", comment="#", header=None, names=header_list)
+	
+	coord_list = []
+
+	if mode=="auto":
+	
+		df['type'] = df['info'].apply(lambda x: get_types(x))
+	
+		for index, row in df.iterrows():
+			chrom1 = row['#chrom1']
+			start1 = row['start1']
+			stop1 = row['stop1']
+			chrom2 = row['chrom2']
+			start2 = row['start2']
+			stop2 = row['stop2']
+			sv_type = row['type']
+			name = row['name']
+
+			if sv_type=="DEL":
+				coord_list.append([chrom1,stop1-wsize,stop1,name,name,"in"])
+				coord_list.append([chrom1,start2,start2+wsize,name,name,"in"])
+				coord_list.append([chrom1,stop1+mini_padder,start2-mini_padder,name,name,"out"])
+
+			elif sv_type=="DUP":
+				coord_list.append([chrom1,stop1,start2,name,name,"in"])
+				coord_list.append([chrom1,start1-wsize,start1-mini_padder,name,name,"out"])
+				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,name,"out"])
+
+			elif sv_type=="INV":
+				sub_name_1 = str(name) + "_1"
+				coord_list.append([chrom1,start1-wsize,start1,name,sub_name_1,"in"])
+				coord_list.append([chrom1,start2-wsize,start2,name,sub_name_1,"in"])
+				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,sub_name_1,"out"])
+
+				sub_name_2 = str(name) + "_2"
+				coord_list.append([chrom1,stop1,stop1+wsize,name,sub_name_2,"in"])
+				coord_list.append([chrom1,stop2,stop2+wsize,name,sub_name_2,"in"])
+				coord_list.append([chrom1,start1-wsize,start1-mini_padder,name,sub_name_2,"out"])		
+
+			elif sv_type=="DISTAL":
+				coord_list.append([chrom1,start1-wsize/2,stop1+wsize/2,name,name,"in"])
+				coord_list.append([chrom2,start2-wsize/2,stop2+wsize/2,name,name,"in"])
+
+			elif sv_type=="UNK":
+				coord_list.append([chrom1,start1-wsize/2,stop1+wsize/2,name,name,"in"])
+				coord_list.append([chrom2,start2-wsize/2,stop2+wsize/2,name,name,"in"])
+
+			else:
+				print "Unrecognized SV type in input"
+				sys.exit()
+				#out_list.append(list(row))
+	
+	elif mode=="window":
+		
+		for index, row in df.iterrows():
+			chrom1 = row['#chrom1']
+			start1 = row['start1']
+			stop1 = row['stop1']
+			chrom2 = row['chrom2']
+			start2 = row['start2']
+			stop2 = row['stop2']
+			name = row['name']
+
+			coord_list.append([chrom1,start1-wsize/2,stop1+wsize/2,name,name,"in"])
+			coord_list.append([chrom2,start2-wsize/2,stop2+wsize/2,name,name,"in"])
+	
+	df_refined = pd.DataFrame(coord_list, columns = ['#chrom','start','stop','name','sub_name','status'])
+	df_refined.to_csv(outpre, sep="\t", index=False)
+	
+	
+	
