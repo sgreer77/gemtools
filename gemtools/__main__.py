@@ -24,6 +24,7 @@ from gemtools.get_phase_blocks_f import get_phase_blocks
 from gemtools.refine_bcs_f import refine_bcs
 from gemtools.align_contigs_f import align_contigs
 from gemtools.assess_contigs_f import assess_contigs
+from gemtools.set_bc_regions_f import set_bc_regions
 
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
@@ -152,9 +153,10 @@ def get_option_parser():
 	parser.add_argument("--index1",
 		dest="index1", metavar="INDEX1",
 		help="index1 fastq file")
-	parser.add_argument("-m","--mol_size",
-		dest="mol_size", metavar="MOL_SIZE",
-		help="Mean size of HMW molecules")
+	parser.add_argument("-m","--region_mode",metavar='(auto|window)',
+		choices=('auto','window'),
+		dest="region_mode", metavar="REGION_MODE",
+		help="Mode to generate regions: auto or window")
 	parser.add_argument("-e", "--shared_bc_file", metavar="FILE",
 		dest="shrd_file",
 		help="File of shared bcs")
@@ -166,7 +168,7 @@ def get_option_parser():
 
 def pipeline_from_parsed_args(args):
 	if args.tool=="bedpe2window":
-		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile, mol_size=args.mol_size)
+		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
 		pipeline = get_shared_bcs(sv=args.infile, bam=args.bam, out=args.outfile)
 	if args.tool=="assign_sv_haps":
@@ -197,6 +199,8 @@ def pipeline_from_parsed_args(args):
 		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
 	if args.tool=="assess_contigs":
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
+	if args.tool=="set_bc_regions":
+		pipeline = assess_contigs(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -218,23 +222,19 @@ def main(cmdlineargs=None):
 			print """
 Tool:	gemtools -T bedpe2window
 Summary: Generate windows around SV breakpoints for SV analysis\n
-Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -m <mol_size>
+Usage:   gemtools -T bedpe2window [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -w <window_size>
 Input:
 	-i  bedpe file of SV breakpoints (ex: sv_call.bedpe from Long Ranger)
-	NOTE: must also supply either -m or -w (see Options below)
 Output:
 	-o  output file: bedpe file with windows around breakpoints
 Options:
-	-m  mean HMW size (Long Ranger estimates this); if supplied, gemtools will determine optimal window size for each SV breakpoint
 	-w  size of window to generate around the breakpoints; if supplied, windows of this specified size will be generated for each SV breakpoint
 			"""
 			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
-		if (not args.window_size and not args.mol_size):
+		if not args.window_size:
 			parser.error('Missing required input')
-		if (args.window_size and args.mol_size):
-			parser.error('Please only supply one of -m or -w (-m is recommended)')
 		
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
@@ -590,7 +590,33 @@ Output:
 			parser.error(str(args.infile) + " does not exist")
 	
 ##########################################################################################
-
+	if args.tool=="set_bc_regions":
+		#print "gemtools -T bedpe2window -i [LR_input.bedpe] -w [window_size] -o [out.bedpe]"
+		if args.help:
+			print """
+Tool:	gemtools -T set_bc_regions
+Summary: Generate windows for SV analysis\n
+Usage:   gemtools -T set_bc_regions [OPTIONS] -i <LR_input.bedpe> -o <out.bedpe> -w <window_size> -m <region_mode: auto or window>
+Input:
+	-i  bedpe file of SV breakpoints (ex: sv_call.bedpe from Long Ranger)
+	-m	mode to run: auto or window (if auto: bedpe file must include an 'info' column with 'TYPE=' defined for each event)
+Output:
+	-o  output file: bedpe file with windows around breakpoints
+Options:
+	-w  size of window to generate around the breakpoints; if supplied, windows of this specified size will be generated for each SV breakpoint
+			"""
+			sys.exit(1)
+		if not (args.infile or args.outfile):
+			parser.error('Missing required input')
+		if not args.window_size:
+			parser.error('Missing required input')
+		if not args.region_mode:
+			parser.error('Missing required input')
+		
+		if not os.path.isfile(args.infile):
+			parser.error(str(args.infile) + " does not exist")
+	
+##########################################################################################
 	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
 
