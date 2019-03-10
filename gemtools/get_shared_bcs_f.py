@@ -1,117 +1,90 @@
-import os
 import sys
-import argparse
+import os
 import __main__ as main
+import argparse
+import ast
 import pandas as pd
-import numpy as np
 import pysam
-import vcf
-
-## DEFINE FUNCTION TO OBTAIN BARCODES FROM BAM FILE FOR SPECIFIC REGIONS
-
-def get_barcodes(bam_in, chrom, start, end, min_mapq):
-        bcs = set()
-        for r in bam_in.fetch(chrom, start, end):
-                if r.has_tag("BX") and r.mapq >= min_mapq:
-                    bc_id=r.get_tag("BX")
-                    bcs.add(bc_id)
-        return list(bcs)
+import numpy as np
 
 
-#def get_shared_bcs(sv_input, bam_input, outpre):
-def get_shared_bcs(outpre='out',**kwargs):
-	
-	if 'sv' in kwargs:
-		sv_input = kwargs['sv']
+MIN_MAPQ = 0
+
+def get_barcode_ids(bam_in, chrom, start, end, min_mapq):
+	bcs = []
+	for r in bam_in.fetch(chrom, start, end):
+	  if r.mapq >= min_mapq:
+		  if r.has_tag("BX"):
+			  bc_id=r.get_tag("BX")
+			  bcs.append(bc_id)
+	return tuple(list(set(list(bcs))))
+
+def get_shared_bcs(**kwargs):
+
+	if 'bed_in' in kwargs:
+		bed_in = kwargs['bed_in']
 	if 'bam' in kwargs:
 		bam_input = kwargs['bam']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 
-	df_sv = pd.read_table(sv_input, sep="\t")
-	#df_sv = df_sv.rename(columns = {'#chrom1':'chrom1'})
+	bam_open = pysam.Samfile(bam_input)
 
-	## Generate list of columns to loop through
-	sv_wndw = df_sv[['name','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w']].values.tolist()
-
-
-	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-	# Get SV-specific barcodes from bam file                                      #
-	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-
-
-	## OBTAIN SV-SPECIFIC BARCODES + THEN INTERSECT BETWEEN EVENTS TO LOOK FOR SHARED BARCODES
-
-	MIN_MAPQ = 0
-
-	bam_file = pysam.AlignmentFile(bam_input, "rb")
-
-	bam_data = []
-
-	for (name,name_1,chrom_1,start_1,end_1,name_2,chrom_2,start_2,end_2) in sv_wndw:
-
-	    name_1, chrom_1, name_2, chrom_2 = str(name_1), str(chrom_1), str(name_2), str(chrom_2)
-	    start_1, end_1, start_2, end_2 = int(start_1), int(end_1), int(start_2), int(end_2)
-
-	    # Obtain + count SV-specific barcodes
-	    bc_1 = get_barcodes(bam_file,chrom_1,start_1,end_1,MIN_MAPQ)
-	    bc_1_unq = set(bc_1)
-	    bc_1_num = len(bc_1_unq)
-
-	    bc_2 = get_barcodes(bam_file,chrom_2,start_2,end_2,MIN_MAPQ)
-	    bc_2_unq = set(bc_2)
-	    bc_2_num = len(bc_2_unq)
-
-	    # Intersect SV-specific barcodes
-	    bc_overlap = bc_1_unq & bc_2_unq
-	    num_overlaps = len(bc_overlap)
-
-	    bam_bc_list = [name, bc_1_num, bc_2_num, num_overlaps, tuple(bc_1_unq), tuple(bc_2_unq), tuple(bc_overlap)]
-
-	    bam_data.append(bam_bc_list)
-
-	# Convert list to data frame + write specified columns to output
-	df_bam = pd.DataFrame(bam_data)
-	df_bam.columns = ['name','bc_1_num','bc_2_num','bc_overlap_num','bc_1_id','bc_2_id','bc_overlap_id']
-
-	## CREATE TABLE CONTAINING EVENTS ALONG WITH THEIR SV-SPECIFIC BARCODES
-
-	df_sv[['name']], df_bam[['name']] = df_sv[['name']].astype(str), df_bam[['name']].astype(str)
-	df_bc = pd.merge(df_sv, df_bam, on='name')
-
-
-	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-	# Pairwise intersection of SV-specific barcodes                               #
-	#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#
-
-	## PERFORM PAIRWISE INTERSECTION OF SV CANDIDATES (i.e. INTERSECTION OF INTERSECTION)
-	sv_inter = []
-
-	sv_spec_bcs = df_bc['bc_overlap_id'].values.tolist()
-	sv_names = list(df_bc['name'])
-
-	for bcs in sv_spec_bcs:
-	    sv_inter.append([set(bcs) & set(x) for x in sv_spec_bcs]) # '&' performs the intersection
-
-
-	## COUNT BARCODES IN LISTS FROM PREVIOUS STEP + GENERATE ADJACENCY MATRIX
-
-	sv_inter_matrix = []
-
-	for inter in sv_inter:
-	    sv_inter_matrix.append([len(x) for x in inter])
-	sv_inter_matrix = np.matrix(sv_inter_matrix)
-
-	## CONVERT TO DF + WRITE TO OUTPUT
-
-	df_inter = pd.DataFrame(sv_inter_matrix, columns=sv_names)
-	#print df_inter
-	#print sv_names
-	df_inter['name'] = sv_names
-
-	df_isect = pd.merge(df_bc, df_inter, on='name')
-	#print df_merge
-
-	df_isect.to_csv(outpre, sep="\t", index=False)
+	bed_df = pd.read_table(bed_in, sep="\t", comment="#", header=None, names=['chrom','start','stop','name','sub_name','status'])
 	
-	return df_isect
+	bed_df['bcs'] = bed_df.apply(lambda row: get_barcode_ids(bam_open,str(row['chrom']),int(row['start']),int(row['stop']),MIN_MAPQ),axis=1)
+	#print bed_df
+	
+	bed_grouped = bed_df.groupby('sub_name')
+
+	out_data = []
+
+	for name, group in bed_grouped:
+	
+		sv_name = list(group['name'])[0]
+		print sv_name
+	
+		#print name
+		group_in = group.loc[group['status']=="in"]
+
+		if len(group_in.index)>0:
+			bc_list_in = group_in['bcs'].tolist()
+
+			if len(bc_list_in)==1:
+				common_bcs = bc_list_in[0]
+			elif len(bc_list_in)>1:
+				common_bcs = set(bc_list_in[0])
+				for s in bc_list_in[1:]:
+					common_bcs.intersection_update(s)
+		
+		common_bcs = list(common_bcs)
+		common_bcs_len = len(common_bcs)
+
+		group_out = group.loc[group['status']=="out"]
+		if len(group_out.index)==0:
+			out_data.append([sv_name,name,tuple(common_bcs)])
+		
+		else:
+			bc_list_out=group_out['bcs'].tolist()
+			bc_list_out_flat = [item for sublist in bc_list_out for item in sublist]
+			bc_list_out_flat_uq = list(set(bc_list_out_flat))
+			bc_list_out_flat_uq_len = len(bc_list_out_flat_uq)
+			
+			bc_final = [x for x in common_bcs if x not in bc_list_out_flat_uq]
+			bc_final_len = len(bc_final)
+			
+			out_data.append([sv_name,name,tuple(bc_final)])
+	
+	bam_open.close()
+	out_df = pd.DataFrame(out_data, columns = ['name','sub_name','select_bcs'])
+	
+	out_df = out_df[['name','select_bcs']]
+	out_df = out_df.loc[out_df['select_bcs']!="na"]
+	out_df2 = out_df.groupby('name')['select_bcs'].sum().reset_index()
+	out_df2['num_select_bcs'] = out_df2['select_bcs'].apply(lambda x: len(x))
+	out_df2 = out_df2[['name','num_select_bcs','select_bcs']]
+	out_df2.columns = ['name','num_bcs','bcs']
+	
+
+	out_df2.to_csv(outpre, sep="\t", index=False)
+
