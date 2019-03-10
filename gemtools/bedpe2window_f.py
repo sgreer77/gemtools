@@ -32,20 +32,6 @@ def window_rows(r):
 	wndw_row = [ r['name'],r['chrom1'],r['start1'],r['stop1'],r['chrom2'],r['start2'],r['stop2'],r['name1'],r['chrom1']] + make_window(r['start1'],r['stop1'],r['window_size']) + [r['name2'],r['chrom2']] + make_window(r['start2'],r['stop2'],r['window_size']) + [r['dist'],r['status'],r['window_size']]
 	return wndw_row
 
-# Below, try to automatically generate windows
-def calc_window_size(d, m):
-	if (str(d)=='na' or int(d)>=(2*int(m))):
-		window_sz = int(m)
-		status = "pass"	
-	else:
-		test_size = int(d) - int(m)
-		if test_size>=10000:
-			window_sz = test_size
-			status="pass"
-		else:
-			window_sz = 10000
-			status="fail"
-	return [window_sz,status]
 	
 ## READ IN SV FILE + PARSE TO DESIRED FORMAT
 
@@ -57,8 +43,6 @@ def bedpe2window(**kwargs):
 		window_size = kwargs['window']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
-	if 'mol_size' in kwargs:
-		mol_size = kwargs['mol_size']
 
 	df_sv = pd.read_table(sv_input, sep="\t", comment="#", header=None)
 	df_sv.columns = ['chrom1','start1','stop1','chrom2','start2','stop2','name'] + list(df_sv.columns)[7:] 
@@ -71,18 +55,9 @@ def bedpe2window(**kwargs):
 	# Get distance between breakpoints -- return "na" if on different chromosomes
 	df_sv['dist'] = df_sv.apply(lambda row: get_dist(row), axis=1)
 
-	if str(window_size)!="None":
-		df_sv['window_size'] = window_size
-		df_sv['status'] = df_sv.apply(lambda row: "pass" if row['window_size']>row['dist'] else "fail", axis=1)
+	df_sv['window_size'] = window_size
+	df_sv['status'] = df_sv.apply(lambda row: "pass" if row['window_size']>row['dist'] else "fail", axis=1)
 	
-	elif str(mol_size)!="None":
-		df_sv['window_size'] = df_sv['dist'].apply(lambda x: calc_window_size(x, mol_size)[0])
-		df_sv['status'] = df_sv['dist'].apply(lambda x: calc_window_size(x, mol_size)[1])
-	
-	else:
-		"Must specify either a window size or a molecule size"
-		sys.exit(1)
-
 	sv_wndw = df_sv.apply(lambda row: window_rows(row), axis=1)
 	df_wndw = pd.DataFrame(list(sv_wndw))
 	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','dist','status','window_size']
