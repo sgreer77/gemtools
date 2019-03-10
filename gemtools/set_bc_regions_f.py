@@ -20,13 +20,13 @@ def set_bc_regions(**kwargs):
 	mini_padder=200 #should be a little bigger than read length
 	
 	with open(sv_input) as f:
-        for line in f:
-                if line.startswith("#chr"):
-                        header_list = line.rstrip().split("\t")
-                elif line.startswith('#'):
-                    pass
-                else:
-                    break
+		for line in f:
+			if line.startswith("#chr"):
+				header_list = line.rstrip().split("\t")
+		elif line.startswith('#'):
+			pass
+		else:
+			break
 
 	df = pd.read_table(sv_input, sep="\t", comment="#", header=None, names=header_list)
 	
