@@ -23,10 +23,10 @@ def set_bc_regions(**kwargs):
 		for line in f:
 			if line.startswith("#chr"):
 				header_list = line.rstrip().split("\t")
-		elif line.startswith('#'):
-			pass
-		else:
-			break
+			elif line.startswith('#'):
+				pass
+			else:
+				break
 
 	df = pd.read_table(sv_input, sep="\t", comment="#", header=None, names=header_list)
 	
