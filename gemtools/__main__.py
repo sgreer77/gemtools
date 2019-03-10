@@ -200,7 +200,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="assess_contigs":
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
 	if args.tool=="set_bc_regions":
-		pipeline = assess_contigs(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
+		pipeline = set_bc_regions(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
 	return pipeline
 
 def main(cmdlineargs=None):
