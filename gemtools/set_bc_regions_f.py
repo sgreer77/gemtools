@@ -47,25 +47,25 @@ def set_bc_regions(**kwargs):
 			name = row['name']
 
 			if sv_type=="DEL":
-				coord_list.append([chrom1,stop1-wsize/2,stop1,name,name,"in"])
-				coord_list.append([chrom1,start2,start2+wsize/2,name,name,"in"])
+				coord_list.append([chrom1,stop1-wsize,stop1,name,name,"in"])
+				coord_list.append([chrom1,start2,start2+wsize,name,name,"in"])
 				coord_list.append([chrom1,stop1+mini_padder,start2-mini_padder,name,name,"out"])
 
 			elif sv_type=="DUP":
 				coord_list.append([chrom1,stop1,start2,name,name,"in"])
-				coord_list.append([chrom1,start1-wsize/2,start1-mini_padder,name,name,"out"])
-				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize/2,name,name,"out"])
+				coord_list.append([chrom1,start1-wsize,start1-mini_padder,name,name,"out"])
+				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,name,"out"])
 
 			elif sv_type=="INV":
 				sub_name_1 = str(name) + "_1"
-				coord_list.append([chrom1,start1-wsize/2,start1,name,sub_name_1,"in"])
-				coord_list.append([chrom1,start2-wsize/2,start2,name,sub_name_1,"in"])
-				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize/2,name,sub_name_1,"out"])
+				coord_list.append([chrom1,start1-wsize,start1,name,sub_name_1,"in"])
+				coord_list.append([chrom1,start2-wsize,start2,name,sub_name_1,"in"])
+				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,sub_name_1,"out"])
 
 				sub_name_2 = str(name) + "_2"
-				coord_list.append([chrom1,stop1,stop1+wsize/2,name,sub_name_2,"in"])
-				coord_list.append([chrom1,stop2,stop2+wsize/2,name,sub_name_2,"in"])
-				coord_list.append([chrom1,start1-wsize/2,start1-mini_padder,name,sub_name_2,"out"])		
+				coord_list.append([chrom1,stop1,stop1+wsize,name,sub_name_2,"in"])
+				coord_list.append([chrom1,stop2,stop2+wsize,name,sub_name_2,"in"])
+				coord_list.append([chrom1,start1-wsize,start1-mini_padder,name,sub_name_2,"out"])		
 
 			elif sv_type=="DISTAL":
 				coord_list.append([chrom1,start1-wsize/2,stop1+wsize/2,name,name,"in"])
