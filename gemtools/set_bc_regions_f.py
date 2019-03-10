@@ -95,7 +95,7 @@ def set_bc_regions(**kwargs):
 			coord_list.append([chrom2,start2-wsize/2,stop2+wsize/2,name,name,"in"])
 	
 	df_refined = pd.DataFrame(coord_list, columns = ['#chrom','start','stop','name','sub_name','status'])
-	df_refined.to_csv(outfile, sep="\t", index=False)
+	df_refined.to_csv(outpre, sep="\t", index=False)
 	
 	
 	
