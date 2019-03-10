@@ -155,7 +155,7 @@ def get_option_parser():
 		help="index1 fastq file")
 	parser.add_argument("-m","--region_mode",metavar='(auto|window)',
 		choices=('auto','window'),
-		dest="region_mode", metavar="REGION_MODE",
+		dest="region_mode", metavar="REG_MODE",
 		help="Mode to generate regions: auto or window")
 	parser.add_argument("-e", "--shared_bc_file", metavar="FILE",
 		dest="shrd_file",
