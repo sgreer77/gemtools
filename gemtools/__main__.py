@@ -169,7 +169,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="bedpe2window":
 		pipeline = bedpe2window(bedpe=args.infile, window=args.window_size, out=args.outfile)
 	if args.tool=="get_shared_bcs":
-		pipeline = get_shared_bcs(sv=args.infile, bam=args.bam, out=args.outfile)
+		pipeline = get_shared_bcs(bed_in=args.infile, bam=args.bam, out=args.outfile)
 	if args.tool=="assign_sv_haps":
 		pipeline = assign_sv_haps(sv=args.infile, window=args.window_size, vcf_control=args.vcf_control, vcf_test=args.vcf, out=args.outfile, shrd_file = args.shrd_file)
 	if args.tool=="count_bcs":
