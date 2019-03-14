@@ -63,8 +63,10 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 				break
 
 	header_list = [h.replace("#","") for h in header_list if "#" in h]
+	print header_list
 
 	bedpe_df = pd.read_table(sv_input, sep="\t", comment="#", header=None, names=header_list)
+	print bedpe_df
 	
 	bc_df = pd.read_table(bc_input, sep="\t")
 
