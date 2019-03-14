@@ -52,7 +52,15 @@ def bedpe2window(**kwargs):
 				coord_list.append([chrom1,stop1+mini_padder,start2-mini_padder,name,name,"out"])
 
 			elif sv_type=="DUP":
-				coord_list.append([chrom1,stop1,start2,name,name,"in"])
+				wsize_check = wsize*2
+				dup_size = start2 - stop1
+				
+				if dup_size<wsize_check:
+					coord_list.append([chrom1,stop1,start2,name,name,"in"])
+				else:
+					coord_list.append([chrom1,stop1,stop1+wsize,name,name,"in"])
+					coord_list.append([chrom1,start2-wsize,start2,name,name,"in"])	
+						
 				coord_list.append([chrom1,start1-wsize,start1-mini_padder,name,name,"out"])
 				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,name,"out"])
 
