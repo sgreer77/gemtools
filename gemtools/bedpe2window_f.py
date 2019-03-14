@@ -17,7 +17,7 @@ def bedpe2window(**kwargs):
 	if 'mode' in kwargs:
 		mode = kwargs['mode']
 		
-	mini_padder=200 #should be a little bigger than read length
+	mini_padder=500 #should be a little bigger than read length
 	
 	with open(sv_input) as f:
 		for line in f:
