@@ -173,7 +173,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="assign_sv_haps":
 		pipeline = assign_sv_haps(sv=args.infile, window=args.window_size, vcf_control=args.vcf_control, vcf_test=args.vcf, out=args.outfile, shrd_file = args.shrd_file)
 	if args.tool=="count_bcs":
-		pipeline = count_bcs(bam=args.bam, sv=args.infile, in_window=args.in_window, out_window=args.out_window, sv_name=args.sv_name, bcs=args.bc_select, out=args.outfile)
+		pipeline = count_bcs(bam=args.bam, sv=args.infile, in_window=args.in_window, out_window=args.out_window, sv_name=args.sv_name, out=args.outfile, shrd_file = args.shrd_file)
 	if args.tool=="get_phased_basic":
 		pipeline = get_phased_basic(vcf=args.vcf, out=args.outfile, chrom=args.chrom)
 	if args.tool=="get_phase_blocks":
@@ -308,7 +308,7 @@ Options:
 	-y  size of large windows around breakpoints to check for barcodes (default: 500000 bp)
 			"""
 			sys.exit(1)
-		if not (args.infile or args.outfile or args.sv_name or args.bam):
+		if not (args.infile or args.outfile or args.sv_name or args.bam or args.shrd_file):
 			parser.error('Missing required input')
 
 		if not os.path.isfile(args.infile):

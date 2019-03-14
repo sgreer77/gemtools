@@ -45,33 +45,16 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		bam_input = kwargs['bam']
 	if 'sv_name' in kwargs:
 		sv_n = kwargs['sv_name']
+	if 'bcs' in kwargs:
+		bc_subset = kwargs['bcs']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
-	if 'shrd_file' in kwargs:
-		bc_input = kwargs['shrd_file']
 
 	full_w_size = int(full_w_size)  # -l #500000
 	small_w_size = int(small_w_size)
 	
-	with open(sv_input) as f:
-		for line in f:
-			if line.startswith("#chr"):
-				header_list = line.rstrip().split("\t")
-			elif line.startswith('#'):
-				pass
-			else:
-				break
-
-	header_list = [h.replace("#","") for h in header_list if "#" in h]
-
-	bedpe_df = pd.read_table(sv_input, sep="\t", comment="#", header=None, names=header_list)
-	
-	bc_df = pd.read_table(bc_input, sep="\t")
-
-	bedpe_df[['name']] = bedpe_df[['name']].astype(str)
-	bc_df[['name']] = bc_df[['name']].astype(str)
-	
-	sv_df = pd.merge(bc_df, bedpe_df, on="name", how="left")
+	sv_df = pd.read_table(sv_input, sep="\t")
+	sv_df[['name']] = sv_df[['name']].astype(str)
 	
 	svs_in_df = list(set(sv_df['name'].tolist()))
 	
@@ -92,16 +75,40 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 		sv_df = sv_df.loc[sv_df['name'].isin(sv_list)]
 	
 	# Make list of SV-specific barcodes
+		
+	if bc_subset=="shared":
+		bc_list=[]
+		bc_tups = sv_df['bc_overlap_id'].tolist()
+		for b in bc_tups:
+			c = list(ast.literal_eval(str(b)))
+			bc_list = bc_list + c
+			bc_list = list(set(bc_list))
 
-	bc_list=[]
-	bc_tups = bc_df['bcs'].tolist()
-	for b in bc_tups:
-		c = list(ast.literal_eval(str(b)))
-		bc_list = bc_list + c
-		bc_list = list(set(bc_list))
+		if len(bc_list)<1:
+			print "No shared barcodes -- exiting"
+			sys.exit(1)
+	
+	elif bc_subset=="select":
+		bc_list=[]
+		bc_tups = sv_df['select_bcs'].tolist()
+		for b in bc_tups:
+			c = list(ast.literal_eval(str(b)))
+			bc_list = bc_list + c
+			bc_list = list(set(bc_list))
 
-	if len(bc_list)<1:
-		print "No select barcodes -- exiting"
+		if len(bc_list)<1:
+			print "No select barcodes -- exiting"
+			sys.exit(1)
+		
+	elif bc_subset=="all":
+		sv_df['all_bcs'] = sv_df.apply(lambda row: tuple(set(row['bc_1_id'] + row['bc_2_id'])), axis=1)
+		bc_list = sv_df[['all_bcs']].sum()
+		#bc_list = list(set(ast.literal_eval(row['bc_1_id']) + ast.literal_eval(row['bc_2_id'])))
+		if len(bc_list)<1:
+			print "No barcodes -- exiting"
+			sys.exit(1)
+	else:
+		print "bcs -- must be either 'shared' or 'all'"
 		sys.exit(1)
 	
 	#print bc_list
