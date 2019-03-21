@@ -4,7 +4,7 @@ import gzip
 import sys
 import time
 from itertools import izip_longest, islice
-
+import io
 
 def extract_reads_separate(**kwargs):	
 

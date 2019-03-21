@@ -6,7 +6,7 @@ import csv
 from itertools import izip_longest, islice
 import gzip
 import time
-
+import io
 
 def extract_reads_interleaved(**kwargs):
 
