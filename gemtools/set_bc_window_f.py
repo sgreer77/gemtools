@@ -7,7 +7,7 @@ def get_types(y):
 	type = y_dict.get("TYPE")
 	return type
 
-def bedpe2window(**kwargs):
+def set_bc_window(**kwargs):
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
 	if 'window' in kwargs:
