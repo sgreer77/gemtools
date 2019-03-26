@@ -1,0 +1,6 @@
+#chrom	start	stop	name	sub_name	status
+chr9	129561609	129761609	call_440	call_440	in
+chr9	129919197	130119197	call_440	call_440	in
+chr9	129762109	129918697	call_440	call_440	out
+chr9	128386532	128486560	call_2080	call_2080	in
+chr9	129079492	129179520	call_2080	call_2080	in
