@@ -1,2 +1,0 @@
-chr	beg_pos	end_pos	dist	PS	all_SNVs	phased_het	total	unique	hap1_total	hap1_unique	hap2_total	hap2_unique
-chr9	127937921	131093155	3155235	123859090	4914	1937	45812	10493	10875	2660	34937	8197

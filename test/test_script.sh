@@ -31,7 +31,7 @@ gemtools -T plot_hmw -i svs.bc_count.txt -o call_2080.pdf
 
 # Assign haps with select_barcodes -- better than before, with shared barcodes!
 echo "Testing set_hap_window..."
-gemtools -T set_hap_window -i $SV_FILE -o svs.hap_wndw.txt -w 10000
+gemtools -T set_hap_window -i $SV_FILE -o svs.hap_wndw.txt -w 100000
 echo "Testing assign_sv_haps..."
 gemtools -T assign_sv_haps -i svs.hap_wndw.txt -e svs.shared.txt -v $VCF_FILE -o svs.haps.txt
 #gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 1000000 -q select
