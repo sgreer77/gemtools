@@ -8,10 +8,10 @@ REFINED_FILE="test_files/refined_regions.txt" # user must generate this if they 
 echo -e "Testing package functions -- this should take about a minute.\n"
 
 # Get shared bcs
-echo "Testing bedpe2window..."
-gemtools -T bedpe2window -i $SV_FILE -o svs.wndw.bedpe -m 85000
+echo "Testing set_bc_window..."
+gemtools -T set_bc_window -i $SV_FILE -o svs.wndw.bed -w 100000 -m auto
 echo "Testing get_shared_bcs..."
-gemtools -T get_shared_bcs -i svs.wndw.bedpe -b $BAM_FILE -o svs.shared.txt
+gemtools -T get_shared_bcs -i svs.wndw.bed -b $BAM_FILE -o svs.shared.txt
 
 # Plotting
 #echo "Testing count_bcs..."
@@ -23,18 +23,17 @@ gemtools -T get_shared_bcs -i svs.wndw.bedpe -b $BAM_FILE -o svs.shared.txt
 #echo "Testing assign_sv_haps..."
 #gemtools -T assign_sv_haps -i svs.shared.txt -v $VCF_FILE -o svs.haps.txt -w 1000000 -q shared
 
-# Refine barcodes then rerun plotting
-echo "Testing refine_bcs..."
-gemtools -T refine_bcs -i $REFINED_FILE -b $BAM_FILE -o svs.shared_refined.txt -e svs.shared.txt
 echo "Testing count_bcs..."
 #gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 500000 -s 'call_2080,call_440,call_189' -q select -o svs.bc_count_refined.txt
-gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 10000 -y 300000 -s 'call_2080' -q select -o svs.bc_count_refined.txt
+gemtools -T count_bcs -i $SV_FILE -e svs.shared.txt -b $BAM_FILE -x 10000 -y 300000 -s call_2080 -o svs.bc_count.txt
 echo "Testing plot_hmw..."
-gemtools -T plot_hmw -i svs.bc_count_refined.txt -o call_2080.pdf
+gemtools -T plot_hmw -i svs.bc_count.txt -o call_2080.pdf
 
 # Assign haps with select_barcodes -- better than before, with shared barcodes!
+echo "Testing set_hap_window..."
+gemtools -T set_hap_window -i $SV_FILE -o svs.hap_wndw.txt -w 10000
 echo "Testing assign_sv_haps..."
-gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 10000 -q select
+gemtools -T assign_sv_haps -i svs.hap_wndw.txt -e svs.shared.txt -v $VCF_FILE -o svs.haps.txt
 #gemtools -T assign_sv_haps -i svs.shared_refined.txt -v $VCF_FILE -o svs.haps_refined.txt -w 1000000 -q select
 
 # Get phase block information
