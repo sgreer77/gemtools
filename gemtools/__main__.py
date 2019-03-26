@@ -49,7 +49,7 @@ The gemtools sub-tools include:\n
 [ SV analysis tools ]
     set_bc_window	Generate windows around SV breakpoints for SV analysis.
     get_shared_bcs	Determine barcodes shared between SV breakpoints.
-    refine_bcs		Select barcodes that are shared between regions and not in other regions.
+    set_hap_window	Generate windows around SV breakpoints for haplotype analysis.
     assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs).
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). 
