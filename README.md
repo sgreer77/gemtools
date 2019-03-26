@@ -55,7 +55,7 @@
 	./test_script.sh
 
 **If the test is successful, it will generate:**
-- 1 bedpe file
+- 1 bed file
 - 10 txt files
 - 1 pdf file
 - A directory containing 16 gzipped fastq files
