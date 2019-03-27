@@ -85,7 +85,8 @@ def plot_hmw(outpre='out',**kwargs):
 
 	plotFunc = robj.r("""
 	 suppressMessages(library(ggplot2))
- 
+	dev.off() 
+
 	function(df, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, label_x, y_brk, outpre)	{
 		theme_set(theme_bw(35))
 		p1 <- ggplot(df,aes(x=(window_start/1000000),y=value)) +
