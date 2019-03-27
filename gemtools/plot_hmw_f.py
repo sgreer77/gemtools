@@ -84,8 +84,7 @@ def plot_hmw(outpre='out',**kwargs):
 	m1_r = robj.conversion.py2ri(m1_1)
 
 	plotFunc = robj.r("""
-	 suppressMessages(library(ggplot2))
-	dev.off() 
+	 suppressMessages(library(ggplot2)) 
 
 	function(df, label_low, label_hi, break_calc,label_calc_low,label_calc_hi, label_y, label_x, y_brk, outpre)	{
 		theme_set(theme_bw(35))
