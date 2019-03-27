@@ -51,7 +51,7 @@ def plot_hmw(outpre='out',**kwargs):
 			df_bc=df_bc[['window_start','window_end','value','variable']]
 			df_bc['bcs_split']= df_bc['variable'].apply(lambda x: x.split("-")[0])
 			bc_counter=bc_counter+1
-		melt_list.append(df_bc)
+			melt_list.append(df_bc)
 
 	m1 = pd.concat(melt_list)
 	
