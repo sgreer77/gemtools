@@ -475,6 +475,8 @@ Output:
 		
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
+                if not str(args.outfile).endswith(".png"):
+                        parser.error(str(args.outfile) + " : Output file must be a png file, ex: out.png")
 
 ##########################################################################################
 	if args.tool=="extract_reads_interleaved":
