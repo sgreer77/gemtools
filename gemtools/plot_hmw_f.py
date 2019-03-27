@@ -15,9 +15,6 @@ def plot_hmw(outpre='out',**kwargs):
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 
-	file_in="count_110.txt"
-	out_plot="out.pdf"
-
 	df=pd.read_table(infile,sep="\t")
 
 	chr_list = list(set(df['chrom'].tolist()))
@@ -101,7 +98,7 @@ def plot_hmw(outpre='out',**kwargs):
 			scale_x_continuous(limits = c(label_calc_low/1000000, label_calc_hi/1000000), breaks=seq(label_low,label_hi,break_calc)) +
 			scale_y_continuous(breaks=seq(0,label_y,y_brk))
 
-		ggsave(outpre, plot=p1, width=15, height=4.5, units="in", dpi=600)
+		ggsave(outpre, plot=p1, width=15, height=4.5, units="in", dpi=100)
 		}
 	""")
 
