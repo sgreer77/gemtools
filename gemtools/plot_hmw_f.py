@@ -14,6 +14,8 @@ def plot_hmw(outpre='out',**kwargs):
 		infile= kwargs['in_windows']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
+	if 'sort_by_coord' in kwargs:
+		sort_by_pos = kwargs['sort_by_coord']
 
 	df=pd.read_table(infile,sep="\t")
 
@@ -37,8 +39,12 @@ def plot_hmw(outpre='out',**kwargs):
 		min_list.append([bc,min_val,max_val])
 
 	min_df = pd.DataFrame(min_list, columns=['bc','min_val','max_val'])
-	min_df.sort_values(by='min_val', inplace=True)
-	bc_order = min_df['bc'].tolist()
+
+	if sort_by_pos==True:
+		min_df.sort_values(by='min_val', inplace=True)
+		bc_order = min_df['bc'].tolist()
+	else:
+		bc_order = min_df['bc'].tolist()
 
 	bc_counter=1
 	melt_list = []

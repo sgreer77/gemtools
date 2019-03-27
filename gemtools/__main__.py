@@ -162,6 +162,8 @@ def get_option_parser():
 	parser.add_argument("-r", "--ref", metavar="FILE",
 		dest="ref_file",
 		help="File of genome reference")
+        parser.add_argument("--sort",
+                dest="sort", help="Sort the barcodes by start coordinate", action="store_true")
 
 	return parser
 
@@ -187,7 +189,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="get_bcs_in_region":
 		pipeline = get_bcs_in_region(region=args.region_in,bam=args.bam, out=args.outfile)
 	if args.tool=="plot_hmw":
-		pipeline = plot_hmw(in_windows=args.infile, out=args.outfile)
+		pipeline = plot_hmw(in_windows=args.infile, out=args.outfile, sort_by_coord=args.sort)
 	if args.tool=="extract_reads_interleaved":
 		pipeline = extract_reads_interleaved(fqdir=args.fqdir, s_bcs=args.s_bcs, lanes=args.lanes, bcs=args.bcs, fq_outdir=args.outdir)
 	if args.tool=="extract_reads_separate":
