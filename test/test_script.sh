@@ -27,7 +27,7 @@ echo "Testing count_bcs..."
 #gemtools -T count_bcs -i svs.shared_refined.txt -b $BAM_FILE -x 1000 -y 500000 -s 'call_2080,call_440,call_189' -q select -o svs.bc_count_refined.txt
 gemtools -T count_bcs -i $SV_FILE -e svs.shared.txt -b $BAM_FILE -x 10000 -y 300000 -s call_2080 -o svs.bc_count.txt
 echo "Testing plot_hmw..."
-gemtools -T plot_hmw -i svs.bc_count.txt -o call_2080.pdf
+gemtools -T plot_hmw -i svs.bc_count.txt -o call_2080.png
 
 # Assign haps with select_barcodes -- better than before, with shared barcodes!
 echo "Testing set_hap_window..."
