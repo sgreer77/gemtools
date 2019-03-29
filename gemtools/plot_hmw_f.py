@@ -57,10 +57,12 @@ def plot_hmw(outpre='out',**kwargs):
 			bc_order = min_df['bc'].tolist()
 		
 		elif len(chr_list)==2:
-			chr_val1 = str(chr_list[0])
-			chr_val2 = str(chr_list[1])
+
 			global chr_val1
 			global chr_val2
+			chr_val1 = str(chr_list[0])
+			chr_val2 = str(chr_list[1])
+
 
 			df1 = df.loc[df['chrom']==chr_val1]
 			df2 = df.loc[df['chrom']==chr_val2]
