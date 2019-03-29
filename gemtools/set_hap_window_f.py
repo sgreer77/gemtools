@@ -56,11 +56,10 @@ def set_hap_window(**kwargs):
 	df_sv['dist'] = df_sv.apply(lambda row: get_dist(row), axis=1)
 
 	df_sv['window_size'] = window_size
-	df_sv['status'] = df_sv.apply(lambda row: "pass" if row['window_size']>row['dist'] else "fail", axis=1)
 	
 	sv_wndw = df_sv.apply(lambda row: window_rows(row), axis=1)
 	df_wndw = pd.DataFrame(list(sv_wndw))
-	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','dist','status','window_size']
+	df_wndw.columns = ['name','chrom1','start1','stop1','chrom2','start2','stop2','name1','chrom1_w','start1_w','stop1_w','name2','chrom2_w','start2_w','stop2_w','dist','window_size']
 
 	df_wndw.to_csv(str(outpre), sep="\t", index=False)
 	return df_wndw
