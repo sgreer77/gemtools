@@ -17,10 +17,6 @@ def plot_hmw(outpre='out',**kwargs):
 	if 'sort_by_coord' in kwargs:
 		sort_by_pos = kwargs['sort_by_coord']
 
-	global chr_val1
-	global chr_val2
-	global chr_val
-
 	df=pd.read_table(infile,sep="\t")
 
 	# remove any barcodes with no read mappings in the region
@@ -38,15 +34,22 @@ def plot_hmw(outpre='out',**kwargs):
 	if len(chr_list)>2:
 		print "Cannot plot breakpoints on more than 2 chromosomes at this time -- exiting"
 		sys.exit()
-
+	elif len(chr_list)==1:
+		chr_val = str(chr_list[0])
 	# if the user wants sorted barcodes, perform the sorting
+	elif len(chr_list)==2:
+		chr_val1 = str(chr_list[0])
+		chr_val2 = str(chr_list[1])
+	else:
+		print "This should not be possible -- what's going on with the chromosome list?"
+		sys.exit()
+		
 
 	if sort_by_pos==False:
 		bc_order = bc_list
 
 	else: # if user wants sorting
 		if len(chr_list)==1:
-			chr_val = str(chr_list[0])
 
 			min_list = []
 			for bc in bc_list:
@@ -61,10 +64,6 @@ def plot_hmw(outpre='out',**kwargs):
 			bc_order = min_df['bc'].tolist()
 		
 		elif len(chr_list)==2:
-
-			chr_val1 = str(chr_list[0])
-			chr_val2 = str(chr_list[1])
-
 
 			df1 = df.loc[df['chrom']==chr_val1]
 			df2 = df.loc[df['chrom']==chr_val2]
@@ -113,7 +112,6 @@ def plot_hmw(outpre='out',**kwargs):
 			melt_list.append(df_bc)
 
 	m1 = pd.concat(melt_list)
-
 
 	if m1.empty:
 		print "No mappings to plot -- exiting -- start by checking that you are used the correct bam file to generate the input file"
