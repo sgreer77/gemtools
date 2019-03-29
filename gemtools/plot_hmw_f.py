@@ -17,6 +17,10 @@ def plot_hmw(outpre='out',**kwargs):
 	if 'sort_by_coord' in kwargs:
 		sort_by_pos = kwargs['sort_by_coord']
 
+	global chr_val1
+	global chr_val2
+	global chr_val
+
 	df=pd.read_table(infile,sep="\t")
 
 	# remove any barcodes with no read mappings in the region
@@ -58,8 +62,6 @@ def plot_hmw(outpre='out',**kwargs):
 		
 		elif len(chr_list)==2:
 
-			global chr_val1
-			global chr_val2
 			chr_val1 = str(chr_list[0])
 			chr_val2 = str(chr_list[1])
 
