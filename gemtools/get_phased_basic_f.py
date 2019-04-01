@@ -114,5 +114,3 @@ def get_phased_basic(inputvcf='None',outpre='out',c='None',**kwargs):
 	df.columns=['#chrom','pos_0','pos','ref','alt','filter','gt','allele_list','num_alts','block_id','phase_status','allele_1','allele_2','base_1','base_2','num_alleles','hom_status','var_type','bc1','bc1_ct','bc2','bc2_ct']
 
 	df.to_csv(str(outpre), sep="\t", index=False)
-
-	return df
