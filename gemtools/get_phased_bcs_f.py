@@ -45,8 +45,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 
 	for name, group in grouped:
 		print name
-		if str(name).isdigit():
-			print "dig"
+		if str(name)!="n/a":
 			name = str(int(name))
 			print name
 			if str(name)==str(phase_block):
