@@ -38,6 +38,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 
 ### END OF INPUT ###
 
+	df['block_id'].fillna("n/a", inplace=True)
 	df.sort_values(by='block_id', inplace=True)
 	grouped=df.groupby('block_id')
 
