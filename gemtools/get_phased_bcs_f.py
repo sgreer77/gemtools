@@ -7,16 +7,14 @@ import pysam
 import numpy as np
 import vcf
 
-def barcodeSplit(bc_list):
-        new_list = [value.partition('_')[0] for value in bc_list if '_' in value]
-        return new_list
-
-def naDrop(bc_list):
-        if "n/a" in bc_list:
-                new_list = [value for value in bc_list if value!="n/a"]
-                return new_list
-        else:
-                return bc_list
+def barcodeSplit(bc_str):
+		bc_list = str(bc_str).split(";")
+		bc_list_pre = [value.partition('_')[0] for value in bc_list if '_' in value]
+		if "n/a" in bc_list_pre:
+			nona_list = [value for value in bc_list_pre if value!="n/a"]
+			return nona_list
+		else:
+			return bc_list_pre
 
 def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',phase_block='None',**kwargs):
 
@@ -38,7 +36,6 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 
 ### END OF INPUT ###
 
-	df['block_id'].fillna("n/a", inplace=True)
 	df.sort_values(by='block_id', inplace=True)
 	grouped=df.groupby('block_id')
 
@@ -46,9 +43,11 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 
 	for name, group in grouped:
 		print name
+		
 		if str(name)!="n/a":
 			name = str(int(float(name)))
 			print name
+			
 			if str(name)==str(phase_block):
 				chr=group['#chrom'].unique()[0]
 				beg_pos=group['pos'].min()
@@ -56,31 +55,27 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 				dist=end_pos-beg_pos+1
 				all_SNVs=len(group)
 	
-				group_phsd=group.loc[group['gt'].isin(['0|1','1|0'])]
-
+				#group_phsd=group.loc[group['gt'].isin(['0|1','1|0'])]
+				group_phsd = group.loc[(group['phase_status']=="phased") & (group['hom_status']=="het") & (group['var_type']=="snv") & (group['filter']=="[]")]
 				phased_het=len(group_phsd)
 	
-				group_phsd['bc1_ls']=group_phsd['bc1'].apply(lambda x: str(x).split(";"))	
-				group_phsd['bc1_rm']=group_phsd['bc1_ls'].apply(lambda x: barcodeSplit(x))
-				group_phsd['bc1_na']=group_phsd['bc1_rm'].apply(lambda x: naDrop(x))
-				bc1_all=group_phsd['bc1_na'].tolist()
+				group_phsd['bc1_ls']=group_phsd['bc1'].apply(lambda x: barcodeSplit(x))
+				bc1_all=group_phsd['bc1_ls'].tolist()
 				bc1_all_zip=sum(bc1_all,[])
-				hap1_total=len(bc1_all_zip)	
-				hap1_unique=len(set(bc1_all_zip))
+				bc1_total=len(bc1_all_zip)	
+				bc1_unique=len(set(bc1_all_zip))
 
-				group_phsd['bc2_ls']=group_phsd['bc2'].apply(lambda x: str(x).split(";"))
-				group_phsd['bc2_rm']=group_phsd['bc2_ls'].apply(lambda x: barcodeSplit(x))
-				group_phsd['bc2_na']=group_phsd['bc2_rm'].apply(lambda x: naDrop(x))
-				bc2_all=group_phsd['bc2_na'].tolist()
+				group_phsd['bc2_ls']=group_phsd['bc2'].apply(lambda x: barcodeSplit(x))
+				bc2_all=group_phsd['bc2_ls'].tolist()
 				bc2_all_zip=sum(bc2_all,[])
-				hap2_total=len(bc2_all_zip)
-				hap2_unique=len(set(bc2_all_zip))	
-
+				bc2_total=len(bc2_all_zip)
+				bc2_unique=len(set(bc2_all_zip))	
+	
 				bcs_all=bc1_all_zip+bc2_all_zip
 				total=len(bcs_all)
-				unique=len(set(bcs_all))	
+				unique=len(set(bcs_all))
 
-				phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique, tuple(list(set(bc1_all_zip))), tuple(list(set(bc2_all_zip)))])
+				phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, bc1_total, bc1_unique, bc2_total, bc2_unique, tuple(list(set(bc1_all_zip))), tuple(list(set(bc2_all_zip)))])
 
 	df=pd.DataFrame(phase_data)
 	df.columns=["chr", "beg_pos", "end_pos", "dist", "PS", "all_SNVs", "phased_het", "total", "unique", "hap1_total", "hap1_unique", "hap2_total", "hap2_unique","hap1_uq_bcs","hap2_uq_bcs"]
