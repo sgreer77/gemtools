@@ -61,6 +61,10 @@ def get_phase_blocks(phased_basic_file='None',outpre='out',**kwargs):
 		bc2_total=len(bc2_all_zip)
 		bc2_unique=len(set(bc2_all_zip))	
 	
+		bcs_all=bc1_all_zip+bc2_all_zip
+		total=len(bcs_all)
+		unique=len(set(bcs_all))
+	
 		phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, bc1_total, bc1_unique, bc2_total, bc2_unique])
 
 	df_out=pd.DataFrame(phase_data)
