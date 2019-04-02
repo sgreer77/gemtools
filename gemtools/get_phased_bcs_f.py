@@ -44,38 +44,40 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 	phase_data=[]
 
 	for name, group in grouped:
-		if str(name)==str(phase_block):
-			chr=group['#chrom'].unique()[0]
-			beg_pos=group['pos'].min()
-			end_pos=group['pos'].max()
-			dist=end_pos-beg_pos+1
-			all_SNVs=len(group)
+		if str(name).isdigit():
+			name = int(name)
+			if str(name)==str(phase_block):
+				chr=group['#chrom'].unique()[0]
+				beg_pos=group['pos'].min()
+				end_pos=group['pos'].max()
+				dist=end_pos-beg_pos+1
+				all_SNVs=len(group)
 	
-			group_phsd=group.loc[group['gt'].isin(['0|1','1|0'])]
+				group_phsd=group.loc[group['gt'].isin(['0|1','1|0'])]
 
-			phased_het=len(group_phsd)
+				phased_het=len(group_phsd)
 	
-			group_phsd['bc1_ls']=group_phsd['bc1'].apply(lambda x: str(x).split(";"))	
-			group_phsd['bc1_rm']=group_phsd['bc1_ls'].apply(lambda x: barcodeSplit(x))
-			group_phsd['bc1_na']=group_phsd['bc1_rm'].apply(lambda x: naDrop(x))
-			bc1_all=group_phsd['bc1_na'].tolist()
-			bc1_all_zip=sum(bc1_all,[])
-			hap1_total=len(bc1_all_zip)	
-			hap1_unique=len(set(bc1_all_zip))
+				group_phsd['bc1_ls']=group_phsd['bc1'].apply(lambda x: str(x).split(";"))	
+				group_phsd['bc1_rm']=group_phsd['bc1_ls'].apply(lambda x: barcodeSplit(x))
+				group_phsd['bc1_na']=group_phsd['bc1_rm'].apply(lambda x: naDrop(x))
+				bc1_all=group_phsd['bc1_na'].tolist()
+				bc1_all_zip=sum(bc1_all,[])
+				hap1_total=len(bc1_all_zip)	
+				hap1_unique=len(set(bc1_all_zip))
 
-			group_phsd['bc2_ls']=group_phsd['bc2'].apply(lambda x: str(x).split(";"))
-			group_phsd['bc2_rm']=group_phsd['bc2_ls'].apply(lambda x: barcodeSplit(x))
-			group_phsd['bc2_na']=group_phsd['bc2_rm'].apply(lambda x: naDrop(x))
-			bc2_all=group_phsd['bc2_na'].tolist()
-			bc2_all_zip=sum(bc2_all,[])
-			hap2_total=len(bc2_all_zip)
-			hap2_unique=len(set(bc2_all_zip))	
+				group_phsd['bc2_ls']=group_phsd['bc2'].apply(lambda x: str(x).split(";"))
+				group_phsd['bc2_rm']=group_phsd['bc2_ls'].apply(lambda x: barcodeSplit(x))
+				group_phsd['bc2_na']=group_phsd['bc2_rm'].apply(lambda x: naDrop(x))
+				bc2_all=group_phsd['bc2_na'].tolist()
+				bc2_all_zip=sum(bc2_all,[])
+				hap2_total=len(bc2_all_zip)
+				hap2_unique=len(set(bc2_all_zip))	
 
-			bcs_all=bc1_all_zip+bc2_all_zip
-			total=len(bcs_all)
-			unique=len(set(bcs_all))	
+				bcs_all=bc1_all_zip+bc2_all_zip
+				total=len(bcs_all)
+				unique=len(set(bcs_all))	
 
-			phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique, tuple(list(set(bc1_all_zip))), tuple(list(set(bc2_all_zip)))])
+				phase_data.append([chr, beg_pos, end_pos, dist, name, all_SNVs, phased_het, total, unique, hap1_total, hap1_unique, hap2_total, hap2_unique, tuple(list(set(bc1_all_zip))), tuple(list(set(bc2_all_zip)))])
 
 	df=pd.DataFrame(phase_data)
 	df.columns=["chr", "beg_pos", "end_pos", "dist", "PS", "all_SNVs", "phased_het", "total", "unique", "hap1_total", "hap1_unique", "hap2_total", "hap2_unique","hap1_uq_bcs","hap2_uq_bcs"]
