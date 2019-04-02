@@ -51,25 +51,30 @@ def count_bcs_list(outpre='out',region_subset='None',small_w_size=1000,bc_subset
 		
 	bam_open = pysam.Samfile(bam_input)
 
-	# Create data frame of 1kb windows
+	# Create data frame of 1kb windows for user-specified region(s)
 	
 	region_list = region_subset.split(';')
 	df_r_list = []
 	for reg in region_list:
+		chr = str(reg).split(',')[0]
 		start = int(str(reg).split(',')[1])
 		stop = int(str(reg).split(',')[2])
+		
 		full_w_size = stop-start
 		window_start = np.arange(start, start+full_w_size, small_w_size+1)
 		window_end = window_start+small_w_size
+		
 		df_out = pd.DataFrame([window_start, window_end]).transpose()
 		df_out.columns = ['window_start','window_end']
-		df_out['chrom'] = str(reg).split(',')[0]
+		df_out['chrom'] = chr
 		df_out = df_out[['chrom','window_start','window_end']]
+		
 		df_r_list.append(df_out)
 	
 	df_r_out = pd.concat(df_r_list)
 
 	# Make a list of barcodes in each of the 1kb windows
+	
 	region_bcs = []
 	for i,r in df_r_out.iterrows():  
 		region_bc_list = get_barcode_ids(bam_open, r['chrom'], r['window_start'], r['window_end'], MIN_MAPQ)
@@ -79,8 +84,7 @@ def count_bcs_list(outpre='out',region_subset='None',small_w_size=1000,bc_subset
 	for bc in bc_list:
 		df_r_out[bc] = [x.count(bc) for x in region_bcs]
 	
-# Write output to file
+	# Write output to file
 
 	df_r_out.to_csv(str(outpre), sep="\t", index=False)
-	return df_r_out
 

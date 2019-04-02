@@ -34,8 +34,6 @@ def get_bcs_in_region(outpre='out',region_subset='None',**kwargs):
 		sys.exit()
 		
 	bam_open = pysam.Samfile(bam_input)
-
-	# Create data frame of 1kb windows
 	
 	region_list = region_subset.split(';')
 	bc_list = []
