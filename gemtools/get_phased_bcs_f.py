@@ -46,7 +46,7 @@ def get_phased_bcs(phased_basic='None',phased_basic_file='None',outpre='out',pha
 	for name, group in grouped:
 		print name
 		if str(name)!="n/a":
-			name = str(int(name))
+			name = str(int(float(name)))
 			print name
 			if str(name)==str(phase_block):
 				chr=group['#chrom'].unique()[0]
