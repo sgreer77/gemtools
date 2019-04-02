@@ -56,4 +56,3 @@ def get_bcs_in_region(outpre='out',region_subset='None',**kwargs):
 	
 	bam_open.close()
 	f.close()
-	return flat_bc_list_uq
