@@ -155,8 +155,8 @@ def get_option_parser():
 	parser.add_argument("-r", "--ref", metavar="FILE",
 		dest="ref_file",
 		help="File of genome reference")
-        parser.add_argument("--sort",
-                dest="sort", help="Sort the barcodes by start coordinate", action="store_true")
+	parser.add_argument("--sort",
+		dest="sort", help="Sort the barcodes by start coordinate", action="store_true")
 
 	return parser
 
