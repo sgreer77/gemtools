@@ -303,4 +303,4 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 ## Citing gemtools
 
 
-If you use gemtools please cite DOI:10.1093/bioinformatics/btz239
+If you use gemtools please cite DOI:[10.1093/bioinformatics/btz239](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz239/5426055)
