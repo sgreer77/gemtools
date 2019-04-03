@@ -89,7 +89,7 @@ def get_option_parser():
 		help="Control vcf file")
 	parser.add_argument("-w", "--window", type=int,
 		dest="window_size", metavar="WINDOW",
-		help="Size of window to create around bkpts in bp      ")
+		help="Size of window to create around bkpts in bp",default=100000)
 	parser.add_argument("-x","--in_window", type=int, default=1000,
 		dest="in_window",metavar="WINDOW",
 		help="Size of small windows in bp                       "
@@ -551,12 +551,11 @@ Tool:	gemtools -T set_bc_regions
 Summary: Generate windows for SV analysis\n
 Usage:   gemtools -T set_bc_regions [OPTIONS] -i <LR_input.bedpe> -o <out.bed> -w <window_size> -m <region_mode: auto or window>
 Input:
-	-i  bedpe file of SV breakpoints (ex: sv_call.bedpe from Long Ranger)
+	-i bedpe file of SV breakpoints; this is typically the Long Ranger output: large_sv_calls.bedpe OR large_sv_candidates.bedpe
+	-w size of window to generate around the breakpoints (should be approximately the size of the HMW molecules); default: 100,000 bp
 	-m  mode to run: auto or window (if auto: bedpe file must include an 'info' column with 'TYPE=' defined for each event)
 Output:
 	-o  output file: bed file with windows around breakpoints
-Options:
-	-w  size of window to generate around the breakpoints; if supplied, windows of this specified size will be generated for each SV breakpoint
 			"""
 			sys.exit(1)
 		if not (args.infile or args.outfile):
