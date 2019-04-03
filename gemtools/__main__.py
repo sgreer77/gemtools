@@ -51,8 +51,8 @@ The gemtools sub-tools include:\n
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode. \n
 [ Subset reads by barcode ]
-    extract_reads	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
-    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1) from older versions of Long Ranger. \n
+    extract_reads		Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
+    extract_reads_interleaved	Obtain reads with particular barcodes from (older version of) Long Ranger fastq files (RA,I1). \n
 [ General tools ]
     get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes.
     get_bcs_in_region	Get all the barcodes that exist in a given region of the genome.
