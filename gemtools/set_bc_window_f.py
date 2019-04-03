@@ -11,10 +11,12 @@ def set_bc_window(wsize=100000,**kwargs):
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
 	if 'window' in kwargs:
+		print "True"
 		if 'window' is None:
 			wsize = int(100000)
 		else:
 			wsize = kwargs['window']
+		print 'window'
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 	if 'mode' in kwargs:
