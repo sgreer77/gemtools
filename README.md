@@ -6,11 +6,11 @@
 
 ### **Dependencies:**
 
-**Python packages:** pandas, numpy, pysam, pyvcf, pybedtools, rpy2
+**Python packages:** pandas (v0.20.3), numpy (v1.13.1), pysam (v0.12.0.1), pyvcf (v0.6.8), pybedtools (v0.7.10), rpy2 (v2.8.5), mappy (v2.15)
 
-**R package:** ggplot2
+**R package:** ggplot2 (v2.2.1)
 
-**NOTE: gemtools was built under python version 2.7**
+**NOTE: gemtools was built under python version 2.7 and R version 3.3.2**
 
 ### **To install gemtools:**
 
@@ -39,7 +39,7 @@
       **Install the dependencies with conda:**
 		
 		conda install pandas pysam rpy2
-		conda install -c bioconda pyvcf pybedtools
+		conda install -c bioconda pyvcf pybedtools mappy
 		conda install -c r r-ggplot2
 
       **Finally, install gemtools:**
