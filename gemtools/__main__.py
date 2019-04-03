@@ -111,10 +111,6 @@ def get_option_parser():
 	parser.add_argument("-l","--bc_list", metavar="FILE",
 		dest="bcs",
 		help="File with list of barcodes")			
-	parser.add_argument("-q","--bc_select",metavar='(all|shared|select)',
-		dest="bc_select",choices=('all','shared','select'), default="shared",
-		help="BCs to consider: all bcs or shared bcs               "
-			"default: shared")
 	parser.add_argument("-n","--chrom", metavar="CHR",
 		dest="chrom", default="None",
 		help="Chromosome number; ex: 'chr22','22'")
@@ -287,7 +283,7 @@ Options:
 			print """
 Tool:	gemtools -T count_bcs
 Summary: Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints\n
-Usage:   gemtools -T count_bcs [OPTIONS] -i <out.shared.txt> -b <LR.bam> -s <sv_name> -q <all/shared/select> -o <out.bc_count.txt>
+Usage:   gemtools -T count_bcs [OPTIONS] -i <LR_input.bedpe> -e <out.shared.txt> -b <LR.bam> -s <sv_name> -o <out.bc_count.txt> -x 1000 -y 100000
 Input:
 	-i  bedpe file of SV breakpoints; this is typically the Long Ranger output: large_sv_calls.bedpe OR large_sv_candidates.bedpe
 	-e  output file from 'get_shared_bcs' tool
