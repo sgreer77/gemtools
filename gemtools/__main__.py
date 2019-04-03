@@ -16,25 +16,21 @@ import argparse
 from gemtools import __version__
 from gemtools.set_bc_window_f import set_bc_window
 from gemtools.get_shared_bcs_f import get_shared_bcs
+from gemtools.set_hap_window_f import set_hap_window
 from gemtools.assign_sv_haps_f import assign_sv_haps
 from gemtools.count_bcs_f import count_bcs
 from gemtools.plot_hmw_f import plot_hmw
 from gemtools.get_phased_basic_f import get_phased_basic
 from gemtools.get_phase_blocks_f import get_phase_blocks
-from gemtools.align_contigs_f import align_contigs
-from gemtools.assess_contigs_f import assess_contigs
-from gemtools.set_hap_window_f import set_hap_window
-
 from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
-#from gemtools.select_bcs_f import select_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
-
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
 from gemtools.extract_reads_separate_f import extract_reads_separate
 
 from gemtools.get_hmw_summary_f import get_hmw_summary
-
+from gemtools.align_contigs_f import align_contigs
+from gemtools.assess_contigs_f import assess_contigs
 
 def gt_usage_msg(name=None):                                                            
     return '''\tgemtools -T <sub-tool> [options]
@@ -52,9 +48,7 @@ The gemtools sub-tools include:\n
     set_hap_window	Generate windows around SV breakpoints for haplotype analysis.
     assign_sv_haps	Assign SV barcodes to existing haplotypes (SNVs).
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
-    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE). 
-    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2).
-    assess_contigs	Determine which contigs may contain rearranged structures. \n
+    plot_hmw		Generate a plot of the mapping locations of reads with each barcode. \n
 [ Subset reads by barcode ]
     extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
     extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2). \n
@@ -62,11 +56,12 @@ The gemtools sub-tools include:\n
     get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes.
     get_bcs_in_region	Get all the barcodes that exist in a given region of the genome.
     count_bcs_list	Determine presence and quantity of given barcodes across a given region.
-    plot_hmw		Generate a plot of the mapping locations of reads with each barcode.
-    refine_bcs		Select barcodes that are shared between regions and not in other regions.
+    plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE).
         """
+# from SV analysis tools
+#    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2).
+#    assess_contigs	Determine which contigs may contain rearranged structures. \n
 
-#    select_bcs		Get barcodes shared by ALL region_in's and present in NONE of the region_out's.
 
 def get_option_parser():
 	parser = argparse.ArgumentParser(description='Gemtools.', add_help=False, usage=gt_usage_msg())
@@ -91,9 +86,6 @@ def get_option_parser():
 	parser.add_argument("-c","--vcf_control", metavar="FILE",
 		dest="vcf_control",
 		help="Control vcf file")
-	#parser.add_argument("-t","--vcf_test", metavar="FILE",
-	#	dest="vcf_test",
-	#	help="Test vcf file")
 	parser.add_argument("-w", "--window", type=int,
 		dest="window_size", metavar="WINDOW",
 		help="Size of window to create around bkpts in bp      ")
@@ -182,8 +174,6 @@ def pipeline_from_parsed_args(args):
 		pipeline = get_phase_blocks(infile_basic=args.infile, out=args.outfile)
 	if args.tool=="get_phased_bcs":
 		pipeline = get_phased_bcs(infile_basic=args.infile, ps=args.phase_block, out=args.outfile)
-	#if args.tool=="select_bcs":
-	#	pipeline = select_bcs(region_in=args.region_in, region_out=args.region_out, bam=args.bam, out=args.outfile)
 	if args.tool=="count_bcs_list":
 		pipeline = count_bcs_list(region=args.region_in, in_window=args.in_window, bam=args.bam, bcs=args.bcs, out=args.outfile)
 	if args.tool=="get_bcs_in_region":
@@ -213,6 +203,11 @@ def main(cmdlineargs=None):
 		if args.help:
 			print gt_help_msg
 			sys.exit(1)
+
+	if args.tools not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads_separate','extract_reads_intererleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw']:
+		print "Please provide a valid gemtools sub-tool."
+		print gt_help_msg
+		sys.exit(1)
 
 ##########################################################################################		
 	if args.tool=="set_hap_window":
