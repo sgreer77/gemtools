@@ -298,3 +298,9 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 		--lanes comma-separated list of seq lanes to consider
 	Output:
 		--outdir Output directory for output fastq files; subsetted RA and I1 files will be generated here
+
+
+## Citing gemtools
+
+
+If you use gemtools please cite DOI:10.1093/bioinformatics/btz239
