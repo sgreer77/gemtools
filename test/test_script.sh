@@ -57,6 +57,6 @@ gemtools -T count_bcs_list -b $BAM_FILE -f chr9,128200000,128300000 -x 1000 -l b
 
 # Subset fastq's
 echo "Testing extract_reads_interleaved..."
-gemtools -T extract_reads_interleaved -l test_files/call_189_bcs.txt -d test_files/fastq_subset -j ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC -k 1,2 -z fastq_call_189
+gemtools -T extract_reads_interleaved --bc_list test_files/call_189_bcs.txt --fqdir test_files/fastq_subset --sample_bcs ACGACATT,CACGTCGG,GTATGTCA,TGTCAGAC --lanes 1,2 --outdir fastq_call_189
 
 echo "Testing complete!"
