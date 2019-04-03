@@ -34,6 +34,7 @@ from gemtools.assess_contigs_f import assess_contigs
 
 def gt_usage_msg(name=None):                                                            
     return '''\tgemtools -T <sub-tool> [options]
+        \t\tgemtools -T <sub-tool> --help
         '''
 
 gt_help_msg = """gemtools: flexible tools for linked read sequencing (10X Genomics) analysis.
