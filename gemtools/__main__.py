@@ -205,7 +205,7 @@ def main(cmdlineargs=None):
 			sys.exit(1)
 
 	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads_separate','extract_reads_intererleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw']:
-		print "Please provide a valid gemtools sub-tool."
+		print "Please provide a valid gemtools sub-tool.\n"
 		print gt_help_msg
 		sys.exit(1)
 
