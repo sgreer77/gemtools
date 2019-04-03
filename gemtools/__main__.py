@@ -227,8 +227,8 @@ Output:
 			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
-		if not args.window_size:
-			parser.error('Missing required input')
+		#if not args.window_size:
+		#	parser.error('Missing required input')
 		
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
@@ -559,8 +559,8 @@ Output:
 			sys.exit(1)
 		if not (args.infile or args.outfile):
 			parser.error('Missing required input')
-		if not args.window_size:
-			parser.error('Missing required input')
+		#if not args.window_size:
+		#	parser.error('Missing required input')
 		if not args.region_mode:
 			parser.error('Missing required input')
 		
