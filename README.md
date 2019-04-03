@@ -6,11 +6,12 @@
 
 ### **Dependencies:**
 
-**Python packages:** pandas (v0.20.3), numpy (v1.13.1), pysam (v0.12.0.1), pyvcf (v0.6.8), pybedtools (v0.7.10), rpy2 (v2.8.5), mappy (v2.15)
+**Python packages:** pandas, numpy, pysam, pyvcf, pybedtools, rpy2, mappy
 
-**R package:** ggplot2 (v2.2.1)
+**R package:** ggplot2
 
-**NOTE: gemtools was built under python version 2.7 and R version 3.3.2**
+**NOTE: gemtools was built under python version 2.7**
+See 'test_versions' file for tested package versions. 
 
 ### **To install gemtools:**
 

@@ -1,12 +1,13 @@
 gemtools was built and tested with these versions:
 
 python: 2.7.13
-pandas 0.23.4
-numpy 1.13.1
-pysam 0.12.0.1
-pyvcf 0.6.8
-pybedtools 0.7.10
-rpy2 2.8.5
+pandas: 0.20.3
+numpy: 1.13.1
+pysam: 0.12.0.1
+pyvcf: 0.6.8
+pybedtools: 0.7.10
+rpy2: 2.8.5
+mappy: 2.15
 
-R 3.3.2
-ggplot2 2.2.1
+R: 3.3.2
+ggplot2: 2.2.1
