@@ -264,14 +264,14 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 ### Tools for extracting subset barcoded reads from fastq files:
 
 
-**extract_reads_separate**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is R1,R2,I1)
+**extract_reads**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is R1,R2,I1)
 
-	gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]
+	gemtools -T extract_reads --bc_list [bc_list] --outdir [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]
 	
-	Ex: gemtools -T extract_reads_separate -l bc_list.txt -z fastq_subset --read1 SAMPLE_S1_L001_R1_001.fastq.gz --read2 SAMPLE_S1_L001_R2_001.fastq.gz --index1 SAMPLE_S1_L001_I1_001.fastq.gz
+	Ex: gemtools -T extract_reads --bc_list bc_list.txt --outdir fastq_subset --read1 SAMPLE_S1_L001_R1_001.fastq.gz --read2 SAMPLE_S1_L001_R2_001.fastq.gz --index1 SAMPLE_S1_L001_I1_001.fastq.gz
 	
 	Input:
-		-l file containing list of barcodes (one barcode per line)
+		--bc_list file containing list of barcodes (one barcode per line)
 		
 		--read1 Long Ranger read 1 fastq
 		
@@ -279,21 +279,21 @@ gemtools is a collection of tools that use the **output of Long Ranger** (10X Ge
 		
 		--index1 Long Ranger index 1 fastq
 	Output:
-		-z Output directory for output fastq files; subsetted R1, R2 and I1 files will be generated here
+		--outdir Output directory for output fastq files; subsetted R1, R2 and I1 files will be generated here
 
 **extract_reads_interleaved**: Obtain reads with particular barcodes from Long Ranger fastq files (where fastq output is RA,I1,I2)
 
-	gemtools -T extract_reads_interleaved -l [bc_list] -z [fastq_output_dir] -d [LR_fastq_dir] -j [sample_barcodes] -k [sample_lanes]
+	gemtools -T extract_reads_interleaved --bc_list [bc_list] --outdir [fastq_output_dir] --fqdir [LR_fastq_dir] --sample_bcs [sample_barcodes] --lanes [sample_lanes]
 	
-	Ex: gemtools -T extract_reads_interleaved -l bc_list.txt -z fastq_subset -d fastq -j 'ACGACGCT,CGCCATTC,GTAGTCAG,TATTGAGA' -k '1,5'
+	Ex: gemtools -T extract_reads_interleaved --bc_list bc_list.txt --outdir fastq_subset --fqdir fastq --sample_bcs 'ACGACGCT,CGCCATTC,GTAGTCAG,TATTGAGA' --lanes '1,5'
 	
 	Input:
-		-l file containing list of barcodes (one barcode per line)
+		--bc_list file containing list of barcodes (one barcode per line)
 		
-		-d Long Ranger fastq directory, containing RA and I1 fastq files
+		--fqdir Long Ranger fastq directory, containing RA and I1 fastq files
 		
-		-j Long Ranger sample barcodes
+		--sample_bcs comma-separated list of Long Ranger sample barcodes
 		
-		-k seq lanes to consider
+		--lanes comma-separated list of seq lanes to consider
 	Output:
-		-z Output directory for output fastq files; subsetted RA and I1 files will be generated here
+		--outdir Output directory for output fastq files; subsetted RA and I1 files will be generated here
