@@ -7,7 +7,7 @@ def get_types(y):
 	type = y_dict.get("TYPE")
 	return type
 
-def set_bc_window(wsize=100000,**kwargs):
+def set_bc_window(**kwargs):
 	if 'bedpe' in kwargs:
 		sv_input = kwargs['bedpe']
 	if 'window' in kwargs:
@@ -16,7 +16,6 @@ def set_bc_window(wsize=100000,**kwargs):
 			wsize = int(100000)
 		else:
 			wsize = kwargs['window']
-		print wsize
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 	if 'mode' in kwargs:
