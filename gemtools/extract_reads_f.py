@@ -6,7 +6,7 @@ import time
 from itertools import izip_longest, islice
 import io
 
-def extract_reads_separate(**kwargs):	
+def extract_reads(**kwargs):	
 
 	if 'read1' in kwargs:
 		r1 = kwargs['read1']

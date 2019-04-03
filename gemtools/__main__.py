@@ -26,7 +26,7 @@ from gemtools.get_bcs_in_region_f import get_bcs_in_region
 from gemtools.get_phased_bcs_f import get_phased_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
-from gemtools.extract_reads_separate_f import extract_reads_separate
+from gemtools.extract_reads_f import extract_reads
 
 from gemtools.get_hmw_summary_f import get_hmw_summary
 from gemtools.align_contigs_f import align_contigs
@@ -51,8 +51,8 @@ The gemtools sub-tools include:\n
     count_bcs		Determine presence and quantity of given barcodes across a given region surrounding the SV breakpoints.
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode. \n
 [ Subset reads by barcode ]
-    extract_reads_separate	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
-    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1,I2). \n
+    extract_reads	Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1).
+    extract_reads_interleaved	Obtain reads with particular barcodes from Long Ranger fastq files (RA,I1) from older versions of Long Ranger. \n
 [ General tools ]
     get_phased_bcs	For a particular phase block, return the haplotype 1 and haplotype 2 barcodes.
     get_bcs_in_region	Get all the barcodes that exist in a given region of the genome.
@@ -183,8 +183,8 @@ def pipeline_from_parsed_args(args):
 		pipeline = plot_hmw(in_windows=args.infile, out=args.outfile, sort_by_coord=args.sort)
 	if args.tool=="extract_reads_interleaved":
 		pipeline = extract_reads_interleaved(fqdir=args.fqdir, s_bcs=args.s_bcs, lanes=args.lanes, bcs=args.bcs, fq_outdir=args.outdir)
-	if args.tool=="extract_reads_separate":
-		pipeline = extract_reads_separate(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
+	if args.tool=="extract_reads":
+		pipeline = extract_reads(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
 	if args.tool=="align_contigs":
 		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
 	if args.tool=="assess_contigs":
@@ -205,7 +205,7 @@ def main(cmdlineargs=None):
 			print gt_help_msg
 			sys.exit(1)
 
-	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads_separate','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw']:
+	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw']:
 		print "Please provide a valid gemtools sub-tool.\n"
 		print gt_help_msg
 		sys.exit(1)
@@ -478,13 +478,13 @@ Output:
 			parser.error(str(args.outdir) + " already exists")
 
 ##########################################################################################	
-	if args.tool=="extract_reads_separate":
-		#print "gemtools -T extract_reads_separate -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]"
+	if args.tool=="extract_reads":
+		#print "gemtools -T extract_reads -l [bc_list] -z [fastq_output_dir] --read1 [LR_R1.fastq.gz] --read2 [LR_R2.fastq.gz] --index1 [LR_I1.fastq.gz]"
 		if args.help:
 			print """
-Tool:	gemtools -T extract_reads_separate
+Tool:	gemtools -T extract_reads
 Summary: Obtain reads with particular barcodes from Long Ranger fastq files (R1,R2,I1)\n
-Usage:   gemtools -T extract_reads_separate --bc_list <bc_list.txt> --read1 <LR_R1.fastq.gz> --read2 <LR_R2.fastq.gz> --index1 <LR_I1.fastq.gz> --outdir <fastq_output_dir>
+Usage:   gemtools -T extract_reads --bc_list <bc_list.txt> --read1 <LR_R1.fastq.gz> --read2 <LR_R2.fastq.gz> --index1 <LR_I1.fastq.gz> --outdir <fastq_output_dir>
 Input:
 	--bc_list  file containing list of barcodes (one barcode per line) 
 	--read1  Long Ranger read 1 fastq
