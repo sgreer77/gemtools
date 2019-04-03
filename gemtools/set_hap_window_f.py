@@ -41,6 +41,8 @@ def set_hap_window(**kwargs):
 		sv_input = kwargs['bedpe']
 	if 'window' in kwargs:
 		window_size = kwargs['window']
+	else:
+		window_size = 1000000
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 
