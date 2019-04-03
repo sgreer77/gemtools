@@ -16,7 +16,7 @@ def set_bc_window(wsize=100000,**kwargs):
 			wsize = int(100000)
 		else:
 			wsize = kwargs['window']
-		print 'window'
+		print wsize
 	if 'out' in kwargs:
 		outpre = kwargs['out']
 	if 'mode' in kwargs:
