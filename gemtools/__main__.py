@@ -40,7 +40,7 @@ def gt_usage_msg(name=None):
 gt_help_msg = """gemtools: flexible tools for linked read sequencing (10X Genomics) analysis.
 usage:	gemtools -T <sub-tool> [options]\n
 The gemtools sub-tools include:\n 
-[ Phase blocks ] 
+[ Phase analysis tools ] 
     get_phased_basic   Obtain phasing information for all SNVs in the vcf file. 
     get_phase_blocks   Summarize phase blocks -- coordinates, size, SNVs per phase block etc.\n
 [ SV analysis tools ]
