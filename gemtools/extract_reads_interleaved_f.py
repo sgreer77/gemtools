@@ -21,15 +21,12 @@ def extract_reads_interleaved(**kwargs):
 	if 'fq_outdir' in kwargs:
 		out_dir = kwargs['fq_outdir']
 
-	#print out_dir
-
 	if os.path.isdir(out_dir):
 		print str(out_dir) + " already exists -- exiting"
 		sys.exit()
 
 	if not os.path.isdir(out_dir):
 		os.makedirs(out_dir)
-        cur_version = 1.0
         
         bc_list = bcs.split(",")
 
@@ -60,8 +57,6 @@ def extract_reads_interleaved(**kwargs):
 def extract_reads(args_fq):
 
         bcs = [] 
-        #out_file = gzip.open(args_fq[3],'w')  
-        #out_si_file = gzip.open(args_fq[4],'w')  
 
         out_file = io.BufferedWriter(gzip.open(args_fq[3],'w')) 
         out_si_file = io.BufferedWriter(gzip.open(args_fq[4],'w'))
@@ -76,7 +71,6 @@ def extract_reads(args_fq):
         n = 0
         i = 0
 
-        #with gzip.open(args_fq[0], 'r') as f, gzip.open(args_fq[1],'r') as ind:
         with io.BufferedReader(gzip.open(args_fq[0], 'r')) as f, io.BufferedReader(gzip.open(args_fq[1],'r')) as ind:
                 cur_time = time.time()
 

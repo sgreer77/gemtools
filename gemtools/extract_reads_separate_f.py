@@ -41,11 +41,11 @@ def extract_reads_separate(**kwargs):
 	if not os.path.isdir(out_dir):
 		os.makedirs(out_dir)
 	
-	bcs_list = []
 	out_r1_file = gzip.open(out_r1,'w')
 	out_r2_file = gzip.open(out_r2,'w')
 	out_si_file = gzip.open(out_i1,'w')
 
+	bcs_list = []
 	with open(bc_file,'r') as f:
 		for line in csv.reader(f,delimiter='\t'):
 			bcs_list.append(line[0])
@@ -56,7 +56,6 @@ def extract_reads_separate(**kwargs):
 	n = 0
 	i = 0
 
-	#with gzip.open(r1, 'r') as f1, gzip.open(r2, 'r') as f2, gzip.open(i1,'r') as ind:
 	with io.BufferedReader(gzip.open(r1, 'r')) as f1, io.BufferedReader(gzip.open(r2, 'r')) as f2, io.BufferedReader(gzip.open(i1,'r')) as ind:
 		cur_time = time.time()
 		while True:
