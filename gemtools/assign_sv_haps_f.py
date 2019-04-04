@@ -138,11 +138,11 @@ def assign_sv_haps(**kwargs):
 
 	merged_df['hap1_overlap'] = merged_df.apply(lambda row: tuple(list(set(list(literal_eval(str(row['bc_1_not_on_2'])))) & set(list(literal_eval(str(row['bcs'])))))), axis=1)
 	merged_df['hap2_overlap'] = merged_df.apply(lambda row: tuple(list(set(list(literal_eval(str(row['bc_2_not_on_1'])))) & set(list(literal_eval(str(row['bcs'])))))), axis=1)
-	merged_df['num_bcs_checked'] = merged_df['bcs'].apply(lambda x: len(list(literal_eval(str(x)))))
+	#merged_df['num_bcs_checked'] = merged_df['bcs'].apply(lambda x: len(list(literal_eval(str(x)))))
 	merged_df['hap1_overlap_num'] = merged_df['hap1_overlap'].apply(lambda x: len(list(x)))
 	merged_df['hap2_overlap_num'] = merged_df['hap2_overlap'].apply(lambda x: len(list(x)))
 
-	merged_df = merged_df[['name','num_bcs','chrom1','start1','stop1','chrom2','start2','stop2','bp_name','phase_id_norm','hap1_overlap','hap2_overlap','num_bcs_checked','hap1_overlap_num','hap2_overlap_num']]
+	merged_df = merged_df[['name','num_bcs','chrom1','start1','stop1','chrom2','start2','stop2','bp_name','phase_id_norm','hap1_overlap','hap2_overlap','hap1_overlap_num','hap2_overlap_num']]
 
 	merged_df.to_csv(outpre, sep="\t", index=False)
 	return merged_df
