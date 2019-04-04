@@ -99,16 +99,13 @@ def assign_sv_haps(**kwargs):
 
 	df_norm = pd.DataFrame(vcf_data_norm)
 	df_norm.columns = ['name','bp_name','phase_id_norm','chr','pos','ref_norm','alt_norm','gt_norm']
-	print df_norm.head()
 	df_norm.drop_duplicates(inplace=True)
 
 	df_tum = pd.DataFrame(vcf_data_tum)
 	df_tum.columns = ['name','bp_name','phase_id_tum','chr','pos','ref_tum','alt_tum','gt_tum', 'bc_1', 'bc_2']
-	print df_tum.head()
 	df_tum.drop_duplicates(inplace=True)
 
 	vcf_merge = pd.merge(df_norm, df_tum, on=['name','bp_name','chr','pos'], how="inner")
-	print vcf_merge.head()
 	vcf_merge.drop_duplicates(inplace=True)
 
 	vcf_merge['bc_1_mod'] = vcf_merge['bc_1'].apply(lambda x: tuple(set([b.split('_')[0] for b in x.split(';')])))
@@ -145,4 +142,3 @@ def assign_sv_haps(**kwargs):
 	merged_df = merged_df[['name','num_bcs','chrom1','start1','stop1','chrom2','start2','stop2','bp_name','phase_id_norm','hap1_overlap','hap2_overlap','hap1_overlap_num','hap2_overlap_num']]
 
 	merged_df.to_csv(outpre, sep="\t", index=False)
-	return merged_df
