@@ -201,7 +201,7 @@ def main(cmdlineargs=None):
 			print gt_help_msg
 			sys.exit(1)
 
-	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw']:
+	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw','align_contigs','assess_contigs']:
 		print "Please provide a valid gemtools sub-tool.\n"
 		print gt_help_msg
 		sys.exit(1)
