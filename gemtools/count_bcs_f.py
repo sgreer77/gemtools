@@ -97,7 +97,7 @@ def count_bcs(full_w_size=500000, small_w_size=1000,bc_subset='shared',sv_n="Non
 	# Make list of SV-specific barcodes
 
 	bc_list=[]
-	bc_tups = bc_df['bcs'].tolist()
+	bc_tups = sv_df['bcs'].tolist()
 	for b in bc_tups:
 		c = list(ast.literal_eval(str(b)))
 		bc_list = bc_list + c
