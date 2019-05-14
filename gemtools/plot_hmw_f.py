@@ -61,6 +61,7 @@ def plot_hmw(outpre='out',**kwargs):
 					min_list.append([bc,min_val,max_val])
 
 			min_df = pd.DataFrame(min_list, columns=['bc','min_val','max_val'])
+			min_df.sort_values(by='min_val', inplace=True)
 			bc_order = min_df['bc'].tolist()
 		
 		elif len(chr_list)==2:
