@@ -44,7 +44,7 @@ def plot_hmw(outpre='out',**kwargs):
 		print "This should not be possible -- what's going on with the chromosome list?"
 		sys.exit()
 		
-
+	print sort_by_pos
 	if sort_by_pos==False:
 		bc_order = bc_list
 
