@@ -153,6 +153,9 @@ def get_option_parser():
 		help="File of genome reference")
 	parser.add_argument("--sort",
 		dest="sort", help="Sort the barcodes by start coordinate", action="store_true")
+	parser.add_argument("--preset",
+		dest="preset", metavar="PRESET",
+		help="Preset for minimap2")
 
 	return parser
 
@@ -182,7 +185,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="extract_reads":
 		pipeline = extract_reads(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
 	if args.tool=="align_contigs":
-		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile)
+		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile, preset=args.preset)
 	if args.tool=="assess_contigs":
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
 	if args.tool=="set_bc_window":
@@ -518,11 +521,12 @@ Usage:   gemtools -T align_contigs [OPTIONS] -i <de_novo.fasta.gz> -o <out.txt> 
 Input:
 	-i  fasta file of de novo contigs (ex: output of supernova)
 	-r  genome reference fasta file
+	--preset
 Output:
 	-o  output file: alignment info
 			"""
 			sys.exit(1)
-		if not (args.infile or args.outfile or args.ref_file):
+		if not (args.infile or args.outfile or args.ref_file or args.preset):
 			parser.error('Missing required input')
 		
 		if not os.path.isfile(args.infile):
