@@ -10,8 +10,10 @@ def align_contigs(**kwargs):
 		genome = kwargs['genome']
 	if 'preset' in kwargs:
 		preset = kwargs['preset']
+	if 'nthreads' in kwargs:
+		nthreads = kwargs['nthreads']
 
-	a = mp.Aligner(str(genome), preset=preset)
+	a = mp.Aligner(str(genome), preset=preset, n_threads = nthreads)
 
 	if not a: raise Exception("ERROR: failed to load/build index")
 

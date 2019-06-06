@@ -156,6 +156,10 @@ def get_option_parser():
 	parser.add_argument("--preset",
 		dest="preset", metavar="PRESET",
 		help="Preset for minimap2")
+	parser.add_argument("-t","--nthreads", type=int, default=3,
+		dest="nthreads",metavar="THREADS",
+		help="Number of threads to use for minimap2 alignment                       "
+			"default: 3")
 
 	return parser
 
@@ -185,7 +189,7 @@ def pipeline_from_parsed_args(args):
 	if args.tool=="extract_reads":
 		pipeline = extract_reads(bcs=args.bcs, fq_outdir=args.outdir, read1=args.read1, read2=args.read2, index1=args.index1)
 	if args.tool=="align_contigs":
-		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile, preset=args.preset)
+		pipeline = align_contigs(infile_fasta=args.infile, genome=args.ref_file, out=args.outfile, preset=args.preset, nthreads=args.nthreads)
 	if args.tool=="assess_contigs":
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
 	if args.tool=="set_bc_window":
@@ -522,6 +526,7 @@ Input:
 	-i  fasta file of de novo contigs (ex: output of supernova)
 	-r  genome reference fasta file
 	--preset
+	-t	number of threads to use (default: 3)
 Output:
 	-o  output file: alignment info
 			"""
