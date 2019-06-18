@@ -24,6 +24,6 @@ def align_contigs(**kwargs):
 	for name, seq, qual in mp.fastx_read(infile):
 		print name
 		for hit in a.map(seq, cs=True):
-			outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.is_primary, hit.q_st, hit.q_en, hit.strand, hit.cs, hit.cigar_str, hit.cigar))
+			outfile.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(name, hit.ctg, hit.r_st, hit.r_st, hit.r_en, hit.q_st, hit.q_en, hit.is_primary, hit.strand, hit.cs, hit.cigar_str, hit.cigar))
 
 	outfile.close()
