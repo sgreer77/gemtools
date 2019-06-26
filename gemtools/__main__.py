@@ -27,6 +27,7 @@ from gemtools.get_phased_bcs_f import get_phased_bcs
 from gemtools.count_bcs_list_f import count_bcs_list
 from gemtools.extract_reads_interleaved_f import extract_reads_interleaved
 from gemtools.extract_reads_f import extract_reads
+from gemtools.plot_vars_and_blocks_f import plot_vars_and_blocks
 
 from gemtools.get_hmw_summary_f import get_hmw_summary
 from gemtools.align_contigs_f import align_contigs
@@ -58,6 +59,7 @@ The gemtools sub-tools include:\n
     get_bcs_in_region	Get all the barcodes that exist in a given region of the genome.
     count_bcs_list	Determine presence and quantity of given barcodes across a given region.
     plot_hmw		Generate a plot of the mapping locations of reads with each barcode (SAME AS ABOVE).
+    plot_vars_and_blocks	For a particular region, plot the heterozygous variants and phase blocks. 
         """
 # from SV analysis tools
 #    align_contigs	Align de novo assembled contigs to a genome reference (using mappy/minimap2).
@@ -160,6 +162,12 @@ def get_option_parser():
 		dest="nthreads",metavar="THREADS",
 		help="Number of threads to use for minimap2 alignment                       "
 			"default: 3")
+	parser.add_argument("--basic",
+		dest="basic_in", metavar="BASIC",
+		help="phased basic file")
+	parser.add_argument("--blocks",
+		dest="blocks_in", metavar="BLOCKS",
+		help="phase blocks file")
 
 	return parser
 
@@ -194,6 +202,9 @@ def pipeline_from_parsed_args(args):
 		pipeline = assess_contigs(infile_aln=args.infile, out=args.outfile)
 	if args.tool=="set_bc_window":
 		pipeline = set_bc_window(bedpe=args.infile, window=args.window_size, out=args.outfile, mode=args.region_mode)
+	if args.tool=="plot_vars_and_blocks":
+		pipeline = plot_vars_and_blocks(infile_basic=args.basic_in, infile_blocks=args.blocks_in, region=args.region_in, out=args.outfile)
+		
 	return pipeline
 
 def main(cmdlineargs=None):
@@ -208,7 +219,7 @@ def main(cmdlineargs=None):
 			print gt_help_msg
 			sys.exit(1)
 
-	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw','align_contigs','assess_contigs']:
+	if args.tool not in ['get_phased_basic','get_phase_blocks','set_bc_window','get_shared_bcs','set_hap_window','assign_sv_haps','count_bcs','plot_hmw','extract_reads','extract_reads_interleaved','get_phased_bcs','get_bcs_in_region','count_bcs_list','plot_hmw','align_contigs','assess_contigs','plot_vars_and_blocks']:
 		print "Please provide a valid gemtools sub-tool.\n"
 		print gt_help_msg
 		sys.exit(1)
@@ -558,9 +569,31 @@ Output:
 		if not os.path.isfile(args.infile):
 			parser.error(str(args.infile) + " does not exist")
 	
-
+##########################################################################################
+	if args.tool=="plot_vars_and_blocks":
+		if args.help:
+			print """
+Tool:	gemtools -T plot_vars_and_blocks
+Summary: For a particular region, plot the heterozygous variants and phase blocks\n
+Usage:   gemtools -T plot_vars_and_blocks --basic <output.phased_basic.txt> --blocks <output.phased_blocks.txt> -r <region> -o <out.png>
+Input:
+	--basic  output from 'get_phased_basic' tool
+	--blocks	output from 'get_phase_blocks' tool
+	-r region of genome to consider; format 'chr1,1000,2000'
+Output:
+	-o  output file: plot
+			"""
+			sys.exit(1)
+		if not (args.basic_in or args.blocks_in or args.region_in or args.outfile):
+			parser.error('Missing required input')
+		
+		if not os.path.isfile(args.basic_in):
+			parser.error(str(args.basic_in) + " does not exist")	
+		if not os.path.isfile(args.blocks_in):
+			parser.error(str(args.blocks_in) + " does not exist")
 	
 ##########################################################################################
+
 	pipeline = pipeline_from_parsed_args(args)
 	runner = pipeline
 
