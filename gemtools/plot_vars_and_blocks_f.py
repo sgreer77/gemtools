@@ -28,6 +28,8 @@ def plot_vars_and_blocks(**kwargs):
 		infile_blocks = kwargs['infile_blocks']
 	if 'region' in kwargs:
 		region = kwargs['region']
+	if 'out' in kwargs:
+		plot_file_name = kwargs['out']
 
 
 	df_basic = pd.read_table(infile_basic, sep="\t")
@@ -58,7 +60,7 @@ def plot_vars_and_blocks(**kwargs):
 	#df_blocks.to_csv('blocks.txt', sep="\t", index=False)
 
 	# make variables for file name and x axis (to pass to R plotting function)
-	plot_file_name = str(infile_basic.split(".")[0]) + ".vars_blocks.png"
+	#plot_file_name = str(infile_basic.split(".")[0]) + ".vars_blocks.png"
 
 	if chr.startswith("chr"):
 		x_axis_name = chr + " coordinate (Mb)"
