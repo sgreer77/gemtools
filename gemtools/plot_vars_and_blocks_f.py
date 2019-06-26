@@ -72,9 +72,8 @@ def plot_vars_and_blocks(**kwargs):
 		function(df_var,df_blk,b,e,xname,outplot)	{
 			x_min = b/1000000
 			x_max = e/1000000
-			#x_by <- (x_max-x_min)/5
-			x_lab<-pretty(x_min:x_max)
-		
+			legend_x = x_min + (x_max-x_min)/2
+			
 			# adjust var table
 			df_var$pos_mod = df_var$pos/1000000
 			df_var$y = 1
@@ -103,7 +102,7 @@ def plot_vars_and_blocks(**kwargs):
 
 			# add legend
 			par(xpd=TRUE)
-			legend(x_lab[4], 4.5, c("phased", "unphased"), pch = c(4,4), col=c("red","black"), cex=1.4, pt.cex=1.6, horiz=T, bty="n", x.intersp=0.5)
+			legend(legend_x, 4.5, c("phased", "unphased"), pch = c(4,4), col=c("red","black"), cex=1.4, pt.cex=1.6, horiz=T, bty="n", x.intersp=0.5)
 
 			dev.off()
 		}
