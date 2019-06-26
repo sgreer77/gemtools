@@ -35,11 +35,11 @@ def plot_vars_and_blocks(**kwargs):
 	df_basic = pd.read_table(infile_basic, sep="\t")
 	df_blocks = pd.read_table(infile_blocks, sep="\t")
 	chr = str(region.split(",")[0])
-	start_input = int(region.split(",")[1])
-	stop_input = int(region.split(",")[2])
+	start = int(region.split(",")[1])
+	stop = int(region.split(",")[2])
 
-	start = int( math.floor(start_input / 1000000.0) * 1000000.0 )
-	stop = int( math.ceil(stop_input / 1000000.0) * 1000000.0 )
+	#start = int( math.floor(start_input / 100000.0) * 1000000.0 )
+	#stop = int( math.ceil(stop_input / 1000000.0) * 1000000.0 )
 
 	# get het SNVs in region (that pass filter)
 	df_basic[['#chrom']] = df_basic[['#chrom']].astype(str)
@@ -72,7 +72,8 @@ def plot_vars_and_blocks(**kwargs):
 		function(df_var,df_blk,b,e,xname,outplot)	{
 			x_min = b/1000000
 			x_max = e/1000000
-			x_by <- (x_max-x_min)/5
+			#x_by <- (x_max-x_min)/5
+			x_lab<-pretty(x_min:x_max)
 		
 			# adjust var table
 			df_var$pos_mod = df_var$pos/1000000
@@ -83,12 +84,12 @@ def plot_vars_and_blocks(**kwargs):
 			df_blk$end_pos_plot<-df_blk$end_pos_check/1000000
 
 			# open plot file
-			png(outplot, width=900, height=350)
+			png(outplot, width=900, height=350, units='in', res=300)
 			par(mar=c(5,5,4,1)+.1)
 
 			# make plot outline
 			plot(y~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,3))
-			axis(1,at=seq(x_min,x_max,x_by),labels=seq(x_min,x_max,x_by), cex.axis=1.25, mgp=c(3,0.7,0))
+			axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
 			mtext(side=1, cex=1.5, line=3, xname)
 			axis(2,at=seq(1,2,1),labels=c("variants","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
 
