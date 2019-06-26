@@ -102,7 +102,7 @@ def plot_vars_and_blocks(**kwargs):
 
 			# add legend
 			par(xpd=TRUE)
-			legend(x_lab[4], 4.5, c("phased", "unphased"), pch = c(4,4), col=c("red","black"), cex=1.4, pt.cex=1.6, horiz=T, bty="n", x.intersp=2)
+			legend(x_lab[4], 4.5, c("phased", "unphased"), pch = c(4,4), col=c("red","black"), cex=1.4, pt.cex=1.6, horiz=T, bty="n", x.intersp=0)
 
 			dev.off()
 		}
