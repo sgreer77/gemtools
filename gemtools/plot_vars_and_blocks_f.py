@@ -85,7 +85,7 @@ def plot_vars_and_blocks(**kwargs):
 
 			# open plot file
 			png(outplot, width=9, height=3.2, units='in', res=300)
-			par(mar=c(5,5,1,1)+.1)
+			par(mar=c(5,5,3,1)+.1)
 
 			# make plot outline
 			plot(y~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,3))
@@ -99,6 +99,10 @@ def plot_vars_and_blocks(**kwargs):
 
 			# plot blocks
 			rect(df_blk$beg_pos_plot, 1.8, df_blk$end_pos_plot, 2.2, lwd=2)
+
+			# add legend
+			par(xpd=TRUE)
+			legend(x_lab[4], 4, c("phased", "unphased"), pch = c(4,4), col=c("red","black"), cex=1.6)
 
 			dev.off()
 		}
