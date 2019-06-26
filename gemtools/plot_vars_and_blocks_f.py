@@ -98,7 +98,7 @@ def plot_vars_and_blocks(**kwargs):
 			points(y~pos_mod, data=df_var[df_var$phase_status=="phased",], pch=4, cex=1.6, col="red")
 
 			# plot blocks
-			rect(df_blk$beg_pos_plot, 1.9, df_blk$end_pos_plot, 2.1, lwd=2)
+			rect(df_blk$beg_pos_plot, 1.8, df_blk$end_pos_plot, 2.2, lwd=2)
 
 			dev.off()
 		}
