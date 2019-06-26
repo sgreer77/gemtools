@@ -575,13 +575,13 @@ Output:
 			print """
 Tool:	gemtools -T plot_vars_and_blocks
 Summary: For a particular region, plot the heterozygous variants and phase blocks\n
-Usage:   gemtools -T plot_vars_and_blocks --basic <output.phased_basic.txt> --blocks <output.phased_blocks.txt> -r <region> -o <out.png>
+Usage:   gemtools -T plot_vars_and_blocks --basic <output.phased_basic.txt> --blocks <output.phased_blocks.txt> -f <region> -o <out.png>
 Input:
 	--basic  output from 'get_phased_basic' tool
 	--blocks	output from 'get_phase_blocks' tool
-	-r region of genome to consider; format 'chr1,1000,2000'
+	-f region of genome to consider; format 'chr1,1000,2000' or '1,1000,2000'
 Output:
-	-o  output file: plot
+	-o  output file: plot of heterozygous variants and phase blocks
 			"""
 			sys.exit(1)
 		if not (args.basic_in or args.blocks_in or args.region_in or args.outfile):
