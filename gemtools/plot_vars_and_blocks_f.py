@@ -72,7 +72,7 @@ def plot_vars_and_blocks(**kwargs):
 		function(df_var,df_blk,b,e,xname,outplot)	{
 			x_min = b/1000000
 			x_max = e/1000000
-			legend_x = x_min + (x_max-x_min)/2
+			legend_x = x_min + (x_max-x_min)/0.67
 			
 			# adjust var table
 			df_var$pos_mod = df_var$pos/1000000
