@@ -84,7 +84,7 @@ def plot_vars_and_blocks(**kwargs):
 			df_blk$end_pos_plot<-df_blk$end_pos_check/1000000
 
 			# open plot file
-			png(outplot, width=10, height=3.6, units='in', res=300)
+			png(outplot, width=8, height=2.5, units='in', res=300)
 			par(mar=c(5,5,4,1)+.1)
 
 			# make plot outline
