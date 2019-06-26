@@ -81,8 +81,6 @@ def plot_vars_and_blocks(**kwargs):
 			# adjust block table
 			df_blk$beg_pos_plot<-df_blk$beg_pos_check/1000000
 			df_blk$end_pos_plot<-df_blk$end_pos_check/1000000
-			#df_blk$beg_pos_plot<-max(df_blk$beg_pos_mod,x_min)
-			#df_blk$end_pos_plot<-min(df_blk$end_pos_mod,x_max)
 
 			# open plot file
 			png(outplot, width=900, height=350)
@@ -95,7 +93,8 @@ def plot_vars_and_blocks(**kwargs):
 			axis(2,at=seq(1,2,1),labels=c("variants","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
 
 			# plot variants
-			points(y~pos_mod, data=df_var, pch=4, cex=1.6)
+			points(y~pos_mod, data=df_var[df_var$phase_status=="not_phased",], pch=4, cex=1.6)
+			points(y~pos_mod, data=df_var[df_var$phase_status=="phased",], pch=4, cex=1.6, col="red")
 
 			# plot blocks
 			rect(df_blk$beg_pos_plot, 1.9, df_blk$end_pos_plot, 2.1, lwd=2)
