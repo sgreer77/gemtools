@@ -89,7 +89,8 @@ def plot_vars_and_blocks(**kwargs):
 
 			# make plot outline
 			plot(y~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,3))
-			axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
+			#axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
+			axis(1, cex.axis=1.25,mgp=c(3,0.7,0))
 			mtext(side=1, cex=1.5, line=3, xname)
 			axis(2,at=seq(1,2,1),labels=c("variants","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
 
