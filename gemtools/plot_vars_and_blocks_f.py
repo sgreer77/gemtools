@@ -85,7 +85,7 @@ def plot_vars_and_blocks(**kwargs):
 
 			# open plot file
 			png(outplot, width=9, height=3, units='in', res=300)
-			par(mar=c(5,5,4,1)+.1)
+			par(mar=c(5,5,3,1)+.1)
 
 			# make plot outline
 			plot(y~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,3))
