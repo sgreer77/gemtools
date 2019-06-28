@@ -79,7 +79,7 @@ def plot_haps_and_blocks(**kwargs):
 			#axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
 			axis(1, cex.axis=1.25,mgp=c(3,0.7,0))
 			mtext(side=1, cex=1.5, line=3, xname)
-			axis(2,at=seq(1,3,1),labels=c("unphased","hap2","hap1","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
+			axis(2,at=seq(1,4,1),labels=c("unphased","hap2","hap1","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
 
 			# plot variants
 			points(y_hap1~pos_mod, data=df_var[df_var$allele_1==1 & df_var$phase_status=='phased',], pch=4, cex=1.6)
