@@ -72,10 +72,10 @@ def plot_haps_and_blocks(**kwargs):
 
 			# open plot file
 			png(outplot, width=9, height=3.2, units='in', res=300)
-			par(mar=c(5,5,3,1)+.1)
+			par(mar=c(5,6,1,1)+.1)
 
 			# make plot outline
-			plot(y_hap1~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,5))
+			plot(y_hap1~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0.5,4.5))
 			#axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
 			axis(1, cex.axis=1.25,mgp=c(3,0.7,0))
 			mtext(side=1, cex=1.5, line=3, xname)
