@@ -33,6 +33,7 @@ def plot_haps_and_blocks(**kwargs):
 	df_basic[['pos']] = df_basic[['pos']].astype(int)
 	df_basic = df_basic[(df_basic['#chrom']==chr) & (df_basic['pos']>start) & (df_basic['pos']<stop) & (df_basic['var_type']=="snv") & (df_basic['filter']=="[]")]
 	df_basic = df_basic[df_basic['gt'].isin(['1|0','0|1'])]
+	df_basic[['allele_1','allele_2']] = df_basic[['allele_1','allele_2']].astype(int)
 	df_basic.rename(index=str, columns={"#chrom": "chrom"}, inplace=True)
 	#df_basic.to_csv('basic.txt', sep="\t", index=False)
 
