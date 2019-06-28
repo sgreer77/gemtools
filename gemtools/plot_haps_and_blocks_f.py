@@ -32,7 +32,7 @@ def plot_haps_and_blocks(**kwargs):
 	df_basic[['#chrom']] = df_basic[['#chrom']].astype(str)
 	df_basic[['pos']] = df_basic[['pos']].astype(int)
 	df_basic = df_basic[(df_basic['#chrom']==chr) & (df_basic['pos']>start) & (df_basic['pos']<stop) & (df_basic['var_type']=="snv") & (df_basic['filter']=="[]")]
-	df_basic = df_basic[df_basic['gt'].isin(['1|0','0|1'])]
+	df_basic = df_basic[df_basic['gt'].isin(['1|0','0|1','0/1','1/0'])]
 	df_basic[['allele_1','allele_2']] = df_basic[['allele_1','allele_2']].astype(int)
 	df_basic.rename(index=str, columns={"#chrom": "chrom"}, inplace=True)
 	#df_basic.to_csv('basic.txt', sep="\t", index=False)
@@ -62,8 +62,9 @@ def plot_haps_and_blocks(**kwargs):
 			
 			# adjust var table
 			df_var$pos_mod = df_var$pos/1000000
-			df_var$y_hap1 = 2
-			df_var$y_hap2 = 1
+			df_var$y_hap1 = 3
+			df_var$y_hap2 = 2
+			df_var$y_unph = 1
 
 			# adjust block table
 			df_blk$beg_pos_plot<-df_blk$beg_pos_check/1000000
@@ -74,18 +75,19 @@ def plot_haps_and_blocks(**kwargs):
 			par(mar=c(5,5,3,1)+.1)
 
 			# make plot outline
-			plot(y_hap1~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,4))
+			plot(y_hap1~pos_mod, data=df_var, type="n", xaxt="n", yaxt="n", ylab="", xlab="", xlim=c(x_min,x_max), ylim=c(0,5))
 			#axis(1,at=x_lab,labels=x_lab, cex.axis=1.25,mgp=c(3,0.7,0))
 			axis(1, cex.axis=1.25,mgp=c(3,0.7,0))
 			mtext(side=1, cex=1.5, line=3, xname)
-			axis(2,at=seq(1,3,1),labels=c("hap2","hap1","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
+			axis(2,at=seq(1,3,1),labels=c("unphased","hap2","hap1","blocks"), cex.axis=1.25, mgp=c(3,0.7,0), las=1)
 
 			# plot variants
-			points(y_hap1~pos_mod, data=df_var[df_var$allele_1==1,], pch=4, cex=1.6)
-			points(y_hap2~pos_mod, data=df_var[df_var$allele_2==1,], pch=4, cex=1.6)
+			points(y_hap1~pos_mod, data=df_var[df_var$allele_1==1 & df_var$phase_status=='phased',], pch=4, cex=1.6)
+			points(y_hap2~pos_mod, data=df_var[df_var$allele_2==1 & df_var$phase_status=='phased',], pch=4, cex=1.6)
+			points(y_unph~pos_mod, data=df_var[df_var$phase_status=='not_phased',], pch=4, cex=1.6)
 
 			# plot blocks
-			rect(df_blk$beg_pos_plot, 1.8, df_blk$end_pos_plot, 2.2, lwd=2)
+			rect(df_blk$beg_pos_plot, 3.8, df_blk$end_pos_plot, 4.2, lwd=2)
 
 			dev.off()
 		}
