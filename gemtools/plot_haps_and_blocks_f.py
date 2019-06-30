@@ -84,7 +84,7 @@ def plot_haps_and_blocks(**kwargs):
 			# plot variants
 			points(y_hap1~pos_mod, data=df_var[df_var$allele_2==1 & df_var$phase_status=='phased',], pch=4, cex=1.6, col="#2B93CE")
 			points(y_hap2~pos_mod, data=df_var[df_var$allele_1==1 & df_var$phase_status=='phased',], pch=4, cex=1.6, col="#663D54")
-			points(y_hap1~pos_mod, data=df_var[df_var$allele_2==1 & df_var$phase_status=='phased' & df_var$pos==11468296,], pch=4, cex=1.6, col="red")
+			points(y_hap1~pos_mod, data=df_var[df_var$allele_2==1 & df_var$phase_status=='phased' & df_var$pos==11468296,], pch=19, cex=1.6, col="red", bg="red")
 			points(y_unph~pos_mod, data=df_var[df_var$phase_status=='not_phased',], pch=4, cex=1.6)
 
 			# plot blocks
