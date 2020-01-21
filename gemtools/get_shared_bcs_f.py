@@ -8,7 +8,7 @@ import pysam
 import numpy as np
 
 
-MIN_MAPQ = map_qual
+
 
 def get_barcode_ids(bam_in, chrom, start, end, min_mapq):
 	bcs = []
@@ -27,6 +27,10 @@ def get_shared_bcs(**kwargs):
 		bam_input = kwargs['bam']
 	if 'out' in kwargs:
 		outpre = kwargs['out']
+	if 'map_qual' in kwargs:
+		map_qual = kwargs['map_qual']
+
+	MIN_MAPQ = map_qual
 
 	bam_open = pysam.Samfile(bam_input)
 
