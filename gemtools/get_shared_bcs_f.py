@@ -8,7 +8,7 @@ import pysam
 import numpy as np
 
 
-MIN_MAPQ = 0
+MIN_MAPQ = map_qual
 
 def get_barcode_ids(bam_in, chrom, start, end, min_mapq):
 	bcs = []
