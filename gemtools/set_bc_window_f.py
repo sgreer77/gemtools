@@ -52,7 +52,7 @@ def set_bc_window(**kwargs):
 
 			if sv_type=="DEL":
 				wsize_del = wsize*2
-				coord_list.append([chrom1,min(0,stop1-wsize_del),stop1,name,name,"in"])
+				coord_list.append([chrom1,max(0,stop1-wsize_del),stop1,name,name,"in"])
 				coord_list.append([chrom1,start2,start2+wsize_del,name,name,"in"])
 				coord_list.append([chrom1,stop1+mini_padder,start2-mini_padder,name,name,"out"])
 
@@ -64,29 +64,29 @@ def set_bc_window(**kwargs):
 					coord_list.append([chrom1,stop1,start2,name,name,"in"])
 				else:
 					coord_list.append([chrom1,stop1,stop1+dup_wsize,name,name,"in"])
-					coord_list.append([chrom1,min(0,start2-dup_wsize),start2,name,name,"in"])	
+					coord_list.append([chrom1,max(0,start2-dup_wsize),start2,name,name,"in"])	
 						
-				coord_list.append([chrom1,min(0,start1-wsize),start1-mini_padder,name,name,"out"])
+				coord_list.append([chrom1,max(0,start1-wsize),start1-mini_padder,name,name,"out"])
 				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,name,"out"])
 
 			elif sv_type=="INV":
 				sub_name_1 = str(name) + "_1"
-				coord_list.append([chrom1,min(0,start1-wsize),start1,name,sub_name_1,"in"])
-				coord_list.append([chrom1,min(0,start2-wsize),start2,name,sub_name_1,"in"])
+				coord_list.append([chrom1,max(0,start1-wsize),start1,name,sub_name_1,"in"])
+				coord_list.append([chrom1,max(0,start2-wsize),start2,name,sub_name_1,"in"])
 				coord_list.append([chrom1,stop2+mini_padder,stop2+wsize,name,sub_name_1,"out"])
 
 				sub_name_2 = str(name) + "_2"
 				coord_list.append([chrom1,stop1,stop1+wsize,name,sub_name_2,"in"])
 				coord_list.append([chrom1,stop2,stop2+wsize,name,sub_name_2,"in"])
-				coord_list.append([chrom1,min(0,start1-wsize),start1-mini_padder,name,sub_name_2,"out"])		
+				coord_list.append([chrom1,max(0,start1-wsize),start1-mini_padder,name,sub_name_2,"out"])		
 
 			elif sv_type=="DISTAL":
-				coord_list.append([chrom1,min(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
-				coord_list.append([chrom2,min(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
+				coord_list.append([chrom1,max(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
+				coord_list.append([chrom2,max(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
 
 			elif sv_type=="UNK":
-				coord_list.append([chrom1,min(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
-				coord_list.append([chrom2,min(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
+				coord_list.append([chrom1,max(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
+				coord_list.append([chrom2,max(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
 
 			else:
 				print "Unrecognized SV type in input"
@@ -104,8 +104,8 @@ def set_bc_window(**kwargs):
 			stop2 = row['stop2']
 			name = row['name']
 
-			coord_list.append([chrom1,min(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
-			coord_list.append([chrom2,min(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
+			coord_list.append([chrom1,max(0,start1-wsize/2),stop1+wsize/2,name,name,"in"])
+			coord_list.append([chrom2,max(0,start2-wsize/2),stop2+wsize/2,name,name,"in"])
 	
 	df_refined = pd.DataFrame(coord_list, columns = ['#chrom','start','stop','name','sub_name','status'])
 	df_refined.to_csv(outpre, sep="\t", index=False)
