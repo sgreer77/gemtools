@@ -52,7 +52,7 @@ def set_bc_window(**kwargs):
 
 			if sv_type=="DEL":
 				wsize_del = wsize*2
-				coord_list.append([chrom1,max(0,stop1-wsize_del),stop1,name,name,"in"])
+				coord_list.append([chrom1,max(0,stop1-wsize_del),max(stop1,wsize_del),name,name,"in"])
 				coord_list.append([chrom1,start2,start2+wsize_del,name,name,"in"])
 				coord_list.append([chrom1,stop1+mini_padder,start2-mini_padder,name,name,"out"])
 
