@@ -129,7 +129,7 @@ def assign_sv_haps(**kwargs):
 	vcf_merge_grp['bc_2_not_on_1'] = vcf_merge_grp.apply(lambda row: tuple(list(set(list(literal_eval(str(row['bc_2_phased_mto'])))) - set(list(literal_eval(str(row['bc_1_phased'])))))), axis=1)
 
 	# MERGE SV BRKPT INFO AND BC INFO
-	merged_df = pd.merge(df, vcf_merge_grp, on="name", how="left")
+	merged_df = pd.merge(df, vcf_merge_grp, on="name", how="inner")
 
 	# GET AND COUNT OVERLAPS BETWEEN HAPLOTYPES BARCODES AND SV-SPECIFIC BARCODES
 
